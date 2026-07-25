@@ -1,6 +1,6 @@
 # Pedro Nauck's Skills
 
-A curated collection of **129 agent skills** for Claude Code and compatible AI coding assistants — **35 original** (⭐️), **30 hand-picked** (💎), **18 marketing & business** (📣), plus **46 community** skills. Each skill provides domain-specific knowledge, best practices, and guided workflows that enhance an agent's ability to perform specialized tasks.
+A curated collection of **130 agent skills** for Claude Code and compatible AI coding assistants — **36 original** (⭐️), **30 hand-picked** (💎), **18 marketing & business** (📣), plus **46 community** skills. Each skill provides domain-specific knowledge, best practices, and guided workflows that enhance an agent's ability to perform specialized tasks.
 
 ## Installation
 
@@ -44,7 +44,7 @@ ln -s $(pwd)/skills/mine ~/.claude/skills/mine
 
 Skills are organized into four top-level buckets:
 
-- `skills/mine/` — 35 original skills authored in this repository (⭐️)
+- `skills/mine/` — 36 original skills authored in this repository (⭐️)
 - `skills/curated/` — 30 hand-picked community skills (💎)
 - `skills/marketing/` — 18 marketing, business, and writing skills (📣)
 - `skills/community/` — 46 broader community skills
@@ -98,6 +98,7 @@ Original skills authored in this repository.
 - **[writing-agents-md](./skills/mine/writing-agents-md)** — Author lean AGENTS.md/CLAUDE.md files as resident system-prompt context — the three-part rent test (delta / frequency / economy) per line, a scope ladder from global CLAUDE.md down to linked docs, form rules for rules that bind (no examples, no emphasis inflation), and Write / Trim / Gate branches
 - **[writing-skills](./skills/mine/writing-skills)** — Author, refactor, and debug agent skills: agentskills.io authoring procedure with metadata validator, the predictability doctrine (information hierarchy, pruning, leading words, descriptions, failure modes) with full glossary, and a loading-diagnosis pass for references the agent ignores (pointer-strength ladder). Merges the former skill-best-practices, writing-great-skills, and skill-load-tips
 - **[writing-tech-post](./skills/mine/writing-tech-post)** — SOTA authoring loop for engineering blog posts — 8 archetype contracts (launch / postmortem / migration / performance / tutorial / research-translation / AI-agent / security), 5-rung abstraction ladder with rung-whiplash diagnostic, 12-form evidence taxonomy with `claim → artifact → reading` cadence, 7-publisher voice matrix, four disclosure contracts (blameless / coordinated-disclosure / paper-link-first / what-we'd-do-differently), narrative arcs + closer taxonomy, and a read-only `lint-post.py` pre-publish gate
+- **[xstate-store](./skills/mine/xstate-store)** — `@xstate/store` v4 event-driven state for TypeScript — a primitive-selection table (store / store logic / atom / XState machine), store core (transitions, `trigger`/`can`, Immer), `enqueue` effects with the synchronous-determinism rule, Standard Schema contracts plus opt-in `validateSchemas()`, selectors and atoms (derived, reducer, config, async), `createStoreLogic` with input and named selectors, the `persist` / `undoRedo` / `reset` extensions, `@xstate/store-react` v2 hooks with scope guidance, pure-`transition()` testing and `fromStore` XState interop, and a v3 → v4 migration path (plus a Zustand concept map). Every sample typechecked against 4.2.2
 - **[yc-apply](./skills/mine/yc-apply)** — Drive a Y Combinator batch application end-to-end through a 10-phase workspace — captures the live YC form, profiles founders and stress-tests the idea via an embedded grill loop, runs a mandatory 5-agent parallel external-research pass on the startup, drafts every field with a buzzword scanner and a provenance-labeled accepted-answer rubric, generates founder-video bullet notes (no script), enforces a script-checked 10-check pre-submit gate, then unlocks a post-invite interview-prep simulator and reapplicant delta tracking. Built from 84 YC essays + 28 interview transcripts
 - **[yt-master](./skills/mine/yt-master)** — Plan, package (title + thumbnail), script, and optimize YouTube videos by combining two complementary methodologies (pt-BR): **Escola Para Youtubers** (Caique — 50 transcripts; packaging-first / algorithm) and **Camilo Coutinho** (20-yr veteran — 100 transcripts; search SEO, sustainable production system, channel decisions), validated by real cross-channel metrics — the embrulho-primeiro production pyramid, 3 psychological thumbnail triggers (FOMO / pain+solution / objection-break) plus a data-driven post-publish thumbnail-swap, 8 metric-backed title formulas plus the 3 verbs (findable/clickable/shareable), a ≤30s hook with a named-technique library, block-based script template, the Problem-vs-Ambition payoff axis and an unblock gate (brain dump / camera fear), the 5-stage algorithm funnel (Impression → CTR → Retention → Satisfaction → Session) with myth-vs-reality and two discovery channels (internal funnel + Google search: 5-block description, rankable chapters, playlists), monetization & growth (YPP, YouTube Shopping, operational Brand Connect, sustainable production system "Fortaleza de Vídeos", community 15-min/day, dark/AI demonetization gate, copyright), channel decisions (naming, audience collision, restart/migrate), a publication checklist, and read-only `ctr-baseline.py` + `title-check.py` helpers
 
@@ -132,7 +133,7 @@ Hand-picked community skills maintained in this repository.
 - **[vercel-react-best-practices](./skills/curated/vercel-react-best-practices)** — React/Next.js performance optimization from Vercel Engineering
 - **[verification-before-completion](./skills/curated/verification-before-completion)** — Run verification commands and confirm output before claiming success
 - **[vitest](./skills/curated/vitest)** — Fast unit testing with Vite -- Jest-compatible API, mocking, coverage, and fixtures
-- **[xstate](./skills/curated/xstate)** — XState v5 state machines, actors, `@xstate/store`, and TanStack Query integration
+- **[xstate](./skills/curated/xstate)** — XState v5 state machines, actors, and TanStack Query integration (for `@xstate/store` v4, use [xstate-store](./skills/mine/xstate-store))
 - **[zod](./skills/curated/zod)** — Zod schema validation for type safety, parsing, and error handling
 - **[zustand](./skills/curated/zustand)** — Zustand state management patterns, store organization, and best practices
 

@@ -10,3 +10,4 @@ skills/**/**/autoresearch*
 .codex/ledger
 .claude/analysis
 .resources/*
+.firecrawl/
