@@ -7,7 +7,7 @@ description: >-
   review round, especially for autonomy/network/security/migration-impacting designs.
   Project-agnostic: any repo, any language. Don't use for implementation/diff review (use
   impl-peer-review) or as an automatic/looping approval gate.
-trigger: explicit
+disable-model-invocation: true
 argument-hint: "[spec-path] [--context p1,p2] [--out dir] [--ide <ide>] [--model <model>] [--reasoning <effort>]"
 metadata:
   author: Pedro Nauck

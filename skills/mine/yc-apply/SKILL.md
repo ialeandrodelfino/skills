@@ -1,6 +1,7 @@
 ---
 name: yc-apply
 description: Guides a founder through the full Y Combinator batch application end-to-end. A 10-phase workflow that captures the live YC form, profiles the founders, stress-tests the idea via an embedded grill loop, runs a mandatory 5-agent parallel external research pass on the startup, drafts every form field with anti-pattern and accepted-example checks, produces founder-video bullet notes (no script), runs a final adversarial gate, generates paste-ready submission answers, unlocks an interview-prep simulator after invite, and supports reapplicant delta tracking and post-decision post-mortems. Writes a documented markdown trail under a user-chosen workspace. Use when a founder wants to prepare a YC batch application, build their founder video, drill mock YC interview questions, or reapply with delta evidence. Don't use for pitch-deck design unrelated to YC, generic startup advice without applying, or post-funding work.
+disable-model-invocation: true
 ---
 
 # YC Apply

@@ -1,30 +1,41 @@
 #!/usr/bin/env bash
-# dispatch-slices.sh — run N explorer slices in parallel via `compozy exec`,
-# wait for all, and report per-slice exit codes. Bundled with the
-# agent-exploration skill. Zero external dependencies (native bash + the
-# `compozy` binary).
+# dispatch-slices.sh — run N explorer slices in parallel through an official
+# harness CLI (claude | codex | cursor-agent), wait for all, and report
+# per-slice exit codes. Bundled with the agent-exploration skill; used only on
+# the external-CLI dispatch route (native subagents need no script).
+# Zero external dependencies (native bash + the chosen CLI binary).
 #
 # Usage:
 #   dispatch-slices.sh \
-#     --ide <ide> --model <model> --reasoning <effort> \
-#     [--logs <dir>] [--bin <path>] \
+#     --cli <claude|codex|cursor-agent> [--model <model>] [--reasoning <effort>] \
+#     [--add-dir <dir>] [--logs <dir>] \
 #     -- <prompt-file> [<prompt-file>...]
 #
 # Required:
-#   --ide        Compozy runtime (e.g. claude, codex, cursor-agent, ...).
-#   --model      Model name (e.g. opus, 'grok-4.5[effort=high,fast=true]').
-#   --reasoning  Reasoning effort: low | medium | high | xhigh.
+#   --cli        Harness CLI: claude (Claude models), codex (gpt-*),
+#                cursor-agent (Grok).
 #
 # Optional:
+#   --model      Model to pin. Required for claude and cursor-agent; codex
+#                falls back to the ~/.codex/config.toml default when omitted.
+#                Examples: fable | opus | gpt-5.3-codex | cursor-grok-4.5-high-fast
+#   --reasoning  Reasoning effort: low | medium | high | xhigh. Default xhigh.
+#                claude → --effort; codex → -c model_reasoning_effort=…;
+#                cursor-agent → ignored (effort/fast live in the model id).
+#   --add-dir    Extra workspace root forwarded to the CLI. Pass the analysis
+#                <path> whenever it lies outside the CLI's working tree.
 #   --logs       Directory for per-slice .out/.err/.exit files. Default ./dispatch-logs.
-#   --bin        Path to the compozy binary. Defaults to $COMPOZY_BIN or `compozy` on PATH.
 #
 # Positional (after --): 1 to 8 prompt files. Each file's basename
 # (without .txt/.md) becomes the slice id used for log file naming.
 #
 # Behaviour:
-#   - Each prompt is dispatched via:
-#       $BIN exec --agent explorer --ide ... --model ... --reasoning-effort ... --prompt-file <file>
+#   - claude:       claude -p --model … --effort … --permission-mode dontAsk
+#                     --allowedTools "<scoped-write allowlist>" < prompt-file
+#   - codex:        codex exec [-m …] -c model_reasoning_effort=… -s workspace-write
+#                     -c sandbox_workspace_write.network_access=true
+#                     --skip-git-repo-check - < prompt-file
+#   - cursor-agent: cursor-agent -p --output-format text --force --model … "$(cat prompt-file)"
 #   - All slices run in parallel via shell job control (& + wait $pid).
 #   - Per-slice stdout/stderr/exit are captured under --logs.
 #   - The script blocks until every slice has exited, then prints a summary.
@@ -32,36 +43,51 @@
 #   - SIGINT/SIGTERM kills running child processes before exiting.
 set -uo pipefail
 
-IDE=""
+CLI=""
 MODEL=""
-REASONING=""
+REASONING="xhigh"
+ADD_DIR=""
 LOGS_DIR="./dispatch-logs"
-BIN="${COMPOZY_BIN:-compozy}"
+
+# Mirrors the Tool Restrictions list in references/dispatch-rules.md: read-only
+# helpers plus exactly one Write. --permission-mode dontAsk auto-denies the rest.
+CLAUDE_ALLOWED_TOOLS="Read Glob Grep WebFetch WebSearch Write Bash(rg *) Bash(ls *) Bash(cat *) Bash(head *) Bash(wc *) Bash(file *) Bash(find *)"
 
 print_help() {
-  sed -n '2,32p' "${BASH_SOURCE[0]}" | sed 's/^# \{0,1\}//'
+  sed -n '2,45p' "${BASH_SOURCE[0]}" | sed 's/^# \{0,1\}//'
 }
 
 while [ $# -gt 0 ]; do
   case "$1" in
-    --ide)        IDE="${2:-}"; shift 2 ;;
-    --ide=*)      IDE="${1#--ide=}"; shift ;;
-    --model)      MODEL="${2:-}"; shift 2 ;;
-    --model=*)    MODEL="${1#--model=}"; shift ;;
-    --reasoning)  REASONING="${2:-}"; shift 2 ;;
+    --cli)         CLI="${2:-}"; shift 2 ;;
+    --cli=*)       CLI="${1#--cli=}"; shift ;;
+    --model)       MODEL="${2:-}"; shift 2 ;;
+    --model=*)     MODEL="${1#--model=}"; shift ;;
+    --reasoning)   REASONING="${2:-}"; shift 2 ;;
     --reasoning=*) REASONING="${1#--reasoning=}"; shift ;;
-    --logs)       LOGS_DIR="${2:-}"; shift 2 ;;
-    --logs=*)     LOGS_DIR="${1#--logs=}"; shift ;;
-    --bin)        BIN="${2:-}"; shift 2 ;;
-    --bin=*)      BIN="${1#--bin=}"; shift ;;
-    --)           shift; break ;;
-    -h|--help)    print_help; exit 0 ;;
-    *)            echo "ERROR: unknown argument: $1" >&2; exit 2 ;;
+    --add-dir)     ADD_DIR="${2:-}"; shift 2 ;;
+    --add-dir=*)   ADD_DIR="${1#--add-dir=}"; shift ;;
+    --logs)        LOGS_DIR="${2:-}"; shift 2 ;;
+    --logs=*)      LOGS_DIR="${1#--logs=}"; shift ;;
+    --)            shift; break ;;
+    -h|--help)     print_help; exit 0 ;;
+    *)             echo "ERROR: unknown argument: $1" >&2; exit 2 ;;
   esac
 done
 
-if [ -z "$IDE" ] || [ -z "$MODEL" ] || [ -z "$REASONING" ]; then
-  echo "ERROR: --ide, --model, --reasoning are required" >&2
+case "$CLI" in
+  claude|codex|cursor-agent) ;;
+  "") echo "ERROR: --cli is required (claude | codex | cursor-agent)" >&2; exit 2 ;;
+  *)  echo "ERROR: unsupported --cli '$CLI' (claude | codex | cursor-agent)" >&2; exit 2 ;;
+esac
+
+case "$REASONING" in
+  low|medium|high|xhigh) ;;
+  *) echo "ERROR: invalid --reasoning '$REASONING' (low | medium | high | xhigh)" >&2; exit 2 ;;
+esac
+
+if [ -z "$MODEL" ] && [ "$CLI" != "codex" ]; then
+  echo "ERROR: --model is required for --cli $CLI (codex may omit it to use its config default)" >&2
   exit 2
 fi
 
@@ -70,12 +96,39 @@ if [ "$#" -lt 1 ] || [ "$#" -gt 8 ]; then
   exit 2
 fi
 
-if ! command -v "$BIN" >/dev/null 2>&1 && [ ! -x "$BIN" ]; then
-  echo "ERROR: compozy binary not found at '$BIN' (override via --bin or \$COMPOZY_BIN)" >&2
+if ! command -v "$CLI" >/dev/null 2>&1; then
+  echo "ERROR: '$CLI' not found on PATH — install that harness's official CLI first" >&2
   exit 2
 fi
 
 mkdir -p "$LOGS_DIR"
+
+# Builds the per-slice command into the global CMD array. The prompt file is
+# fed via stdin for claude/codex; cursor-agent takes it as a positional arg.
+build_cmd() {
+  local prompt_file="$1"
+  case "$CLI" in
+    claude)
+      CMD=(claude -p --model "$MODEL" --effort "$REASONING"
+           --permission-mode dontAsk --allowedTools "$CLAUDE_ALLOWED_TOOLS")
+      [ -n "$ADD_DIR" ] && CMD+=(--add-dir "$ADD_DIR")
+      ;;
+    codex)
+      CMD=(codex exec)
+      [ -n "$MODEL" ] && CMD+=(-m "$MODEL")
+      CMD+=(-c "model_reasoning_effort=$REASONING"
+           -s workspace-write -c "sandbox_workspace_write.network_access=true"
+           --skip-git-repo-check)
+      [ -n "$ADD_DIR" ] && CMD+=(--add-dir "$ADD_DIR")
+      CMD+=(-)
+      ;;
+    cursor-agent)
+      CMD=(cursor-agent -p --output-format text --force --model "$MODEL")
+      [ -n "$ADD_DIR" ] && CMD+=(--add-dir "$ADD_DIR")
+      CMD+=("$(cat "$prompt_file")")
+      ;;
+  esac
+}
 
 PIDS=()
 SLUGS=()
@@ -90,7 +143,7 @@ cleanup() {
 trap cleanup INT TERM
 
 START_TS=$(date +%s)
-echo "dispatch: $# slice(s) via $BIN exec --agent explorer --ide $IDE --model $MODEL --reasoning-effort $REASONING"
+echo "dispatch: $# slice(s) via $CLI (model=${MODEL:-config-default} reasoning=$REASONING)"
 echo "logs:     $LOGS_DIR"
 
 for PROMPT_FILE in "$@"; do
@@ -107,13 +160,12 @@ for PROMPT_FILE in "$@"; do
   ERR="$LOGS_DIR/$SLUG.err"
   rm -f "$LOGS_DIR/$SLUG.exit"
 
-  COMPOZY_NO_UPDATE_NOTIFIER=1 "$BIN" exec \
-    --agent explorer \
-    --ide "$IDE" \
-    --model "$MODEL" \
-    --reasoning-effort "$REASONING" \
-    --prompt-file "$PROMPT_FILE" \
-    >"$OUT" 2>"$ERR" &
+  build_cmd "$PROMPT_FILE"
+  if [ "$CLI" = "cursor-agent" ]; then
+    "${CMD[@]}" </dev/null >"$OUT" 2>"$ERR" &
+  else
+    "${CMD[@]}" <"$PROMPT_FILE" >"$OUT" 2>"$ERR" &
+  fi
 
   PID=$!
   PIDS+=("$PID")

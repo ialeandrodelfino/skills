@@ -7,7 +7,7 @@ description: >-
   files and the verify command. Use after an implementation pass (feature, bug fix, refactor) when
   the user explicitly asks for an external review of the diff before commit or PR. Do not use for
   spec/TechSpec review — use spec-peer-review.
-trigger: explicit
+disable-model-invocation: true
 argument-hint: "[--files p1,p2] [--context p1,p2] [--base ref] [--staged] [--out dir] [--verify cmd] [--ide <ide>] [--model <model>] [--reasoning <effort>]"
 metadata:
   author: Pedro Nauck
