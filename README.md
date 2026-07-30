@@ -1,6 +1,6 @@
 # Pedro Nauck's Skills
 
-A curated collection of **130 agent skills** for Claude Code and compatible AI coding assistants — **36 original** (⭐️), **30 hand-picked** (💎), **18 marketing & business** (📣), plus **46 community** skills. Each skill provides domain-specific knowledge, best practices, and guided workflows that enhance an agent's ability to perform specialized tasks.
+A curated collection of **132 agent skills** for Claude Code and compatible AI coding assistants — **38 original** (⭐️), **30 hand-picked** (💎), **18 marketing & business** (📣), plus **46 community** skills. Each skill provides domain-specific knowledge, best practices, and guided workflows that enhance an agent's ability to perform specialized tasks.
 
 ## Installation
 
@@ -44,7 +44,7 @@ ln -s $(pwd)/skills/mine ~/.claude/skills/mine
 
 Skills are organized into four top-level buckets:
 
-- `skills/mine/` — 36 original skills authored in this repository (⭐️)
+- `skills/mine/` — 38 original skills authored in this repository (⭐️)
 - `skills/curated/` — 30 hand-picked community skills (💎)
 - `skills/marketing/` — 18 marketing, business, and writing skills (📣)
 - `skills/community/` — 46 broader community skills
@@ -65,7 +65,6 @@ Skills are structured instruction sets that give AI agents deep expertise in spe
 
 Original skills authored in this repository.
 
-- **[agent-exploration](./skills/mine/agent-exploration)** — Dispatch scoped-write explorer subagents in parallel for codebase/topic research — each writes one analysis file to a seven-section schema, and the parent synthesizes a summary
 - **[agent-output-audit](./skills/mine/agent-output-audit)** — Independent audit of AI-implemented work / Compozy task slugs / AI-authored PRs. Runs the independent-evaluator protocol on implementer transcripts, scans test diffs for RF-1..RF-6 red flags (skipped tests, weakened assertions, mocks hiding integration, snapshot drift), reconciles `task_NN.md` frontmatter `status:` against evidence, runs the canonical CI gate with flaky-test triage, and emits a Quality Gates verdict. Integrates with `cy-codex-loop` slugs at `.compozy/tasks/<slug>/`.
 - **[app-renderer-systems](./skills/mine/app-renderer-systems)** — Domain feature systems organized under a `systems/` directory
 - **[architectural-analysis](./skills/mine/architectural-analysis)** — Deep architectural audit for dead code, duplication, anti-patterns, and code smells
@@ -95,6 +94,9 @@ Original skills authored in this repository.
 - **[tweetsmash-api](./skills/mine/tweetsmash-api)** — TweetSmash REST API for fetching bookmarks, managing labels, filtering, and pagination
 - **[typescript-advanced](./skills/mine/typescript-advanced)** — Advanced type system -- generics, conditional types, mapped types, template literals
 - **[ui-craft](./skills/mine/ui-craft)** — Anti-AI-slop guardrails for UI/UX work — usability heuristics, accessibility floors, design-system discipline, 14 named slop patterns with severity tags, tunable design dials (`VISUAL_VARIANCE`/`MOTION_INTENSITY`/`INFORMATION_DENSITY`), scene-driven decisions, Product vs Brand registers, anti-defaults blocklist, 7 named UI archetypes, plus performance / motion / dark-mode reference packs and executable contrast + token-drift scripts
+- **[vc-outreach](./skills/mine/vc-outreach)** — Runs the investor-facing raise motion (list → meeting → pipeline → close): partner-level tiered target lists with disqualification and referrer mapping, warm-intro blurbs and cold emails that convert to first calls, meeting prep and objection handling, the parallel-process pipeline (batching, momentum, follow-ups, health benchmarks), and diligence through close (data room, references, term-sheet-to-wire). Distilled from a 625-source fundraising corpus (NFX, Paul Graham, First Round, YC, Hustle Fund, real founder funnels with numbers). Pairs with [vc-strategy](./skills/mine/vc-strategy) and [vc-pitch-deck](./skills/mine/vc-pitch-deck)
+- **[vc-pitch-deck](./skills/mine/vc-pitch-deck)** — Builds and tears down investor decks: maps the fundraising narrative onto a slide sequence, enforces per-slide requirements (problem, solution, traction, market, team, ask), covers proof slides, and reviews decks against funded-deck patterns and DocSend attention telemetry — with send-ahead, presented, and demo-day variants and a per-slide teardown rubric. Benchmarks carry source and year because deck norms drift. Pairs with [vc-strategy](./skills/mine/vc-strategy) and [vc-outreach](./skills/mine/vc-outreach)
+- **[vc-strategy](./skills/mine/vc-strategy)** — Designs the fundraise before any artifact exists: fundability assessment against what VCs actually evaluate, the fundraising narrative and value proposition (positioning, why-now), round design (when to raise, how much, valuation, SAFE vs priced, dilution, milestones), stage benchmarks, term-sheet economics and negotiation, and devtools/AI-infra positioning (open source, platform risk, developer traction). Numbers carry source and vintage. Pairs with [vc-pitch-deck](./skills/mine/vc-pitch-deck) and [vc-outreach](./skills/mine/vc-outreach)
 - **[writing-agents-md](./skills/mine/writing-agents-md)** — Author lean AGENTS.md/CLAUDE.md files as resident system-prompt context — the three-part rent test (delta / frequency / economy) per line, a scope ladder from global CLAUDE.md down to linked docs, form rules for rules that bind (no examples, no emphasis inflation), and Write / Trim / Gate branches
 - **[writing-skills](./skills/mine/writing-skills)** — Author, refactor, and debug agent skills: agentskills.io authoring procedure with metadata validator, the predictability doctrine (information hierarchy, pruning, leading words, descriptions, failure modes) with full glossary, and a loading-diagnosis pass for references the agent ignores (pointer-strength ladder). Merges the former skill-best-practices, writing-great-skills, and skill-load-tips
 - **[writing-tech-post](./skills/mine/writing-tech-post)** — SOTA authoring loop for engineering blog posts — 8 archetype contracts (launch / postmortem / migration / performance / tutorial / research-translation / AI-agent / security), 5-rung abstraction ladder with rung-whiplash diagnostic, 12-form evidence taxonomy with `claim → artifact → reading` cadence, 7-publisher voice matrix, four disclosure contracts (blameless / coordinated-disclosure / paper-link-first / what-we'd-do-differently), narrative arcs + closer taxonomy, and a read-only `lint-post.py` pre-publish gate
