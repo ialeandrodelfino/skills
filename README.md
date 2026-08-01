@@ -1,6 +1,6 @@
 # Pedro Nauck's Skills
 
-A curated collection of **132 agent skills** for Claude Code and compatible AI coding assistants — **38 original** (⭐️), **30 hand-picked** (💎), **18 marketing & business** (📣), plus **46 community** skills. Each skill provides domain-specific knowledge, best practices, and guided workflows that enhance an agent's ability to perform specialized tasks.
+A curated collection of **132 agent skills** for Claude Code and compatible AI coding assistants — **39 original** (⭐️), **29 hand-picked** (💎), **18 marketing & business** (📣), plus **46 community** skills. Each skill provides domain-specific knowledge, best practices, and guided workflows that enhance an agent's ability to perform specialized tasks.
 
 ## Installation
 
@@ -44,8 +44,8 @@ ln -s $(pwd)/skills/mine ~/.claude/skills/mine
 
 Skills are organized into four top-level buckets:
 
-- `skills/mine/` — 38 original skills authored in this repository (⭐️)
-- `skills/curated/` — 30 hand-picked community skills (💎)
+- `skills/mine/` — 39 original skills authored in this repository (⭐️)
+- `skills/curated/` — 29 hand-picked community skills (💎)
 - `skills/marketing/` — 18 marketing, business, and writing skills (📣)
 - `skills/community/` — 46 broader community skills
 
@@ -73,6 +73,7 @@ Original skills authored in this repository.
 - **[deslop](./skills/mine/deslop)** — Remove AI-generated code slop from the branch diff — unnecessary comments, abnormal defensive checks, `any` casts, deep nesting — before claiming a task complete or opening a PR
 - **[drizzle-safe-migrations](./skills/mine/drizzle-safe-migrations)** — Production-safe Drizzle migration workflows for schema changes
 - **[git-rebase](./skills/mine/git-rebase)** — Git rebase operations and merge conflict resolution with clean history
+- **[golang-master](./skills/mine/golang-master)** — Go 1.21–1.26 engineering doctrine for any Go codebase — a ten-rule floor (error wrapping, goroutine ownership, context-first APIs, race-clean tests) plus branch-routed references: errors (sentinel vs typed, `%w` chains, single-handling rule, panic policy), concurrency (channel/mutex/atomic and WaitGroup/errgroup decision tables, `errgroup.SetLimit` pools, spawn checklist), context (cancellation discipline, `WithoutCancel` detachment, value hygiene), safety (nil interface trap, append aliasing, numeric truncation, defer-in-loop), interfaces & generics (consumer-side contracts, `cmp.Ordered` constraints), naming & style (anti-stutter, functional options, no `init()`), assertion-framework-free testing (table-driven, `synctest`, goleak, `b.Loop()`), pprof-first performance methodology, version-by-version modernization tables, and module layout. Supersedes the curated `golang-pro`
 - **[herdr-orchestration](./skills/mine/herdr-orchestration)** — Orchestrate Claude and Codex worker TUIs from a controller agent through herdr panes and the herdr socket CLI — supports plan-first delegation (Claude Code plan mode, Codex Plan mode) and native agent-status waits; controller owns assignment, state, conflict control, integration, and retirement (verified workers' panes are closed, never left piled up); workers launch as interactive TUIs via `herdr agent start`
 - **[impl-peer-review](./skills/mine/impl-peer-review)** — Optional cross-LLM peer review of an implementation diff via Compozy — an independent model writes one scoped findings file (blockers/risks/nits + SHIP/FIX/REWORK verdict) for user-directed remediation. Project-agnostic with configurable `--ide`/`--model`/`--reasoning` runtime, auto-detected `--verify` gate, and auto-discovered project rules
 - **[insta-master](./skills/mine/insta-master)** — Plan, create, distribute, and monetize Instagram content by combining two complementary methodologies (pt-BR): **Hyeser** (tactical creator, 421k — Reels, virality, engagement, faceless monetization) and **Rafael Kiso** (mLabs founder — algorithm-as-graph, per-surface retention, internal search/SEO/AEO, consumer journey, social-media-as-a-business), distilled from 8 deep-research slices over 344 transcripts — the retention + social-signals distribution engine with per-surface thresholds (Feed 10s / Explore 11s / Reels 15s) and a diagnosis funnel, the COCA×journey content matrix (Growth / Objection / Connection / Authority), Reels craft ("it's the start, not the 3 seconds", 33% retention rule, hook→development→loop structure, lo-fi CapCut editing, A/B test reels), modern discovery (caption-as-semantic-field with the Question→Answer template, hashtag-as-SEO timeline, AEO to appear in ChatGPT/IA), profile foundations (bio-promise, subniche, @name, 0→1000 plan, converting bio link), Stories & cadence (3-5 story blocks, the frequency band over a magic number, best-time myth), creator monetization & selling (sell-without-looking-like-an-ad 80/20, 4-step DM social selling, affiliate / clips / faceless-IA / IG Shop / infoproduct), social-media-as-a-business (value/ROI pricing, 4-pillar method, media kit, UGC × influencer × brandlover), a publication checklist, plus read-only `retencao-check.py` + `post-check.py` helpers
@@ -119,7 +120,6 @@ Hand-picked community skills maintained in this repository.
 - **[extreme-software-optimization](./skills/curated/extreme-software-optimization)** — Profile-driven performance optimization with behavior proofs, opportunity scoring, and isomorphism guarantees
 - **[firecrawl](./skills/curated/firecrawl)** — Web scraping, search, crawling, and browser automation via the Firecrawl CLI
 - **[game-changing-features](./skills/curated/game-changing-features)** — Find 10x product opportunities and high-leverage improvements
-- **[golang-pro](./skills/curated/golang-pro)** — Concurrent Go patterns, microservices with gRPC/REST, pprof optimization, generics, and idiomatic error handling
 - **[hono](./skills/curated/hono)** — Hono framework development with documentation search and API reference
 - **[impeccable](./skills/curated/impeccable)** — Production-grade frontend design and iteration — bold or quiet redesigns, live UI iteration, visual hierarchy, accessibility, motion, and design-token discipline backed by real working code
 - **[lesson-learned](./skills/curated/lesson-learned)** — Extract software engineering lessons from git history and recent code changes
