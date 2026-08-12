@@ -4,17 +4,15 @@ Run this checklist after every research round, before authoring `summary.md`. Ev
 
 ## 1. Runtime
 
-- [ ] The dispatch route was resolved per SKILL.md **Dispatch Routing** and announced (native subagents by default; external CLI only on operator request).
-- [ ] CLI route only: the chosen binary (`claude`, `codex`, or `cursor-agent`) is reachable on `PATH`.
-- [ ] No silent reroute: every slice ran on the harness and model the operator requested (or the documented native default).
+- [ ] Every slice ran as a native subagent of the current harness.
+- [ ] No silent substitution: every slice ran on the model the operator pinned, or the inherited session model when none was pinned.
 
 ## 2. Inputs
 
 - [ ] `--path` resolved to an absolute path that exists.
 - [ ] `--agents` is between 1 and 8 inclusive.
 - [ ] `--prompt` is non-empty and quoted in every dispatched slice prompt verbatim.
-- [ ] `--model`/`--harness` resolved to a single route (default: native, inheriting the session model).
-- [ ] `--reasoning` resolved to `low|medium|high|xhigh` on CLI routes (native subagents inherit the session's effort).
+- [ ] `--model` was forwarded per-slice only when the operator pinned one; otherwise slices inherited the session's model and reasoning effort.
 - [ ] `<path>/analysis/` exists before dispatch.
 
 ## 3. Scout
@@ -26,12 +24,11 @@ Run this checklist after every research round, before authoring `summary.md`. Ev
 
 ## 4. Dispatch
 
-- [ ] Every slice was dispatched on the resolved route — native: one subagent call per slice in a single parallel batch; CLI: `scripts/dispatch-slices.sh` or the manual command shapes, with `--model`/`--reasoning` forwarded.
-- [ ] Every slice prompt was written to its own file under `<path>/.dispatch/prompts/` (the CLI route consumes them; the native route keeps them for audit and re-dispatch).
+- [ ] Every slice was dispatched as one native subagent call, all in a single parallel batch (no staggering).
+- [ ] Every slice prompt was written to its own file under `<path>/.dispatch/prompts/` (the round's audit trail and re-dispatch source).
 - [ ] Every slice prompt embedded `assets/explorer-prompt.md`, `references/dispatch-rules.md`, and the seven-section schema from `assets/analysis-template.md` verbatim.
 - [ ] Every slice prompt named slice scope, slug+ordinal, and target path.
-- [ ] All slices dispatched in parallel (no staggering).
-- [ ] Every slice finished clean — native: the subagent returned its written-path confirmation; CLI: exit 0 (when `dispatch-slices.sh` was used, its final summary line reads `failed=0/N`). Failures triggered slice re-dispatch.
+- [ ] Every slice finished clean — the subagent returned its written-path confirmation. Failures triggered slice re-dispatch.
 
 ## 5. Files
 

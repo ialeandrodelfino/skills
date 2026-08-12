@@ -1,6 +1,6 @@
 # Pedro Nauck's Skills
 
-A curated collection of **132 agent skills** for Claude Code and compatible AI coding assistants — **39 original** (⭐️), **29 hand-picked** (💎), **18 marketing & business** (📣), plus **46 community** skills. Each skill provides domain-specific knowledge, best practices, and guided workflows that enhance an agent's ability to perform specialized tasks.
+A curated collection of **131 agent skills** for Claude Code and compatible AI coding assistants — **38 original** (⭐️), **29 hand-picked** (💎), **18 marketing & business** (📣), plus **46 community** skills. Each skill provides domain-specific knowledge, best practices, and guided workflows that enhance an agent's ability to perform specialized tasks.
 
 ## Installation
 
@@ -44,7 +44,7 @@ ln -s $(pwd)/skills/mine ~/.claude/skills/mine
 
 Skills are organized into four top-level buckets:
 
-- `skills/mine/` — 39 original skills authored in this repository (⭐️)
+- `skills/mine/` — 38 original skills authored in this repository (⭐️)
 - `skills/curated/` — 29 hand-picked community skills (💎)
 - `skills/marketing/` — 18 marketing, business, and writing skills (📣)
 - `skills/community/` — 46 broader community skills
@@ -65,7 +65,7 @@ Skills are structured instruction sets that give AI agents deep expertise in spe
 
 Original skills authored in this repository.
 
-- **[agent-output-audit](./skills/mine/agent-output-audit)** — Independent audit of AI-implemented work / Compozy task slugs / AI-authored PRs. Runs the independent-evaluator protocol on implementer transcripts, scans test diffs for RF-1..RF-6 red flags (skipped tests, weakened assertions, mocks hiding integration, snapshot drift), reconciles `task_NN.md` frontmatter `status:` against evidence, runs the canonical CI gate with flaky-test triage, and emits a Quality Gates verdict. Integrates with `cy-codex-loop` slugs at `.compozy/tasks/<slug>/`.
+- **[agent-exploration](./skills/mine/agent-exploration)** — Dispatch scoped-write explorer subagents in parallel through the current harness's native subagent facility for multi-area research — each slice writes one seven-section analysis file, and the parent synthesizes a summary
 - **[app-renderer-systems](./skills/mine/app-renderer-systems)** — Domain feature systems organized under a `systems/` directory
 - **[architectural-analysis](./skills/mine/architectural-analysis)** — Deep architectural audit for dead code, duplication, anti-patterns, and code smells
 - **[bubbletea](./skills/mine/bubbletea)** — Build terminal UIs with Go and Bubbletea -- Elm architecture, Lipgloss styling, dual-pane layouts, and reusable components
@@ -75,7 +75,6 @@ Original skills authored in this repository.
 - **[git-rebase](./skills/mine/git-rebase)** — Git rebase operations and merge conflict resolution with clean history
 - **[golang-master](./skills/mine/golang-master)** — Go 1.21–1.26 engineering doctrine for any Go codebase — a ten-rule floor (error wrapping, goroutine ownership, context-first APIs, race-clean tests) plus branch-routed references: errors (sentinel vs typed, `%w` chains, single-handling rule, panic policy), concurrency (channel/mutex/atomic and WaitGroup/errgroup decision tables, `errgroup.SetLimit` pools, spawn checklist), context (cancellation discipline, `WithoutCancel` detachment, value hygiene), safety (nil interface trap, append aliasing, numeric truncation, defer-in-loop), interfaces & generics (consumer-side contracts, `cmp.Ordered` constraints), naming & style (anti-stutter, functional options, no `init()`), assertion-framework-free testing (table-driven, `synctest`, goleak, `b.Loop()`), pprof-first performance methodology, version-by-version modernization tables, and module layout. Supersedes the curated `golang-pro`
 - **[herdr-orchestration](./skills/mine/herdr-orchestration)** — Orchestrate Claude and Codex worker TUIs from a controller agent through herdr panes and the herdr socket CLI — supports plan-first delegation (Claude Code plan mode, Codex Plan mode) and native agent-status waits; controller owns assignment, state, conflict control, integration, and retirement (verified workers' panes are closed, never left piled up); workers launch as interactive TUIs via `herdr agent start`
-- **[impl-peer-review](./skills/mine/impl-peer-review)** — Optional cross-LLM peer review of an implementation diff via Compozy — an independent model writes one scoped findings file (blockers/risks/nits + SHIP/FIX/REWORK verdict) for user-directed remediation. Project-agnostic with configurable `--ide`/`--model`/`--reasoning` runtime, auto-detected `--verify` gate, and auto-discovered project rules
 - **[insta-master](./skills/mine/insta-master)** — Plan, create, distribute, and monetize Instagram content by combining two complementary methodologies (pt-BR): **Hyeser** (tactical creator, 421k — Reels, virality, engagement, faceless monetization) and **Rafael Kiso** (mLabs founder — algorithm-as-graph, per-surface retention, internal search/SEO/AEO, consumer journey, social-media-as-a-business), distilled from 8 deep-research slices over 344 transcripts — the retention + social-signals distribution engine with per-surface thresholds (Feed 10s / Explore 11s / Reels 15s) and a diagnosis funnel, the COCA×journey content matrix (Growth / Objection / Connection / Authority), Reels craft ("it's the start, not the 3 seconds", 33% retention rule, hook→development→loop structure, lo-fi CapCut editing, A/B test reels), modern discovery (caption-as-semantic-field with the Question→Answer template, hashtag-as-SEO timeline, AEO to appear in ChatGPT/IA), profile foundations (bio-promise, subniche, @name, 0→1000 plan, converting bio link), Stories & cadence (3-5 story blocks, the frequency band over a magic number, best-time myth), creator monetization & selling (sell-without-looking-like-an-ad 80/20, 4-step DM social selling, affiliate / clips / faceless-IA / IG Shop / infoproduct), social-media-as-a-business (value/ROI pricing, 4-pillar method, media kit, UGC × influencer × brandlover), a publication checklist, plus read-only `retencao-check.py` + `post-check.py` helpers
 - **[kb-yt-channel](./skills/mine/kb-yt-channel)** — Turn a YouTube channel into a Karpathy KB topic — resolves recent or full uploads, scaffolds `yt-channels` topics, ingests transcripts via `kb ingest youtube` (captions / auto / STT), and validates plus indexes the result
 - **[no-workarounds](./skills/mine/no-workarounds)** — Enforce root-cause fixes over workarounds, hacks, and symptom patches
