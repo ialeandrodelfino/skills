@@ -8,9 +8,9 @@ description: >
   configuring linting, or optimizing performance. Do not use for non-Rust languages or
   general software architecture unrelated to Rust idioms.
 license: MIT
-compatibility: Rust 1.70+, Cargo
+compatibility: Rust 2024 edition (1.85+), guidance current through Rust 1.98, Cargo
 metadata:
-  version: "2.0.0"
+  version: "2.1.0"
   domain: language
   triggers: Rust, Cargo, ownership, borrowing, lifetimes, async Rust, tokio, zero-cost abstractions, memory safety, systems programming, traits, generics, error handling, thiserror, anyhow, clippy, rustfmt, testing, benchmarks
   author: Pedro Nauck
@@ -62,6 +62,9 @@ Load detailed guidance based on context. Read the relevant file when the topic a
 - Use `format!` over string concatenation with `+`
 - Prefer `s.bytes()` over `s.chars()` for ASCII-only operations
 - Avoid macros unless necessary; prefer functions or generics
+- Use let chains in `if`/`while` conditions (1.88, edition 2024) instead of nested `if let`
+- Use if-let guards in `match` arms (1.95): `Some(x) if let Ok(y) = parse(x) =>`
+- Use `cfg_select!` (1.95) for multi-branch platform gating instead of the cfg-if crate
 
 ## Quick Reference: Error Handling
 
@@ -123,7 +126,7 @@ impl Connection<Connected> { fn send(&self, data: &[u8]) { /* ... */ } }
 | `oneshot` | Single value, single use (request-response) |
 | `watch` | Latest-value-only, change notification |
 
-- Sync channels: `crossbeam::channel` over `std::sync::mpsc`
+- Sync channels: `std::sync::mpsc` is the idiomatic default (rewritten atop crossbeam internals in 1.67); reach for `crossbeam::channel` when you need `select!` or MPMC
 - Async channels: `tokio::sync::{mpsc, broadcast, oneshot, watch}`
 - Atomics (`AtomicBool`, `AtomicUsize`) over `Mutex` for primitive types
 - Choose memory ordering carefully: `Relaxed` / `Acquire` / `Release` / `SeqCst`
@@ -143,6 +146,7 @@ impl Connection<Connected> { fn send(&self, data: &[u8]) { /* ... */ } }
 - `cargo-tarpaulin` or `cargo-llvm-cov` for code coverage
 - `sqlx::test` for database integration tests with automatic pool injection
 - Use `#[should_panic]` and `#[ignore]` attributes where appropriate
+- Use `assert_matches!` / `debug_assert_matches!` (1.96) for pattern assertions with rich diagnostics
 
 ## Quick Reference: Performance
 
@@ -155,6 +159,8 @@ impl Connection<Connected> { fn send(&self, data: &[u8]) { /* ... */ } }
 - Stack for small types, heap for large/recursive; use `smallvec` for large const arrays
 - Use `Cow<'_, T>` to avoid unnecessary allocation
 - Prefer `s.bytes()` over `s.chars()` for ASCII-only string operations
+- Integer-to-string hot paths: `{integer}::format_into` with `core::fmt::NumBuffer` (1.98) — itoa-class speed, no dependency
+- Mark unlikely branches with `core::hint::cold_path` (1.95) in measured hot loops
 
 ## Quick Reference: Clippy & Linting
 
@@ -210,11 +216,13 @@ cargo clippy --all-targets --all-features --locked -- -D warnings
 |------------|--------|-------|
 | `lazy_static!` | `std::sync::OnceLock` | Rust 1.70 |
 | `once_cell::Lazy` | `std::sync::LazyLock` | Rust 1.80 |
-| `std::sync::mpsc` | `crossbeam::channel` (sync) | — |
-| `std::sync::Mutex` | `parking_lot::Mutex` (recommended) | — |
+| cfg-if crate | `cfg_select!` macro | Rust 1.95 |
+| itoa crate | `{integer}::format_into` + `NumBuffer` | Rust 1.98 |
 | `failure` / `error-chain` | `thiserror` / `anyhow` | — |
 | `try!()` | `?` operator | Rust 2018 |
 | `async-trait` crate | Native `async fn` in traits (1.75+, limited) | Rust 1.75 |
+
+Not deprecated (common misconception): `std::sync::Mutex` and `std::sync::mpsc` are the idiomatic defaults — `parking_lot` (no poisoning, smaller guards) and `crossbeam-channel` (`select!`, MPMC) are situational opt-in alternatives, not replacements.
 
 ## Cargo.toml Essentials
 
@@ -223,7 +231,7 @@ Recommended dependencies:
 [dependencies]
 thiserror = "2"
 anyhow = "1"
-tokio = { version = "1", features = ["full"] }
+tokio = { version = "1", features = ["rt-multi-thread", "macros", "sync", "time"] } # enable only what you use — never "full" in a real project
 serde = { version = "1", features = ["derive"] }
 tracing = "0.1"
 tracing-subscriber = "0.3"

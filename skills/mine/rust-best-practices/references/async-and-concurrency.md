@@ -22,7 +22,7 @@ Future (lazy) -> poll() -> Ready(value) | Pending
 
 ```toml
 [dependencies]
-tokio = { version = "1", features = ["full"] }
+tokio = { version = "1", features = ["rt-multi-thread", "macros", "sync", "time"] } # enable only what you use
 futures = "0.3"
 tokio-util = "0.7"
 anyhow = "1.0"

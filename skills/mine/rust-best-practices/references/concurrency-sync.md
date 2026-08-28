@@ -58,9 +58,9 @@ std::thread::spawn(move || {
 });
 ```
 
-### parking_lot::Mutex (Recommended)
+### parking_lot::Mutex (Situational alternative)
 
-`parking_lot::Mutex` is a drop-in replacement with better performance:
+`std::sync::Mutex` is the idiomatic default. `parking_lot::Mutex` is a drop-in opt-in when its trade-offs fit:
 - No poisoning (simpler API, no `.unwrap()` on lock)
 - Smaller memory footprint
 - Better performance under contention
@@ -95,7 +95,7 @@ let mut write_handle = data.write().unwrap();
 write_handle.push(4);
 ```
 
-Prefer `RwLock` over `Mutex` for read-heavy workloads. `parking_lot::RwLock` is also recommended.
+Prefer `RwLock` over `Mutex` for read-heavy workloads (`parking_lot::RwLock` under the same opt-in reasoning).
 
 ## Lock Ordering to Prevent Deadlocks
 
@@ -120,9 +120,9 @@ Rules:
 
 ## Synchronous Channels
 
-### crossbeam::channel (Recommended over std::sync::mpsc)
+### crossbeam::channel (When you need select! or MPMC)
 
-Better performance, more features:
+`std::sync::mpsc` (rewritten atop crossbeam internals in 1.67) covers the common case; crossbeam adds `select!` and multi-consumer:
 
 ```rust
 use crossbeam::channel;
