@@ -1,5 +1,7 @@
 # Narrative, Momentum, and Pacing
 
+Applicability: corpus-derived structures, lengths, bylines, and narrative devices below are editorial options for the relevant task, not completion gates. Actual claims require appropriate evidence; applicable disclosure restrictions remain binding. Use `pre-publish-checklist.md` for publication requirements.
+
 The five-lede taxonomy, the H2-as-question-resolution discipline, the story-shape catalogue (detective / migration / blameless / paper-link-first / tutorial arcs), momentum-stall diagnostics, the closer multiple-choice gate, and the headline taxonomy.
 
 ## Contents
@@ -51,7 +53,7 @@ Each H2 should answer the question the previous section left dangling, opening a
 
 Each section closes with the partial-victory paragraph (e.g. *"This was a slight improvement, but clearly still higher than normal"*) that licenses the next H2.
 
-**Pre-prose outline review:** produce the H2 chain and annotate each H2 with what question it answers and what question it leaves open. Reject outlines where any H2 fails the gate.
+For a draft with confusing flow, inspect what each H2 contributes and whether the sequence answers the reader's questions. Annotate the outline only if this helps the revision.
 
 **Counter-example — noun-phrase H2s:** AWS architecting-for-agentic-AI (`044:62-75`) runs noun-phrase H2s ("Why traditional architectures hinder agentic AI", "System architecture for fast agentic feedback loops") and resists the question-chain. The result is correct for the reference archetype (the H2s function as a TOC, not a narrative spine) but reads as catalogue-paced.
 
@@ -82,7 +84,7 @@ Meta WebRTC (`199:50-117`) runs a tighter variant — Challenge → Solution 1 (
 
 3-W summary → background → the incident → timeline → contributing factors → mitigation (including mitigations that failed) → action items → optional lessons / acknowledgments.
 
-Signature beat: at least one **failed-mitigation paragraph**. Canva `050`'s *"We attempted to work around this issue by significantly increasing the desired task count manually. Unfortunately, it didn't mitigate the issue"* is what licenses the next mitigation paragraph to exist. Without it, the escalation reads as panic; with it, it reads as ordered learning.
+When a failed mitigation occurred, it can be a useful narrative beat. Canva `050`'s *"We attempted to work around this issue by significantly increasing the desired task count manually. Unfortunately, it didn't mitigate the issue"* is what licenses the next mitigation paragraph to exist. Without it, the escalation reads as panic; with it, it reads as ordered learning.
 
 Datadog `034` runs an ambitious temporal-displacement variant: opens with the outage date, then traces causality back two years to a December 2020 systemd commit.
 
@@ -115,7 +117,7 @@ Four diagnostics recur.
 - **Scene-setting density too high.** Pre-pathology paragraph runs longer than necessary; reader skims past the lede. Resolved by pairing one scene-setting paragraph with one pathology paragraph (one-and-one). Longer scene-setting needs a stronger pathology to balance it.
 - **Payload-density ratio too low.** Sections that introduce no new fact, number, code reference, or distinction. Diagnostic: read the H2s and ask "what does the reader know after this section that they did not know before?" If the answer is "we explained the architecture in more words," cut.
 - **Callback frequency too low.** A fact introduced in section 1 is not referenced again before section 5. Datadog Rust storage resolves this by introducing the "6th generation in a lineage that started 15 years ago" frame in the lede and explicitly running Gen 1 → Gen 6 H2s under "How we built the 6th generation of our real-time metrics storage" (line 77). The lede claim is paid back in the body's spine, then again in the closing.
-- **Rhetorical-question budget exceeded.** Datadog shared-database `036:51-83` runs three rhetorical-question H2s — the maximum the genre tolerates before the rhetorical move starts to feel performative. Cap at three per long post.
+- **Rhetorical-question budget exceeded.** Datadog shared-database `036:51-83` runs three rhetorical-question H2s — the maximum the genre tolerates before the rhetorical move starts to feel performative. Use only questions that improve the reader's understanding; the corpus count is not a fixed limit.
 
 ## Closer taxonomy (multiple-choice gate)
 
@@ -146,7 +148,7 @@ Datadog Rust storage `016` passes the test: lede introduces "6th generation in a
 
 Datadog network-latency `041` passes: lede issues debt ("we don't expect to get paged about every single deployment") → closer "Bolster your visibility and learn to look twice" pays the lesson.
 
-Run this as a **pre-flight check** before any other review.
+Use this optional diagnostic when the ending feels disconnected; lexical overlap is not proof of a coherent argument.
 
 ## Anti-narrative patterns
 

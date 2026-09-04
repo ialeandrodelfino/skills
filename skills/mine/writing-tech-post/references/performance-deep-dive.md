@@ -1,5 +1,7 @@
 # Performance Deep-Dive
 
+Applicability: corpus-derived structures, lengths, bylines, and narrative devices below are editorial options for the relevant task, not completion gates. Actual claims require appropriate evidence; applicable disclosure restrictions remain binding. Use `pre-publish-checklist.md` for publication requirements.
+
 The performance archetype's contract: detective-arc structure, distribution-shift evidence (not means), iterative bottleneck-peeling, partial-victory paragraph cadence, and the two honest-recap closing variants.
 
 ## Contents
@@ -53,7 +55,7 @@ Examples (Datadog network-latency, repeated five times):
 
 **Without it,** the post reads as a sequence of unrelated fixes. **With it,** the post reads as ordered investigation.
 
-The skill must require at least one partial-victory paragraph between successive fixes in any detective-arc draft.
+Include a partial-victory transition when the measured result was partial. Do not invent residual problems or additional fixes to satisfy this narrative shape.
 
 ## Distribution-shift contract (mandatory)
 

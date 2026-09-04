@@ -1,5 +1,7 @@
 # Checklist de publicação (QA pré-postagem)
 
+Applicability: adapt only the parts needed for the requested Instagram artifact. Output counts, timing, checklists, and performance benchmarks are examples to validate against the account and current platform, not approval gates.
+
 Rode antes de declarar qualquer conteúdo pronto para publicar. Marque a fase e ataque a primeira falha na ordem do funil.
 
 ## Contents

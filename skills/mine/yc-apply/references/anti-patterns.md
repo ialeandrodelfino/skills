@@ -1,5 +1,7 @@
 # Anti-Patterns
 
+Treat lexical patterns as advisory signals; judge meaning and evidence. Current live-form requirements and truthful claims are binding, while research/interview/score/word-choice rituals are optional under SKILL.md.
+
 The forbidden-phrase list, the 10-item "never say" list, and behavioral red flags. Used by `scripts/buzzword-scan.sh` and by every grill loop in Phase 4 and Phase 6. Each entry pairs a bad pattern with the accepted-example rewrite to show the founder.
 
 ## Contents

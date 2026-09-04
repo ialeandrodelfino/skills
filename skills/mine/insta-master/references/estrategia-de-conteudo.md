@@ -1,5 +1,7 @@
 # Estratégia de conteúdo e ideação
 
+Applicability: adapt only the parts needed for the requested Instagram artifact. Output counts, timing, checklists, and performance benchmarks are examples to validate against the account and current platform, not approval gates.
+
 ## Contents
 
 - A matriz COCA × jornada (o núcleo)

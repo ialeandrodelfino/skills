@@ -1,5 +1,7 @@
 # Anti-Patterns
 
+Applicability: corpus-derived structures, lengths, bylines, and narrative devices below are editorial options for the relevant task, not completion gates. Actual claims require appropriate evidence; applicable disclosure restrictions remain binding. Use `pre-publish-checklist.md` for publication requirements.
+
 The full banned-move catalogue. Each pattern: name, why it fails, banned example, fixed example, and the archetype(s) it most often appears in.
 
 ## Contents

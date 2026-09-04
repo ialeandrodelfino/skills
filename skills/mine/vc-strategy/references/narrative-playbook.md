@@ -1,5 +1,7 @@
 # Narrative Playbook — value proposition and fundraising story
 
+Use only the requested narrative format. A full memo and timed oral test are optional for a full narrative exercise, not prerequisites for a one-liner.
+
 The narrative is strategy, not decoration: "The story is the strategy. If you make your story better, you make the strategy better" (Ben Horowitz). It precedes and outranks the deck — vc-pitch-deck renders what this file constructs.
 
 ## Memo before deck

@@ -1,5 +1,7 @@
 # Depth and Abstraction
 
+Applicability: corpus-derived structures, lengths, bylines, and narrative devices below are editorial options for the relevant task, not completion gates. Actual claims require appropriate evidence; applicable disclosure restrictions remain binding. Use `pre-publish-checklist.md` for publication requirements.
+
 The five-rung abstraction ladder, the five traversal patterns the corpus surfaces, the rung-whiplash diagnostic, the anchor-N rule, and the per-archetype default depth profile.
 
 ## Contents
@@ -110,7 +112,7 @@ Cross-referencing the corpus for "how many paragraphs of R4/R5 a post can sustai
 - **Architecture migrations** are the loosest — phased-plan structure lets them sustain R4 across 8–15 paragraphs between R2 anchors, because each phase heading is implicitly an R2 anchor.
 - **Research translations** are paradoxical — they often sustain R3 (eval tables) without ever surfacing to R1, because the audience expects academic-gloss residency.
 
-**Operational rule of thumb:** if a draft has more than four consecutive R4/R5 paragraphs without surfacing to R3 (a metric) or R2 (a user/business referent), the next paragraph must either re-anchor or open a new section with an anchored heading.
+**Operational rule of thumb:** if a draft has more than four consecutive R4/R5 paragraphs without surfacing to R3 (a metric) or R2 (a user/business referent), consider a short anchor or section break if the intended reader is losing context; four paragraphs is a diagnostic heuristic.
 
 ## Decision tree — pick the depth
 
@@ -121,7 +123,7 @@ Run in order; the tree's output is the four-tuple.
 3. **Q3 — Work nature.** Investigative (no foreknowledge of destination) → Spiral. Teleological (planned outcome) → Staircase or Anchor-and-dive. Mixed → braided.
 4. **Q4 — Artifact obligation.** Owes user-perceived impact (perf, AI/agent) → R1 anchor mandatory in opener and closer; Yo-yo is the safest. Owes organisational-impact (capacity, scale, migration) → R2 anchor sufficient.
 5. **Q5 — Closing handoff.** Operational change (perf, postmortem, migration) → close at R2 status snapshot or R3 distribution result. Advertised capability (launch, research) → close at R2 roadmap or footnote. User-time recovery (AI/agent) → close at R1.
-6. **Q6 — Length budget.** ≤2,000 words → pick one rung band (R2–R3 or R4–R5) and stay; trying to traverse all five guarantees whiplash. 3,000–5,500 words → full staircase or spiral feasible. ≥5,000 words → braided patterns mandatory or the reader fatigues.
+6. **Q6 — Length budget.** ≤2,000 words → pick one rung band (R2–R3 or R4–R5) and stay; trying to traverse all five guarantees whiplash. 3,000–5,500 words → full staircase or spiral feasible. ≥5,000 words → braided patterns may help readers maintain context.
 
 ## Vendor-name placement rule
 

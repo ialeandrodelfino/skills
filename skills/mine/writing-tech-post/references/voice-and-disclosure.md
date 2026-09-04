@@ -1,5 +1,7 @@
 # Voice and Disclosure
 
+Applicability: corpus-derived structures, lengths, bylines, and narrative devices below are editorial options for the relevant task, not completion gates. Actual claims require appropriate evidence; applicable disclosure restrictions remain binding. Use `pre-publish-checklist.md` for publication requirements.
+
 House voice management plus the four disclosure contracts: blameless register (postmortems), coordinated-disclosure four-panel (security), paper-link-first attribution (AI), and "what we'd do differently" honesty (migrations).
 
 ## Contents

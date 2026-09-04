@@ -1,5 +1,7 @@
 # Algoritmo e distribuição
 
+Applicability: adapt only the parts needed for the requested Instagram artifact. Output counts, timing, checklists, and performance benchmarks are examples to validate against the account and current platform, not approval gates.
+
 ## Contents
 
 - O motor: retenção + sinais sociais (modelo de anúncios)

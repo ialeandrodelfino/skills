@@ -1,5 +1,7 @@
 # Evidence, Diagrams, and Code
 
+Applicability: corpus-derived structures, lengths, bylines, and narrative devices below are editorial options for the relevant task, not completion gates. Actual claims require appropriate evidence; applicable disclosure restrictions remain binding. Use `pre-publish-checklist.md` for publication requirements.
+
 The twelve-form evidence taxonomy, captioning conventions, the `claim → artifact → reading` cadence, code-curation rules, and the distribution-shift / named-benchmark contracts.
 
 ## Contents
@@ -92,9 +94,9 @@ Sub-types of existing slots with distinct obligations, surfacing in the AI/agent
 
 ## Distribution-shift contract (mandatory for performance)
 
-Any performance claim attaches to four pieces of context, or it is not falsifiable:
+For a comparative runtime-performance claim, report the relevant measurement context:
 
-- **Percentile.** p50 / p90 / p99 / pXX. Mean-only charts are rejected.
+- **Metric and distribution.** Use percentiles for latency/tail claims; choose appropriate throughput, allocation, size, or other metrics for different claims. A mean alone cannot substantiate a tail-latency claim.
 - **Sample size.** Number of pull requests, investigations, competitions, nodes. State explicitly.
 - **Measurement window.** Time range, traffic level, rollout window. Charts on the same axes so the reader can read the shift visually.
 - **Environment.** Instance type, browser, OS, hardware. `054:107` reports *"m1 MacBook pro with 4x slowdown"* — without this, the INP numbers are not falsifiable.
@@ -108,11 +110,11 @@ For 2025–26 AI/agent capability claims, the contract substitutes capability-an
 - **Cited benchmark.** Public (MLE-Bench-Lite, BrowseComp-Plus, Finance-Agent, PlanCraft, Workbench, SWE-Bench) or internal with documented composition.
 - **Baseline.** MLE-STAR vs AIDE (25.8% → 63.6%); scaling-agents single-agent vs centralised/independent/decentralised/hybrid.
 - **Methodology.** What the eval harness does — Datadog's evaluation-platform regression (publishing an 11% pass-rate drop and 35% label-count drop as deliberate short-term degradation) is the standing example.
-- **Ablation.** Decompose the headline gain. MLE-STAR's "In-depth analysis" breaks the medal-rate gain into model-usage shift, human intervention, and per-checker contribution. Posts without ablation read as proof-of-concept, not production.
+- **Ablation.** Decompose the headline gain. MLE-STAR's "In-depth analysis" breaks the medal-rate gain into model-usage shift, human intervention, and per-checker contribution. An ablation is needed for causal component-attribution claims, not every operational capability description.
 
 ## Per-archetype mandatory evidence forms
 
-Each archetype has a non-negotiable evidence form set:
+Choose from these evidence forms when the corresponding claim requires them; do not fabricate an incident, metric, or artifact to complete a set:
 
 - **Performance deep-dive** → distribution-shift evidence per fix + named tooling (`pg_walinspect`, `lldb`, ENA metric IDs) + partial-victory disclosure between fixes.
 - **Postmortem** → UTC timestamps with defined granularity + named services and versions + quantitative impact + specific root-cause artifact (commit SHA, PR number, CVE).

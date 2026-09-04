@@ -1,5 +1,7 @@
 # Troubleshooting YouTube Channel Ingest
 
+Apply remedies only to an observed failure. Start with the current tool/network configuration and native backoff; cookies, optional impersonation packages, and proxies are not bulk-ingest prerequisites. Respect access restrictions and rate limits. Resolve the actual tool environment rather than copying a machine-specific Python path.
+
 All ingest mechanics run inside `kb ingest channel`; the rate-limit, proxy, and
 cookie knobs below are read by `kb` from its config (`[youtube]` in kb.toml) and
 environment, not from `scripts/ingest-channel.py`.
@@ -19,7 +21,7 @@ jitter, and adaptive exponential backoff (`[youtube].bulk_concurrency`,
 but on a bare IP that is still not enough. Layered mitigations, strongest first:
 
 1. **Cookies (authenticated session).** Export a logged-in YouTube session to a Netscape cookies.txt and set `YOUTUBE_COOKIES_FILE` (or `[youtube].cookies_file`). Prefer a secondary Google account — bulk caption scraping can get an account temporarily flagged. yt-dlp can export from a browser: `yt-dlp --cookies-from-browser <browser> --cookies cookies.txt --skip-download <url>` (Chromium browsers need Keychain access; Arc is not a supported `--cookies-from-browser` name — extract from its profile or a supported browser).
-2. **Impersonation (curl_cffi).** yt-dlp's YouTube extractor wants to impersonate a browser TLS fingerprint; without curl_cffi it warns "no impersonate target available" and is blocked more often. Install it into the yt-dlp environment. Homebrew: `/opt/homebrew/opt/yt-dlp/libexec/bin/python -m pip install curl_cffi`. Verify with `yt-dlp --list-impersonate-targets`.
+2. **Impersonation (curl_cffi).** yt-dlp's YouTube extractor wants to impersonate a browser TLS fingerprint; without curl_cffi it warns "no impersonate target available" and is blocked more often. Install it into the yt-dlp environment. Homebrew: `<python-for-the-installed-yt-dlp> -m pip install curl_cffi`. Verify with `yt-dlp --list-impersonate-targets`.
 3. **Residential proxy.** Set `YOUTUBE_PROXY`. **Datacenter IPs are blocked by YouTube** — use a rotating **residential** proxy. Pin to a single country to avoid account-geo flags (e.g. a `<user>-GB-rotate` username on Webshare rotates the IP per request but stays in GB). Plain all-country rotation with a logged-in account risks impossible-travel security flags.
 4. **Pacing.** Raise `--throttle` (e.g. `5s`) and keep `--concurrency 1` on a bare IP. `--concurrency N` (>1) is only safe behind a rotating proxy. Cookies alone are not enough at high volume; pacing or a rotating proxy is required.
 
