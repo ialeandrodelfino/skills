@@ -1,12 +1,6 @@
 ---
 name: rust-best-practices
-description: >
-  Comprehensive Rust coding guidelines covering ownership, error handling, async patterns,
-  traits, testing, performance, clippy, and documentation. Use when writing new Rust code,
-  reviewing or refactoring existing Rust, implementing async systems with Tokio, designing
-  error hierarchies, choosing between borrowing and cloning, setting up tests or benchmarks,
-  configuring linting, or optimizing performance. Do not use for non-Rust languages or
-  general software architecture unrelated to Rust idioms.
+description: "Write, review, refactor, or optimize Rust, including ownership, errors, Tokio, traits, tests, benchmarks, Clippy, and documentation. Excludes other languages and architecture unrelated to Rust idioms."
 license: MIT
 compatibility: Cargo; honor the repository edition, pinned toolchain, and minimum supported Rust version
 metadata:

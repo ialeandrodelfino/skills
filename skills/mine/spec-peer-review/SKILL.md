@@ -1,11 +1,6 @@
 ---
 name: spec-peer-review
-description: >-
-  Cross-LLM peer review of a spec — TechSpec, design doc, RFC, or detailed PRD — using the configured independent reviewer runtime, producing one scoped Markdown findings artifact for user-directed
-  incorporation. Use when the user has approved a spec draft and explicitly wants an external
-  review round, especially for autonomy/network/security/migration-impacting designs.
-  Project-agnostic: any repo, any language. Don't use for implementation/diff review (use
-  deep-review) or as an automatic/looping approval gate.
+description: "Run one requested external review of an approved spec, design doc, RFC, or detailed PRD; produce findings for user-selected incorporation. Excludes implementation reviews and automatic or looping approval gates."
 disable-model-invocation: true
 argument-hint: "[spec-path] [--context p1,p2] [--out dir] [--ide <ide>] [--model <model>] [--reasoning <effort>]"
 metadata:

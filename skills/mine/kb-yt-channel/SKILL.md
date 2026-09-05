@@ -1,6 +1,6 @@
 ---
 name: kb-yt-channel
-description: Creates and maintains Knowledge Base topics from YouTube channels by scaffolding a yt-channels topic, bulk-ingesting transcripts through kb ingest channel, and validating/indexing the result. Use when turning a YouTube channel into a Karpathy KB topic. Do not use for single-video ingestion, general video summaries, or non-YouTube sources.
+description: "Create and maintain Karpathy KB topics from YouTube channels through scaffolding, bulk transcript ingestion, validation, and indexing. Excludes single videos, general summaries, and other sources."
 disable-model-invocation: true
 ---
 # KB YouTube Channel

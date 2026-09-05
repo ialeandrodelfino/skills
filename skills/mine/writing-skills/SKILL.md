@@ -1,6 +1,6 @@
 ---
 name: writing-skills
-description: Author, refactor, and debug agent skills. Use when creating a new skill from scratch, pruning or restructuring a bloated SKILL.md, tightening a skill description's triggers, or diagnosing bundled references the agent ignores. Don't use for agent instruction files like CLAUDE.md or AGENTS.md (use writing-agents-md), general documentation, or READMEs.
+description: "Create, refactor, shorten, or debug skills, descriptions, and reference loading. Use writing-agents-md for AGENTS.md/CLAUDE.md; excludes general documentation and READMEs."
 metadata:
   author: Pedro Nauck
   github: https://github.com/pedronauck

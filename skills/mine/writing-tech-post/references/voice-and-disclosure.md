@@ -100,7 +100,7 @@ The hedge is not weakness; it is calibration.
 
 - **Genericise only when security requires it, and disclose the genericisation.** A postmortem that cannot name its own systems should disclose why ("for security reasons, we are not naming the specific kernel module") rather than silently substituting "a critical microservice" or "an upstream provider."
 
-- **Vendor names live at R5 (implementation), not R1/R2 (framing).** The single rule that separates an engineering post from a customer story. Apply the **"remove the vendor's name" test** as a pre-publish gate (full text in `depth-and-abstraction.md`).
+- **Explain vendor-related mechanisms.** Product names may identify the actual system at any point; they do not substitute for evidence. The removal test in `depth-and-abstraction.md` is an optional diagnostic, not a publication gate.
 
 ## Acknowledgements as distributed-responsibility signal
 

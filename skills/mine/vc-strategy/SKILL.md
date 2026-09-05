@@ -1,6 +1,6 @@
 ---
 name: vc-strategy
-description: "Fundraising strategy for startups: fundability assessment against what VCs actually evaluate, the fundraising narrative and value proposition (positioning, why-now), round design (when to raise, how much, valuation, SAFE vs priced, dilution, milestones), term-sheet economics and negotiation, and devtools/AI-infra positioning (open source, platform risk, developer traction). Use when a founder asks whether or when to raise, how much and on what instrument, needs a value proposition or fundraising narrative, is weighing term-sheet terms, or must position a technical product for investors. Don't use for authoring deck slides (use vc-pitch-deck) or for running investor outreach, meetings, and pipeline (use vc-outreach)."
+description: "Assess fundability, positioning, fundraising narrative, timing, round size, instruments, valuation, dilution, milestones, and term negotiation, including devtools/AI infrastructure. Excludes deck authoring and outreach execution."
 ---
 
 # VC Strategy

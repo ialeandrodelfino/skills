@@ -1,6 +1,6 @@
 ---
 name: tweetsmash-api
-description: Uses the TweetSmash REST API to fetch bookmarks, inspect labels, and add or remove labels from saved tweets. Use when integrating TweetSmash into scripts, agents, workflows, cron jobs, or internal tools that need bookmark retrieval, filtering, pagination, or label management. Do not use for direct browser automation inside TweetSmash, unrelated X or Twitter APIs, or tasks that only need product marketing copy.
+description: "Integrate TweetSmash REST bookmark retrieval, filtering, pagination, and label management into scripts or tools. Excludes browser automation, other Twitter/X APIs, and marketing copy."
 metadata:
   author: Pedro Nauck
   github: https://github.com/pedronauck

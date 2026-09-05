@@ -1,6 +1,6 @@
 ---
 name: react
-description: React 19 development under the React Compiler. Use when writing React components or hooks, deciding whether a useMemo/useCallback/memo belongs in the code, diagnosing a component the compiler skipped, reaching for useEffect, choosing where state lives, typing props or refs in TypeScript, wiring Actions or use(), setting up babel-plugin-react-compiler or eslint-plugin-react-hooks, or testing components with Vitest. Don't use for React Native, non-React frameworks (Vue, Svelte, Solid), or backend-only Node.js code.
+description: "Build React 19 components and hooks under React Compiler: state, Effects, memoization, props/refs, Actions, use(), compiler/lint setup, and Vitest tests. Excludes React Native, other frameworks, and backend-only Node.js."
 allowed-tools: Read, Grep, Glob
 metadata:
   author: Pedro Nauck

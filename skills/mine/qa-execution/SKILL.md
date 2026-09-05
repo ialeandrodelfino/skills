@@ -1,15 +1,6 @@
 ---
 name: qa-execution
-description: >-
-  Runs real-user dogfooding sessions through the product's public interfaces: a
-  persona walks a journey in the browser, takes a thematic tour, probes edges,
-  hunts paper cuts, and reports what a real user would experience. Reads its
-  plan from the living QA docs tree (<qa-docs-path>, default docs/qa/). Use when
-  validating a release candidate, branch diff, migration, or user-facing change
-  against production-like behavior. For planning that tree — personas, journeys,
-  charters, the bug registry — use qa-report; for CI gate runs, AI
-  implementation audits, or integration/security/performance suites, use
-  agent-output-audit.
+description: "Run persona-driven dogfooding through public product interfaces using living QA docs. Use for release candidates, branch diffs, migrations, and user-facing changes. qa-report owns planning; CI and specialist test suites are outside this workflow."
 disable-model-invocation: true
 argument-hint: "[qa-docs-path]"
 metadata:

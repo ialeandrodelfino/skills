@@ -1,11 +1,6 @@
 ---
 name: refactoring-analysis
-description: >
-  Audits a codebase for refactoring opportunities using Martin Fowler's code smell and
-  technique catalog — long functions, duplication, high coupling, complex conditionals,
-  primitive obsession — and writes a prioritized report to docs/_refacs/. Use when auditing
-  code quality, planning a refactoring sprint, or reviewing architectural health; not for
-  style/formatting, performance, or security audits.
+description: "Audit code quality and architectural health or plan refactoring using Fowler code smells and techniques; write prioritized findings to docs/_refacs/. Excludes formatting, performance, and security audits."
 disable-model-invocation: true
 metadata:
   author: Pedro Nauck

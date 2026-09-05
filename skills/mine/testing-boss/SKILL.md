@@ -1,6 +1,6 @@
 ---
 name: testing-boss
-description: Testing doctrine for tests that reveal bugs instead of passing for the wrong reason — spanning software and LLM/AI systems. Use when authoring or reviewing tests, adding a mock, deciding where a test belongs, letting a coding agent generate tests, triaging flaky CI, designing an eval suite for an LLM/agent feature, or rebuilding a brittle suite. Not for general code review, library debugging unrelated to tests, CI pipeline design beyond tests, or production observability.
+description: "Author or review software tests and LLM/agent evals; choose test placement and mocks, diagnose flaky CI, or repair brittle suites. Excludes unrelated code review, debugging, CI design, and production observability."
 metadata:
   author: Pedro Nauck
   github: https://github.com/pedronauck

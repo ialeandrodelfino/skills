@@ -1,6 +1,6 @@
 ---
 name: writing-agents-md
-description: Author lean AGENTS.md/CLAUDE.md instruction files — resident system-prompt context where every line pays rent. Use when writing an agent instruction file from scratch, auditing or trimming a bloated one, or gating whether a new rule earns residence and at which scope. Don't use for on-demand skills (use writing-skills) or human-facing docs and READMEs.
+description: "Create, audit, shorten, or scope AGENTS.md and CLAUDE.md instructions. Use writing-skills for on-demand skills; excludes human-facing documentation and READMEs."
 metadata:
   author: Pedro Nauck
   github: https://github.com/pedronauck

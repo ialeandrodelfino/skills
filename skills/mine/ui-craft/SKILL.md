@@ -1,11 +1,6 @@
 ---
 name: ui-craft
-description: >-
-  Craft floor for user-facing UI that refuses AI slop. Use when designing or
-  building a new visible surface (component, page, dashboard, form, dialog,
-  empty/loading/error state), reviewing or refactoring an existing one, or
-  shaping an AI/agent interface (chat, streaming, citations). Not for backend,
-  infrastructure, CLI/TUI (use tui-design), or docs-only edits.
+description: "Design, build, review, or refactor visible UI, including pages, components, forms, loading/error states, and AI chat/streaming interfaces. Excludes backend, infrastructure, CLI/TUI, and docs-only work."
 metadata:
   author: Pedro Nauck
   github: https://github.com/pedronauck

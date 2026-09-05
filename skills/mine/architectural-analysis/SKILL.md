@@ -1,6 +1,6 @@
 ---
 name: architectural-analysis
-description: Architectural audit that hunts dead code, duplicated functionality, anti-patterns, type confusion, and code smells across a whole codebase. Use when the user asks for architectural analysis, to find dead or unused code, identify duplication, or assess codebase health. Don't use for style/formatting, performance profiling, security audits, or feature-level code review.
+description: "Audit architecture, dead code, duplication, type confusion, and code smells across a codebase. Excludes formatting, performance profiling, security audits, and feature-level reviews."
 disable-model-invocation: true
 metadata:
   author: Pedro Nauck

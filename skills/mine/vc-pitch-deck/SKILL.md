@@ -1,6 +1,6 @@
 ---
 name: vc-pitch-deck
-description: "Pitch-deck creation and teardown: maps the fundraising narrative onto a slide sequence, enforces per-slide requirements (problem, solution, traction, market, team, ask), and reviews decks against funded-deck patterns and investor attention data. Use when a founder is building an investor deck, reviewing or revising an existing deck, fixing one slide, or adapting between send-ahead, presented, and demo-day variants. Don't use for deciding round size, valuation, terms, or the narrative itself (use vc-strategy), nor for investor lists, outreach, or meetings (use vc-outreach)."
+description: "Create, review, or revise investor decks and individual slides, including send-ahead, presented, and demo-day variants. vc-strategy owns fundraising strategy/narrative; vc-outreach owns investor outreach and meetings."
 ---
 
 # VC Pitch Deck

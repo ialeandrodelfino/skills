@@ -1,6 +1,6 @@
 ---
 name: ddd-master
-description: DDD (Domain-Driven Design) process for deciding the discipline applies, grasping a domain, drawing bounded contexts, and designing aggregates. Use when refusing slogan DDD or choosing transaction script over a domain model; when EventStorming or building an event timeline before contexts exist; when locking ubiquitous language, classifying subdomains, or mapping context relationships; when designing an aggregate, value object, domain event, or repository. Don't use for Clean Architecture or hexagonal audits without a domain model, product specs, Event Sourcing or CQRS framework catalogs, or compiling a DDD wiki.
+description: "Assess DDD fit; discover domains with EventStorming, define language and bounded contexts, and design aggregates, value objects, events, and repositories. Excludes architecture-only audits, product specs, and CQRS/Event Sourcing catalogs."
 metadata:
   author: Pedro Nauck
   github: https://github.com/pedronauck

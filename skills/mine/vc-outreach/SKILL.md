@@ -1,6 +1,6 @@
 ---
 name: vc-outreach
-description: "VC outreach and raise execution: investor target lists (partner-level, tiered), warm-intro and cold-email plays that convert to first calls, meeting prep and objection handling, the parallel-process pipeline (batching, momentum, follow-ups), and diligence through close (data room, references, term-sheet-to-wire). Use when a founder needs an investor list, wants intros or cold emails to VCs, is preparing for or debriefing an investor meeting, is managing an active raise pipeline, or is assembling a data room. Don't use for deck authoring (use vc-pitch-deck) or for round sizing, narrative, and term economics (use vc-strategy)."
+description: "Build investor lists, warm intros and cold emails; prepare meetings, manage a raise pipeline, and run diligence through close. vc-pitch-deck owns slides; vc-strategy owns round design, narrative, and terms."
 ---
 
 # VC Outreach

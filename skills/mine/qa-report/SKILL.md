@@ -1,12 +1,6 @@
 ---
 name: qa-report
-description: >-
-  Plans real-user QA as living repo docs — the durable <qa-docs-path> tree
-  (default docs/qa/) that every QA cycle appends to. Use when bootstrapping or
-  updating a project's QA docs, planning a cycle before execution (map journeys
-  as flows, derive scenarios, plan persona-driven session charters), or
-  registering bugs into the durable bug registry. Do not use for live
-  session execution, browser evidence, or fix loops — use qa-execution for those.
+description: "Create or update living QA docs, journey/scenario plans, persona session charters, and the durable bug registry. qa-execution owns live sessions, browser evidence, and fix loops."
 disable-model-invocation: true
 argument-hint: "[qa-docs-path]"
 metadata:

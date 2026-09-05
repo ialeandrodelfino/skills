@@ -1,6 +1,6 @@
 ---
 name: golang-master
-description: Go engineering doctrine for writing and reviewing production Go — errors, concurrency, safety, types, tests, performance. Use when wrapping or matching errors, spawning goroutines or picking channel vs mutex vs atomic, propagating context and cancellation, designing interfaces or generics, naming and structuring declarations, auditing nil/slice/map/numeric safety, shaping table-driven tests and benchmarks, chasing allocations with pprof, modernizing pre-1.21 idioms, or laying out a module. Don't use for a framework's or repo's own conventions (project skills own those), non-Go code, or fetching third-party library docs.
+description: "Write or review production Go: errors, concurrency, context, types, generics, safety, tests, benchmarks, profiling, modernization, and module structure. Project/framework conventions and third-party API lookup have separate owners."
 allowed-tools: Read, Grep, Glob, Bash(go:*)
 metadata:
   author: Pedro Nauck

@@ -1,6 +1,6 @@
 ---
 name: xstate-store
-description: XState Store (@xstate/store v4) event-driven state for TypeScript apps. Use when creating a store with createStore or createStoreLogic, writing transitions and enqueue effects, declaring Standard Schema contracts, wiring selectors or atoms, adding the persist, undo-redo, reset, or validateSchemas extensions, binding a store to React with @xstate/store-react, testing transitions or bridging a store into XState with fromStore, or migrating a v3 store to v4. Don't use for XState state machines and actors, Zustand or Redux stores, or TanStack Query server state.
+description: "Build, test, integrate, or migrate XState Store v4: transitions, effects, schemas, selectors, atoms, extensions, React bindings, and fromStore. Excludes XState state-machine design, other stores, and Query server state."
 ---
 
 # XState Store
