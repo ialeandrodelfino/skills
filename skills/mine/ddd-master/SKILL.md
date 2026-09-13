@@ -9,9 +9,9 @@ metadata:
 
 # DDD Master
 
-Predictable process for applying **DDD**: verdict first, then grasp what happens, lock language and **bounded contexts**, then design one **aggregate** at a time.
+Define or revise a domain model from its language, boundaries, and invariants. Assess DDD fit before scaffolding a new model; reuse accepted decisions for established models.
 
-Use the branch covering the changed model or decision. Reuse established language, context maps, and timelines; read adjacent references only when the change crosses their boundaries.
+Use the branch covering the changed model or decision. Reuse established language, context maps, and timelines. Read the relevant sections and their contract dependencies; a complete reference read is needed only when the contract is inseparable.
 
 ## Bundled Path Rule
 
@@ -19,14 +19,14 @@ Resolve bundled files relative to the directory that holds this `SKILL.md`. A pa
 
 ## Branches
 
-| When the task involves… | Read **in full** |
+| When the task involves… | Relevant sections |
 | --- | --- |
-| Refusing DDD, anemic models, transaction script, slogan folders, CRUD, or legacy rewrite | `references/when-not.md` |
-| EventStorming, event timelines, or grasping what happens before contexts exist | `references/discovery.md` |
-| Ubiquitous language, subdomains, bounded contexts, context map, or context relationships | `references/strategic.md` |
-| Aggregates, value objects, domain events, repositories, factories, or invariants | `references/tactical.md` |
-| Rule density, repository FAQ, or Branas/Elemar practitioner checks | `references/practitioner.md` |
-| CQRS-by-default, copying a "DDD" repo, LLM-generated aggregates, or model/code drift | `references/pitfalls.md` |
+| Refusing DDD, anemic models, transaction script, slogan folders, CRUD, or legacy rewrite | `references/when-not.md`: Three verdicts, Essential complexity, or Legacy |
+| EventStorming, event timelines, or grasping what happens before contexts exist | `references/discovery.md`: Skip / swap gate, Family of formats, What the agent does vs fakes |
+| Ubiquitous language, subdomains, bounded contexts, context map, or context relationships | `references/strategic.md`: Ubiquitous language, Context map, Relationship decision tree |
+| Aggregates, value objects, domain events, repositories, factories, or invariants | `references/tactical.md`: Classification tests, Consistency boundary, and the affected building block |
+| Rule density, repository FAQ, or Branas/Elemar practitioner checks | `references/practitioner.md`: Density, Small aggregates, or Repository FAQ |
+| CQRS-by-default, copying a "DDD" repo, LLM-generated aggregates, or model/code drift | `references/pitfalls.md`: the diagnosed modeling or generation pitfall |
 
 For a new or redesigned model, work through the relevant discovery, strategic, and tactical decisions. A narrow change inside an established context needs only its affected invariants and consumers. Downgrade-to-layers can use `architectural-analysis` when a structural audit is requested.
 
@@ -41,22 +41,22 @@ For a new or redesigned model, work through the relevant discovery, strategic, a
 
 ## Step 1: Verdict
 
-Classify new or redesigned models before scaffolding. For a focused question or local fix, give the relevant rationale without a six-tag report.
+Classify new or redesigned models before scaffolding. Use the questions below where they affect the decision; a focused question or local fix needs only its relevant rationale.
 
 1. Tag essential complexity (multi-step invariants that change together) or write "CRUD + syntax only."
 2. Tag the subdomain **core**, supporting, or generic.
 3. Flag slogan DDD: Evans vocabulary or layer folders without a collaboratively evolved model of rules.
 4. If objects are data bags and services own the rules, name **transaction script** (or operations-over-records). Keep the DDD label off that design.
-5. If the change sits inside a ball of mud, pick Bubble, Autonomous Bubble, or Open-host-over-ACL — when the request is a legacy rewrite, read `references/when-not.md` in full before choosing.
+5. If the change sits inside a ball of mud, pick Bubble, Autonomous Bubble, or Open-host-over-ACL — when the request is a legacy rewrite, read the Legacy section of `references/when-not.md` before choosing.
 6. Tag each rule syntax, semantic, or production. Syntax may stay in the UI; semantic and production rules earn a model owner only on Proceed.
 
 Record **Refuse**, **Downgrade**, or **Proceed**.
 
-*Done when:* one verdict is written with the six tags above; Refuse and Downgrade emit no aggregate or repository types.
+*Done when:* the approach and consequential reasons are clear. Record only classifications that affect the model; Refuse and Downgrade do not scaffold unnecessary aggregate or repository types.
 
 ## Step 2: Grasp the domain
 
-Run when the verdict is Proceed and no trusted event timeline exists. When the user asked for EventStorming or "what happens," read `references/discovery.md` in full.
+Run when the verdict is Proceed and no trusted event timeline exists. When the user asked for EventStorming or "what happens," read the matching format and facilitation sections of `references/discovery.md`.
 
 1. List who knows the questions (code, APIs, logs) and who knows the answers (named humans). Absent answerers become a hotspot.
 2. Hang past-tense domain events on one unbounded timeline. Prefer sentence names.
@@ -72,20 +72,20 @@ Skip the workshop *tool* when a recent EventStorm, Domain Storytelling, or Examp
 
 ## Step 3: Strategic design
 
-Run when creating or changing context boundaries or language. When drawing contexts, locking language, or mapping relationships, read `references/strategic.md` in full.
+Run when creating or changing context boundaries or language. When drawing contexts, locking language, or mapping relationships, read the relevant language or context-map sections of `references/strategic.md`.
 
 1. Classify every named capability core / supporting / generic. Generic lists a buy-or-reuse candidate.
 2. Hunt polysemes (Customer, Order, Account). Split the term across contexts or give it one meaning inside a named context.
 3. Lock **ubiquitous language** per emerging context: glossary, one walked scenario, code names that match.
 4. Design bounded contexts. Default: one core + one context. Split when language, purpose, owner, or use diverges. Name each context (the name enters the language).
-5. Draw a context map of the *surroundings*. Each edge states direction (upstream/downstream, mutually dependent, or free) and one primary pattern. When choosing ACL, OHS, conformist, partnership, shared kernel, customer/supplier, published language, separate ways, or big ball of mud, read `references/strategic.md` in full and apply its decision tree.
+5. Draw a context map of the *surroundings*. Each edge states direction (upstream/downstream, mutually dependent, or free) and one primary pattern. When choosing ACL, OHS, conformist, partnership, shared kernel, customer/supplier, published language, separate ways, or big ball of mud, use the Relationship decision tree in `references/strategic.md`.
 6. Fill required canvas cells for each context the agent owns: name, purpose, UL terms, inbound or outbound messages.
 
 *Done when:* every named area has a subdomain type; every in-scope context has name, purpose, and boundary; every neighboring edge has direction + pattern; required canvas cells are non-empty.
 
 ## Step 4: Design one aggregate
 
-Run only for a bounded context labeled Domain Model. When designing building blocks, read `references/tactical.md` in full. When judging rule density or a repository FAQ, read `references/practitioner.md` in full.
+Run only for a bounded context labeled Domain Model. When designing building blocks, read the affected building-block sections of `references/tactical.md`, including consistency and publication dependencies when applicable. When judging rule density or a repository FAQ, read Density or Repository FAQ in `references/practitioner.md`.
 
 1. Name the aggregate and its lifespan (billing period, sprint, or process-scoped).
 2. List true invariants — rules that must hold after every successful command. Drop relationship-only and "cannot delete X if Y exists" false invariants.
@@ -102,8 +102,8 @@ Run only for a bounded context labeled Domain Model. When designing building blo
 
 ## Tripwires
 
-- A package or topic tagged `ddd` offered as the model — inspect for invariants on roots and immutable value objects, or write "DDD-in-name-only" and model from experts. When copying a sample repo, read `references/pitfalls.md` in full.
-- A multi-step prompt about to emit aggregates or hexagons from chat history — stop at glossary / event list / BC *proposals*; validate uncertain in-scope context proposals against domain evidence before generating their aggregates; reuse accepted boundaries. When the loop is an LLM generation, read `references/pitfalls.md` in full.
-- A reach for an event store or a new microservice "to do DDD" — keep one write model and one database; split a query model only when a named read is blocked by aggregate constraints. When CQRS or Event Sourcing is proposed as the default, read `references/pitfalls.md` in full.
+- A package or topic tagged `ddd` offered as the model — inspect for invariants on roots and immutable value objects, or write "DDD-in-name-only" and model from experts. When copying a sample repo, read the matching section of `references/pitfalls.md`.
+- A multi-step prompt about to emit aggregates or hexagons from chat history — stop at glossary / event list / BC *proposals*; validate uncertain in-scope context proposals against domain evidence before generating their aggregates; reuse accepted boundaries. When the loop is an LLM generation, read the matching section of `references/pitfalls.md`.
+- A reach for an event store or a new microservice "to do DDD" — keep one write model and one database; split a query model only when a named read is blocked by aggregate constraints. When CQRS or Event Sourcing is proposed as the default, read the matching section of `references/pitfalls.md`.
 - A `*Service` about to own a new invariant — put the rule on the entity or value object; name the application service with a verb.
 - Hexagonal ports chosen as proof of DDD — hexagonal + transaction script is a valid Downgrade; tactical DDD still requires a Domain Model inside the context.

@@ -1,0 +1,59 @@
+{
+  "source": "/Users/pedronauck/Dev/compozy/skills/skills/mine/deep-review",
+  "installed": "/Users/pedronauck/Dev/compozy/compozy/.agents/skills/deep-review",
+  "prior_installation_backup": "/var/folders/7x/xg204hnd04b81fczcxvjlhzr0000gn/T/deep-review-installed-backup-hzr7m47f/deep-review",
+  "changed_files": [
+    "SKILL.md",
+    "assets/PROMPT.md",
+    "references/context-pack.md",
+    "references/orchestration.md",
+    "references/output-contracts.md",
+    "references/subagent-runtimes.md",
+    "scripts/_common.py",
+    "scripts/_job_output.py",
+    "scripts/_knowledge_sources.py",
+    "scripts/_planning.py",
+    "scripts/build_jobs.py",
+    "scripts/build_knowledge.py",
+    "scripts/build_manifest.py",
+    "scripts/prepare_review.py",
+    "scripts/render_review.py",
+    "scripts/run_jobs.py"
+  ],
+  "exact_file_parity": true,
+  "sha256_by_file": {
+    "SKILL.md": "f59a97b2f534d1e4e8cddd54cf41ce34a6899fc1a804a1263f2c9fc15be4edc7",
+    "references/context-pack.md": "ca5b33c5ea84a384db3aa10092ce781ac392681878097b3b18d0907805efa88b",
+    "references/publish-github.md": "de983300e555ea447942c7e9c8c9430b0614a7c8b9d30537cab62d10cb9a56e5",
+    "references/orchestration.md": "1b5434cd6e8b758d1720599d4fbd81c5eba05787042f42e8632dcc1fc8b84710",
+    "references/taxonomy.md": "3c5821a1c06a3654cd9f7597f929135c84636083129d36efd35ee8c7b9056662",
+    "references/subagent-runtimes.md": "876f4c5acfcfc8ab5ae1904ef40ebc9b9127ca0be1e3ea5932937340edd65e56",
+    "references/output-contracts.md": "4a5044b7d698e9eecb8337b6031cbca8bc6a4a7f5477f375f031e367b4f47b63",
+    "references/state-and-learnings.md": "f3ecc720ab77161a492eccce8c14c97ad77622c2ca63a686b47f15e5808a1273",
+    "scripts/build_manifest.py": "abe144b9909694b896dd350cb7fd2deabe1f08b4f0220074eaf04f18be7610c4",
+    "scripts/merge_findings.py": "ce7a268c28b58247f23d42dc9b58ec48db9ce0ee2b8ea1cd68b643dd946b1886",
+    "scripts/run_jobs.py": "301d20a5b5be5db6ef646bb70a07ac9673120ad0754af3ef8f2331658d221042",
+    "scripts/_job_output.py": "767084a0d1823e14427518fba5901914d65cb2bef752be6d5160396357a38eb7",
+    "scripts/render_review.py": "12e2ec5806181323bc5968451d82f363c4f542f8b989a249cdd461a461d093cd",
+    "scripts/_common.py": "448835831c0f0ba17563896ce511d174b088870cb7e3a420835e3d263bfb7d9a",
+    "scripts/_planning.py": "f252bd6c986c2f80d626c258e7b43e188f289074ab9844ad513c3d1225eb35af",
+    "scripts/build_jobs.py": "6bc28e1121cc0fa8c433b25af7c99d62cc93484747a4ad4bea76be2760fbf069",
+    "scripts/prepare_review.py": "064b0f0f6f464580776f10871f6da83c714ac2745fa49306c523d24a9d455fff",
+    "scripts/_knowledge_sources.py": "6ab92887b7e36a4b92478ea9d494935c408ceec3f8223d553761e110f4514a0e",
+    "scripts/render_html.py": "2017840dbb646dfee9e36efadac7124beb3eb785102d97307836e19788633282",
+    "scripts/build_knowledge.py": "37f23cd03e8823d7875936860c2ecf4f39b94b28ab52d52492fc6823bc260252",
+    "assets/PROMPT.md": "9069476952d58e304834b3730195154fd17540fcaa2072761368841f8595d916",
+    "assets/findings.schema.json": "0e656086bfcc25de1c59c706ea6555970b65060312d762d5cae290019f423a79",
+    "assets/REVIEW_UI.html": "0f66762e8278011990072c2d0d30972728974f10711f469a549e0ba01d7dfe28"
+  },
+  "configurable_limits_followup": {
+    "changed_files": [
+      "SKILL.md",
+      "references/orchestration.md",
+      "scripts/_planning.py",
+      "scripts/build_jobs.py",
+      "scripts/prepare_review.py"
+    ],
+    "exact_file_parity": true
+  }
+}

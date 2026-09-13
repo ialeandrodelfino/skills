@@ -1,6 +1,6 @@
 ---
 name: tailwindcss
-description: Tailwind CSS v4 conventions — semantic design tokens for theme-safe styling, mobile-first responsive layouts, and v4-first utilities. Use when styling components or writing className utilities with Tailwind. Don't use for plain CSS, CSS-in-JS (styled-components, emotion), or other utility frameworks.
+description: "Style components with Tailwind CSS v4 and project tokens. Excludes plain CSS, CSS-in-JS, and other utility frameworks."
 allowed-tools: Read, Grep, Glob
 metadata:
   author: Pedro Nauck

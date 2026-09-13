@@ -1,0 +1,85 @@
+{
+  "manifest": "/Users/pedronauck/Dev/compozy/compozy/.deep-review/acp-runtime-catalog/manifest.json",
+  "manifest_sha256": "ffff3896177eb7c846a8d3cb7dc60f4cf68e098f53229516e7828d9fc6b2e08f",
+  "results": {
+    "installed_before": {
+      "skill_path": "/Users/pedronauck/Dev/compozy/compozy/.agents/skills/deep-review",
+      "build_knowledge_sha256": "db72e3744426b3f88feb0c82698cae60dd3801e52a04b1423686af5d20fecd66",
+      "samples": [
+        {
+          "seconds": 7.2571,
+          "exit_code": 0,
+          "stdout": "knowledge registry -> /private/var/folders/7x/xg204hnd04b81fczcxvjlhzr0000gn/T/deep-review-comparison-kiymy8c6/installed_before/0/knowledge.json\nsources: 381 instructions + 2 config/learnings + 95 skills + 335 direct references; 433 need an applied/not-applicable decision\nrules accounting skeleton -> /private/var/folders/7x/xg204hnd04b81fczcxvjlhzr0000gn/T/deep-review-comparison-kiymy8c6/installed_before/0/rules.template.json",
+          "stderr": "",
+          "knowledge.json_bytes": 7185274,
+          "rules.template.json_bytes": 173634,
+          "pending_sources": 433
+        },
+        {
+          "seconds": 4.4381,
+          "exit_code": 0,
+          "stdout": "knowledge registry -> /private/var/folders/7x/xg204hnd04b81fczcxvjlhzr0000gn/T/deep-review-comparison-kiymy8c6/installed_before/1/knowledge.json\nsources: 381 instructions + 2 config/learnings + 95 skills + 335 direct references; 433 need an applied/not-applicable decision\nrules accounting skeleton -> /private/var/folders/7x/xg204hnd04b81fczcxvjlhzr0000gn/T/deep-review-comparison-kiymy8c6/installed_before/1/rules.template.json",
+          "stderr": "",
+          "knowledge.json_bytes": 7185274,
+          "rules.template.json_bytes": 173634,
+          "pending_sources": 433
+        },
+        {
+          "seconds": 4.3889,
+          "exit_code": 0,
+          "stdout": "knowledge registry -> /private/var/folders/7x/xg204hnd04b81fczcxvjlhzr0000gn/T/deep-review-comparison-kiymy8c6/installed_before/2/knowledge.json\nsources: 381 instructions + 2 config/learnings + 95 skills + 335 direct references; 433 need an applied/not-applicable decision\nrules accounting skeleton -> /private/var/folders/7x/xg204hnd04b81fczcxvjlhzr0000gn/T/deep-review-comparison-kiymy8c6/installed_before/2/rules.template.json",
+          "stderr": "",
+          "knowledge.json_bytes": 7185274,
+          "rules.template.json_bytes": 173634,
+          "pending_sources": 433
+        }
+      ]
+    },
+    "optimized": {
+      "skill_path": "/Users/pedronauck/Dev/compozy/skills/skills/mine/deep-review",
+      "build_knowledge_sha256": "37f23cd03e8823d7875936860c2ecf4f39b94b28ab52d52492fc6823bc260252",
+      "samples": [
+        {
+          "seconds": 0.1883,
+          "exit_code": 0,
+          "stdout": "knowledge -> /private/var/folders/7x/xg204hnd04b81fczcxvjlhzr0000gn/T/deep-review-comparison-kiymy8c6/optimized/0/knowledge.md\n4 instructions + 2 config/learnings + 99 routers + 0 references; 105 pending\ndecision template -> /private/var/folders/7x/xg204hnd04b81fczcxvjlhzr0000gn/T/deep-review-comparison-kiymy8c6/optimized/0/rules.template.json",
+          "stderr": "",
+          "knowledge.json_bytes": 194717,
+          "rules.template.json_bytes": 44505,
+          "knowledge.md_bytes": 35788,
+          "pending_sources": 105
+        },
+        {
+          "seconds": 0.1897,
+          "exit_code": 0,
+          "stdout": "knowledge -> /private/var/folders/7x/xg204hnd04b81fczcxvjlhzr0000gn/T/deep-review-comparison-kiymy8c6/optimized/1/knowledge.md\n4 instructions + 2 config/learnings + 99 routers + 0 references; 105 pending\ndecision template -> /private/var/folders/7x/xg204hnd04b81fczcxvjlhzr0000gn/T/deep-review-comparison-kiymy8c6/optimized/1/rules.template.json",
+          "stderr": "",
+          "knowledge.json_bytes": 194717,
+          "rules.template.json_bytes": 44505,
+          "knowledge.md_bytes": 35788,
+          "pending_sources": 105
+        },
+        {
+          "seconds": 0.1923,
+          "exit_code": 0,
+          "stdout": "knowledge -> /private/var/folders/7x/xg204hnd04b81fczcxvjlhzr0000gn/T/deep-review-comparison-kiymy8c6/optimized/2/knowledge.md\n4 instructions + 2 config/learnings + 99 routers + 0 references; 105 pending\ndecision template -> /private/var/folders/7x/xg204hnd04b81fczcxvjlhzr0000gn/T/deep-review-comparison-kiymy8c6/optimized/2/rules.template.json",
+          "stderr": "",
+          "knowledge.json_bytes": 194717,
+          "rules.template.json_bytes": 44505,
+          "knowledge.md_bytes": 35788,
+          "pending_sources": 105
+        }
+      ]
+    }
+  },
+  "benchmark_kind": "real CLI discovery on same current repository and historical file selection; no model calls",
+  "measured_at": "2026-09-12",
+  "selected_files": 337,
+  "summary": {
+    "installed_median_seconds": 4.4381,
+    "optimized_median_seconds": 0.1897,
+    "discovery_speedup": 23.395361096468108,
+    "knowledge_size_reduction_percent": 97.2900546311804,
+    "initial_pending_reduction_percent": 75.75057736720554
+  }
+}
