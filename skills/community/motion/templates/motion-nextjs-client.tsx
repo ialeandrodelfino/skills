@@ -1,5 +1,5 @@
 // Motion + Next.js App Router - Client Component Pattern
-// Production-tested with Motion v12.23.24, Next.js 15, React 19
+// Production-tested with Motion v12.43.0, Next.js 15, React 19
 
 /**
  * INSTALLATION

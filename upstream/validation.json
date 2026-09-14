@@ -1,0 +1,71 @@
+{
+  "date": "2026-09-14",
+  "scope": "Local working tree, not committed or published to GitHub",
+  "cliVersion": "1.5.26",
+  "originalSkillsResearched": 102,
+  "originalPackagesChanged": 59,
+  "originalPackagesAlreadyCurrent": 12,
+  "requiredFirecrawlGuidesAdded": 11,
+  "managedPackages": 82,
+  "preserved": {
+    "localOrAdapted": 20,
+    "retired": 4,
+    "unresolved": 7
+  },
+  "toolingTests": {
+    "passed": 15,
+    "command": "python3 -m unittest discover -s tests/upstream_skills -v"
+  },
+  "consumerValidation": {
+    "skills": 153,
+    "filesComparedByteForByte": 1438,
+    "bucketCounts": {
+      "curated": 42,
+      "community": 39,
+      "marketing": 18,
+      "deprecated": 14,
+      "mine": 40
+    },
+    "activeBucketExplicitReferences": "passed",
+    "preexistingDeprecatedMissingReferences": [
+      "cmux-orchestration -> cmux",
+      "cmux-orchestration -> cmux-workspace"
+    ]
+  },
+  "rootLockPreserved": true,
+  "nativeLockSha256": "bce86143f90990add1873018d55b19e73f98089c0814aeceb5c6e3ef229f6647",
+  "catalogLockSha256": "cf856d3243fe0e309f95154f9d6ffa0314a797602d3107d7967b08abd0bf0c61",
+  "authorshipReclassification": {
+    "confirmedBy": "Pedro Nauck in this task",
+    "skills": [
+      "centrifugo",
+      "effect-ts",
+      "electron-builder",
+      "electron-dev",
+      "electron-release",
+      "elysia",
+      "es-toolkit",
+      "evolution-api",
+      "shadcn",
+      "xstate",
+      "zustand"
+    ],
+    "directoriesMoved": 7,
+    "contentHashesPreserved": true,
+    "activeSymlinksUpdated": 14,
+    "nativeConsumerRevalidation": [
+      {
+        "bucket": "curated",
+        "count": 42,
+        "exitCode": 0,
+        "namesPreserved": true
+      },
+      {
+        "bucket": "community",
+        "count": 39,
+        "exitCode": 0,
+        "namesPreserved": true
+      }
+    ]
+  }
+}

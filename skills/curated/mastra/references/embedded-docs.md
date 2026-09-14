@@ -40,6 +40,10 @@ Use `grep` to find relevant docs in `references/`:
 grep -r "Agent" node_modules/@mastra/core/dist/docs/references
 ```
 
+### Naming convention
+
+Documents are typically formatted as `<category>-<topic>.md` where category is one of: `"docs", "reference", "guides", "models"`.
+
 ### Optional: Check source code for type definitions / additional details
 
 Look at the `SOURCE_MAP.json` to find the file path for the export:
@@ -60,7 +64,7 @@ cat node_modules/@mastra/core/dist/agent/agent.d.ts
 
 | Package          | Path                                     | Contains                                  |
 | ---------------- | ---------------------------------------- | ----------------------------------------- |
-| `@mastra/core`   | `node_modules/@mastra/core/dist/docs/`   | Agents, Workflows, Tools, Mastra instance |
+| `@mastra/core`   | `node_modules/@mastra/core/dist/docs/`   | Agents, Workflows, Tools, Mastra instance  |
 | `@mastra/memory` | `node_modules/@mastra/memory/dist/docs/` | Memory systems, conversation history      |
 | `@mastra/rag`    | `node_modules/@mastra/rag/dist/docs/`    | RAG features, vector stores               |
 | `@mastra/pg`     | `node_modules/@mastra/pg/dist/docs/`     | PostgreSQL storage                        |

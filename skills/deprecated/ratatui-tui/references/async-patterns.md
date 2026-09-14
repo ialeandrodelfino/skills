@@ -3,7 +3,6 @@
 ## Why Async?
 
 Sync event loops block on input, making background tasks impossible:
-
 - Network requests
 - File I/O
 - Timers/animations

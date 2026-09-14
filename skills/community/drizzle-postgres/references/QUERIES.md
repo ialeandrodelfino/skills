@@ -1,6 +1,23 @@
 # Drizzle Query Patterns
 
-Comprehensive reference for querying PostgreSQL with Drizzle ORM.
+Comprehensive reference for querying PostgreSQL with Drizzle ORM using the
+SQL-like API (`db.select()` etc. — identical in 0.x and v1.0). For `db.query.*`
+relational queries see [RELATIONS.md](RELATIONS.md).
+
+## Contents
+
+- [Query Operators](#query-operators)
+- [Select Queries](#select-queries)
+- [Ordering & Pagination](#ordering--pagination)
+- [Joins](#joins)
+- [Aggregations](#aggregations)
+- [Subqueries](#subqueries)
+- [Insert Operations](#insert-operations)
+- [Update Operations](#update-operations)
+- [Delete Operations](#delete-operations)
+- [Raw SQL](#raw-sql)
+- [Prepared Statements](#prepared-statements)
+- [Transactions](#transactions)
 
 ---
 
@@ -10,18 +27,18 @@ Comprehensive reference for querying PostgreSQL with Drizzle ORM.
 
 ```typescript
 import {
-  eq, // =
-  ne, // <>
-  gt, // >
-  gte, // >=
-  lt, // <
-  lte, // <=
-  like, // LIKE (case-sensitive)
-  ilike, // ILIKE (case-insensitive)
+  eq,           // =
+  ne,           // <>
+  gt,           // >
+  gte,          // >=
+  lt,           // <
+  lte,          // <=
+  like,         // LIKE (case-sensitive)
+  ilike,        // ILIKE (case-insensitive)
   notLike,
   notIlike,
-  inArray, // IN
-  notInArray, // NOT IN
+  inArray,      // IN
+  notInArray,   // NOT IN
   isNull,
   isNotNull,
   between,
@@ -35,7 +52,7 @@ import {
   arrayContained,
   arrayOverlaps,
   sql,
-} from "drizzle-orm";
+} from 'drizzle-orm';
 ```
 
 ---
@@ -49,45 +66,56 @@ import {
 const allUsers = await db.select().from(users);
 
 // Specific columns
-const emails = await db
-  .select({
-    id: users.id,
-    email: users.email,
-  })
-  .from(users);
+const emails = await db.select({
+  id: users.id,
+  email: users.email
+}).from(users);
 
 // With alias
-const result = await db
-  .select({
-    identifier: users.id,
-    mail: users.email,
-  })
-  .from(users);
+const result = await db.select({
+  identifier: users.id,
+  mail: users.email,
+}).from(users);
 ```
 
 ### Where Clause
 
 ```typescript
 // Single condition
-const user = await db.select().from(users).where(eq(users.id, userId));
+const user = await db
+  .select()
+  .from(users)
+  .where(eq(users.id, userId));
 
 // Multiple conditions (AND)
 const activeAdmins = await db
   .select()
   .from(users)
-  .where(and(eq(users.status, "active"), eq(users.role, "admin")));
+  .where(and(
+    eq(users.status, 'active'),
+    eq(users.role, 'admin'),
+  ));
 
 // OR conditions
 const flaggedUsers = await db
   .select()
   .from(users)
-  .where(or(eq(users.status, "suspended"), gt(users.warningCount, 3)));
+  .where(or(
+    eq(users.status, 'suspended'),
+    gt(users.warningCount, 3),
+  ));
 
 // Complex nested conditions
 const result = await db
   .select()
   .from(users)
-  .where(and(eq(users.status, "active"), or(eq(users.role, "admin"), gt(users.score, 100))));
+  .where(and(
+    eq(users.status, 'active'),
+    or(
+      eq(users.role, 'admin'),
+      gt(users.score, 100),
+    ),
+  ));
 ```
 
 ### Comparison Operators
@@ -150,17 +178,26 @@ async function getPosts(filters: Filters) {
   return db
     .select()
     .from(posts)
-    .where(
-      and(
-        eq(posts.published, true),
-        filters.search ? ilike(posts.title, `%${filters.search}%`) : undefined,
-        filters.categoryId ? eq(posts.categoryId, filters.categoryId) : undefined,
-        filters.minPrice ? gte(posts.price, filters.minPrice) : undefined,
-        filters.maxPrice ? lte(posts.price, filters.maxPrice) : undefined
-      )
-    );
+    .where(and(
+      eq(posts.published, true),
+      filters.search
+        ? ilike(posts.title, `%${filters.search}%`)
+        : undefined,
+      filters.categoryId
+        ? eq(posts.categoryId, filters.categoryId)
+        : undefined,
+      filters.minPrice !== undefined   // not truthiness: 0 is a valid price
+        ? gte(posts.price, filters.minPrice)
+        : undefined,
+      filters.maxPrice !== undefined
+        ? lte(posts.price, filters.maxPrice)
+        : undefined,
+    ));
 }
 ```
+
+`and()`/`or()` ignore `undefined` arguments, which is what makes this pattern
+work. An empty `and()` is `undefined`, so `.where(undefined)` returns all rows.
 
 ---
 
@@ -191,7 +228,12 @@ const sorted = await db
 
 ```typescript
 // Basic pagination
-const page1 = await db.select().from(posts).orderBy(desc(posts.createdAt)).limit(20).offset(0);
+const page1 = await db
+  .select()
+  .from(posts)
+  .orderBy(desc(posts.createdAt))
+  .limit(20)
+  .offset(0);
 
 // Page helper
 async function getPage(page: number, pageSize: number = 20) {
@@ -224,7 +266,10 @@ async function getPostsAfter(cursor?: string, limit = 20) {
 ### Left Join
 
 ```typescript
-const usersWithPosts = await db.select().from(users).leftJoin(posts, eq(posts.authorId, users.id));
+const usersWithPosts = await db
+  .select()
+  .from(users)
+  .leftJoin(posts, eq(posts.authorId, users.id));
 
 // Result type: { users: User, posts: Post | null }[]
 ```
@@ -232,7 +277,10 @@ const usersWithPosts = await db.select().from(users).leftJoin(posts, eq(posts.au
 ### Inner Join
 
 ```typescript
-const usersWithPosts = await db.select().from(users).innerJoin(posts, eq(posts.authorId, users.id));
+const usersWithPosts = await db
+  .select()
+  .from(users)
+  .innerJoin(posts, eq(posts.authorId, users.id));
 
 // Only users who have posts
 ```
@@ -240,13 +288,19 @@ const usersWithPosts = await db.select().from(users).innerJoin(posts, eq(posts.a
 ### Right Join
 
 ```typescript
-const postsWithUsers = await db.select().from(posts).rightJoin(users, eq(posts.authorId, users.id));
+const postsWithUsers = await db
+  .select()
+  .from(posts)
+  .rightJoin(users, eq(posts.authorId, users.id));
 ```
 
 ### Full Join
 
 ```typescript
-const all = await db.select().from(users).fullJoin(posts, eq(posts.authorId, users.id));
+const all = await db
+  .select()
+  .from(users)
+  .fullJoin(posts, eq(posts.authorId, users.id));
 ```
 
 ### Multiple Joins
@@ -284,26 +338,41 @@ const result = await db
 ### Imports
 
 ```typescript
-import { count, sum, avg, min, max, countDistinct } from "drizzle-orm";
+import { count, sum, avg, min, max, countDistinct } from 'drizzle-orm';
 ```
 
 ### Basic Aggregates
 
 ```typescript
-// Count all rows
-const [{ total }] = await db.select({ total: count() }).from(users);
+// Count all rows — shorthand
+const total = await db.$count(users);                          // number
+const active = await db.$count(users, eq(users.status, 'active'));
+
+// Count all rows — explicit
+const [{ total }] = await db
+  .select({ total: count() })
+  .from(users);
 
 // Count with condition
-const [{ activeCount }] = await db.select({ activeCount: count() }).from(users).where(eq(users.status, "active"));
+const [{ activeCount }] = await db
+  .select({ activeCount: count() })
+  .from(users)
+  .where(eq(users.status, 'active'));
 
 // Count distinct
-const [{ uniqueAuthors }] = await db.select({ uniqueAuthors: countDistinct(posts.authorId) }).from(posts);
+const [{ uniqueAuthors }] = await db
+  .select({ uniqueAuthors: countDistinct(posts.authorId) })
+  .from(posts);
 
 // Sum
-const [{ totalRevenue }] = await db.select({ totalRevenue: sum(orders.amount) }).from(orders);
+const [{ totalRevenue }] = await db
+  .select({ totalRevenue: sum(orders.amount) })
+  .from(orders);
 
 // Average
-const [{ avgPrice }] = await db.select({ avgPrice: avg(products.price) }).from(products);
+const [{ avgPrice }] = await db
+  .select({ avgPrice: avg(products.price) })
+  .from(products);
 
 // Min / Max
 const [{ cheapest, expensive }] = await db
@@ -364,11 +433,11 @@ const authorStats = await db
 const subquery = db
   .select({
     authorId: posts.authorId,
-    postCount: sql<number>`count(*)`.as("post_count"),
+    postCount: sql<number>`count(*)`.as('post_count'),
   })
   .from(posts)
   .groupBy(posts.authorId)
-  .as("author_stats");
+  .as('author_stats');
 
 const usersWithStats = await db
   .select({
@@ -386,22 +455,39 @@ const usersWithStats = await db
 const usersWithPosts = await db
   .select()
   .from(users)
-  .where(exists(db.select().from(posts).where(eq(posts.authorId, users.id))));
+  .where(
+    exists(
+      db.select().from(posts).where(eq(posts.authorId, users.id))
+    )
+  );
 
 // Users who have NO posts
 const usersWithoutPosts = await db
   .select()
   .from(users)
-  .where(notExists(db.select().from(posts).where(eq(posts.authorId, users.id))));
+  .where(
+    notExists(
+      db.select().from(posts).where(eq(posts.authorId, users.id))
+    )
+  );
 ```
 
-### Scalar Subquery
+### Correlated Scalar Subquery
+
+Self-referencing correlations need a table alias — comparing `posts.authorId`
+to itself is always true:
 
 ```typescript
+import { alias } from 'drizzle-orm/pg-core';
+
+const p = alias(posts, 'p');
+
 const postsWithAuthorCount = await db
   .select({
     post: posts,
-    authorPostCount: db.select({ count: count() }).from(posts).where(eq(posts.authorId, posts.authorId)),
+    authorPostCount: sql<number>`(
+      SELECT count(*) FROM ${p} WHERE ${p.authorId} = ${posts.authorId}
+    )`.as('author_post_count'),
   })
   .from(posts);
 ```
@@ -416,8 +502,8 @@ const postsWithAuthorCount = await db
 const [newUser] = await db
   .insert(users)
   .values({
-    email: "user@example.com",
-    name: "John Doe",
+    email: 'user@example.com',
+    name: 'John Doe',
   })
   .returning();
 ```
@@ -428,9 +514,9 @@ const [newUser] = await db
 const newUsers = await db
   .insert(users)
   .values([
-    { email: "user1@example.com", name: "User 1" },
-    { email: "user2@example.com", name: "User 2" },
-    { email: "user3@example.com", name: "User 3" },
+    { email: 'user1@example.com', name: 'User 1' },
+    { email: 'user2@example.com', name: 'User 2' },
+    { email: 'user3@example.com', name: 'User 3' },
   ])
   .returning();
 ```
@@ -441,17 +527,20 @@ const newUsers = await db
 // Update on conflict
 await db
   .insert(users)
-  .values({ email: "user@example.com", name: "John" })
+  .values({ email: 'user@example.com', name: 'John' })
   .onConflictDoUpdate({
     target: users.email,
     set: {
-      name: "John Updated",
+      name: 'John Updated',
       updatedAt: new Date(),
     },
   });
 
 // Ignore on conflict
-await db.insert(users).values({ email: "user@example.com", name: "John" }).onConflictDoNothing();
+await db
+  .insert(users)
+  .values({ email: 'user@example.com', name: 'John' })
+  .onConflictDoNothing();
 
 // Composite key conflict
 await db
@@ -465,7 +554,11 @@ await db
 ### Insert from Select
 
 ```typescript
-await db.insert(archivedPosts).select().from(posts).where(lt(posts.createdAt, oneYearAgo));
+await db
+  .insert(archivedPosts)
+  .select()
+  .from(posts)
+  .where(lt(posts.createdAt, oneYearAgo));
 ```
 
 ---
@@ -475,7 +568,10 @@ await db.insert(archivedPosts).select().from(posts).where(lt(posts.createdAt, on
 ### Basic Update
 
 ```typescript
-await db.update(users).set({ status: "active" }).where(eq(users.id, userId));
+await db
+  .update(users)
+  .set({ status: 'active' })
+  .where(eq(users.id, userId));
 ```
 
 ### Update with Returning
@@ -484,7 +580,7 @@ await db.update(users).set({ status: "active" }).where(eq(users.id, userId));
 const [updated] = await db
   .update(users)
   .set({
-    status: "active",
+    status: 'active',
     updatedAt: new Date(),
   })
   .where(eq(users.id, userId))
@@ -515,7 +611,7 @@ await db
   .set({
     status: sql`CASE WHEN ${users.score} > 100 THEN 'gold' ELSE 'silver' END`,
   })
-  .where(eq(users.role, "member"));
+  .where(eq(users.role, 'member'));
 ```
 
 ---
@@ -525,19 +621,27 @@ await db
 ### Basic Delete
 
 ```typescript
-await db.delete(users).where(eq(users.id, userId));
+await db
+  .delete(users)
+  .where(eq(users.id, userId));
 ```
 
 ### Delete with Returning
 
 ```typescript
-const [deleted] = await db.delete(users).where(eq(users.id, userId)).returning();
+const [deleted] = await db
+  .delete(users)
+  .where(eq(users.id, userId))
+  .returning();
 ```
 
 ### Soft Delete
 
 ```typescript
-await db.update(users).set({ deletedAt: new Date() }).where(eq(users.id, userId));
+await db
+  .update(users)
+  .set({ deletedAt: new Date() })
+  .where(eq(users.id, userId));
 ```
 
 ### Delete with Subquery
@@ -546,7 +650,12 @@ await db.update(users).set({ deletedAt: new Date() }).where(eq(users.id, userId)
 // Delete inactive users who have no posts
 await db
   .delete(users)
-  .where(and(eq(users.status, "inactive"), notExists(db.select().from(posts).where(eq(posts.authorId, users.id)))));
+  .where(and(
+    eq(users.status, 'inactive'),
+    notExists(
+      db.select().from(posts).where(eq(posts.authorId, users.id))
+    ),
+  ));
 ```
 
 ---
@@ -570,10 +679,13 @@ const result = await db
 .where(sql`${users.email} ~* ${pattern}`)  // PostgreSQL regex
 
 // Typed raw query
-const users = await db.execute<{ id: string; name: string }>(
+const rows = await db.execute<{ id: string; name: string }>(
   sql`SELECT id, name FROM users WHERE status = 'active'`
 );
 ```
+
+Note on `db.execute()` result shape: with postgres.js the result is the row
+array itself; with node-postgres it's a `pg` result object — read `result.rows`.
 
 ### SQL Operators
 
@@ -593,33 +705,36 @@ const users = await db.execute<{ id: string; name: string }>(
 
 ## Prepared Statements
 
-Improve performance by preparing queries once:
+Improve performance by preparing queries once. Caveat: named server-side
+prepared statements break behind transaction-mode poolers (PgBouncer < 1.21,
+Supavisor) — see
+[PERFORMANCE.md](PERFORMANCE.md#transaction-pooling-limitations).
 
 ```typescript
 // Prepare
 const getUserById = db
   .select()
   .from(users)
-  .where(eq(users.id, sql.placeholder("id")))
-  .prepare("get_user_by_id");
+  .where(eq(users.id, sql.placeholder('id')))
+  .prepare('get_user_by_id');
 
 // Execute multiple times
-const user1 = await getUserById.execute({ id: "uuid-1" });
-const user2 = await getUserById.execute({ id: "uuid-2" });
+const user1 = await getUserById.execute({ id: 'uuid-1' });
+const user2 = await getUserById.execute({ id: 'uuid-2' });
 
 // Prepared insert
 const createUser = db
   .insert(users)
   .values({
-    email: sql.placeholder("email"),
-    name: sql.placeholder("name"),
+    email: sql.placeholder('email'),
+    name: sql.placeholder('name'),
   })
   .returning()
-  .prepare("create_user");
+  .prepare('create_user');
 
 const newUser = await createUser.execute({
-  email: "user@example.com",
-  name: "John",
+  email: 'user@example.com',
+  name: 'John',
 });
 ```
 
@@ -630,12 +745,15 @@ const newUser = await createUser.execute({
 ### Basic Transaction
 
 ```typescript
-const result = await db.transaction(async tx => {
+const result = await db.transaction(async (tx) => {
   const [user] = await tx.insert(users).values({ email, name }).returning();
-  await tx.insert(profiles).values({ userId: user.id, bio: "" });
+  await tx.insert(profiles).values({ userId: user.id, bio: '' });
   return user;
 });
 ```
+
+Use `tx` for every statement inside the callback. A query on `db` runs on a
+different connection outside the transaction and will not roll back.
 
 ### Nested Transactions (Savepoints)
 
@@ -676,13 +794,10 @@ await db.transaction(async (tx) => {
 ### Transaction Isolation
 
 ```typescript
-await db.transaction(
-  async tx => {
-    // ...
-  },
-  {
-    isolationLevel: "serializable", // read committed, repeatable read, serializable
-    accessMode: "read write", // read only, read write
-  }
-);
+await db.transaction(async (tx) => {
+  // ...
+}, {
+  isolationLevel: 'serializable',  // read committed, repeatable read, serializable
+  accessMode: 'read write',        // read only, read write
+});
 ```

@@ -17,10 +17,10 @@ export default {
   async fetch(request: Request, env: Env): Promise<Response> {
     const apiKey = await env.API_KEY.get();
     return fetch("https://api.example.com", {
-      headers: { Authorization: `Bearer ${apiKey}` },
+      headers: { "Authorization": `Bearer ${apiKey}` }
     });
-  },
-};
+  }
+}
 ```
 
 ### Error Handling
@@ -31,21 +31,24 @@ export default {
     try {
       const apiKey = await env.API_KEY.get();
       return fetch("https://api.example.com", {
-        headers: { Authorization: `Bearer ${apiKey}` },
+        headers: { "Authorization": `Bearer ${apiKey}` }
       });
     } catch (error) {
       console.error("Secret access failed:", error);
       return new Response("Configuration error", { status: 500 });
     }
-  },
-};
+  }
+}
 ```
 
 ### Multiple Secrets & Patterns
 
 ```typescript
 // Parallel fetch
-const [stripeKey, sendgridKey] = await Promise.all([env.STRIPE_KEY.get(), env.SENDGRID_KEY.get()]);
+const [stripeKey, sendgridKey] = await Promise.all([
+  env.STRIPE_KEY.get(),
+  env.SENDGRID_KEY.get()
+]);
 
 // ❌ Missing .get()
 const key = env.API_KEY;
@@ -129,7 +132,6 @@ GET /accounts/{account_id}/secrets_store/quota
 ### Responses
 
 Success:
-
 ```json
 {
   "success": true,
@@ -143,11 +145,10 @@ Success:
 ```
 
 Error:
-
 ```json
 {
   "success": false,
-  "errors": [{ "code": 10000, "message": "Name exists" }]
+  "errors": [{"code": 10000, "message": "Name exists"}]
 }
 ```
 

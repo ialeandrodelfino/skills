@@ -1,5 +1,5 @@
 // Motion + Vite + React + TypeScript - Basic Setup
-// Production-tested with Motion v12.23.24, React 19, Vite 6
+// Production-tested with Motion v12.43.0, React 19, Vite 7
 
 /**
  * INSTALLATION

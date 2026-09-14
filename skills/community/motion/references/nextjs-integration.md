@@ -304,7 +304,7 @@ export default function Page() {
 
 ### Issue 1: Next.js 15 + React 19 Compatibility
 
-**Status**: Most issues resolved in latest Motion version (12.23.24)
+**Status**: Most issues resolved in latest Motion version (12.43.0)
 
 **Symptoms**:
 - Build errors: "unsupported to use 'export *' in a client boundary"

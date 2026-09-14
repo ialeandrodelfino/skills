@@ -40,7 +40,7 @@ if grep -q '@cloudflare/vite-plugin\|wrangler' package.json; then
   echo "🔍 Detected: Cloudflare Workers project"
   echo ""
   echo "⚠️  WARNING: Motion has build compatibility issues with Wrangler"
-  echo "   Recommendation: Use framer-motion v12.23.24 instead"
+  echo "   Recommendation: Use framer-motion v12.43.0 instead"
   echo ""
   read -p "Continue with Motion (may cause build errors) or use framer-motion? [motion/framer]: " choice
   if [ "$choice" = "framer" ]; then
@@ -231,7 +231,7 @@ echo ""
 if [ "$USING_CLOUDFLARE" = true ]; then
   echo "⚠️  IMPORTANT (Cloudflare Workers):"
   echo "   Monitor GitHub issue #2918 for Motion + Wrangler compatibility"
-  echo "   Consider using framer-motion v12.23.24 if build errors occur"
+  echo "   Consider using framer-motion v12.43.0 if build errors occur"
   echo ""
 fi
 

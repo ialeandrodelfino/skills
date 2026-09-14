@@ -18,6 +18,7 @@ Instead of cramming all functionality into a single component with dozens of pro
 
 Fernando gave a great talk about this at React Universe Conf 2025, where he shared his approach to rebuilding Slack's Message Composer as a composable component.
 
+
 ## Making a component composable
 
 To make a component composable, you need to break it down into smaller, more focused components. For example, let's take this Accordion component:
@@ -75,7 +76,12 @@ export type AccordionRootProps = React.ComponentProps<"div"> & {
   setOpen: (open: boolean) => void;
 };
 
-export const Root = ({ children, open, setOpen, ...props }: AccordionRootProps) => (
+export const Root = ({
+  children,
+  open,
+  setOpen,
+  ...props
+}: AccordionRootProps) => (
   <AccordionContext.Provider value={{ open, setOpen }}>
     <div {...props}>{children}</div>
   </AccordionContext.Provider>
@@ -110,7 +116,9 @@ export type AccordionTriggerProps = React.ComponentProps<"button"> & {
 
 export const Trigger = ({ asChild, ...props }: AccordionTriggerProps) => (
   <AccordionContext.Consumer>
-    {({ open, setOpen }) => <button onClick={() => setOpen(!open)} {...props} />}
+    {({ open, setOpen }) => (
+      <button onClick={() => setOpen(!open)} {...props} />
+    )}
   </AccordionContext.Consumer>
 );
 ```
@@ -130,7 +138,9 @@ export type AccordionContentProps = React.ComponentProps<"div"> & {
 };
 
 export const Content = ({ asChild, ...props }: AccordionContentProps) => (
-  <AccordionContext.Consumer>{({ open }) => <div {...props} />}</AccordionContext.Consumer>
+  <AccordionContext.Consumer>
+    {({ open }) => <div {...props} />}
+  </AccordionContext.Consumer>
 );
 ```
 
@@ -158,7 +168,7 @@ const data = [
 
 return (
   <Accordion.Root open={false} setOpen={() => {}}>
-    {data.map(item => (
+    {data.map((item) => (
       <Accordion.Item key={item.title}>
         <Accordion.Trigger>{item.title}</Accordion.Trigger>
         <Accordion.Content>{item.content}</Accordion.Content>

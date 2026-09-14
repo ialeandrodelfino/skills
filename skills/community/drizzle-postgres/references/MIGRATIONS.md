@@ -1,6 +1,20 @@
 # Drizzle Migrations
 
-Comprehensive reference for managing database migrations with drizzle-kit.
+Comprehensive reference for managing database migrations with drizzle-kit
+(stable drizzle-kit 0.3x; v1.0 differences noted inline).
+
+## Contents
+
+- [Configuration](#configuration)
+- [Commands](#commands)
+- [Migration Workflow](#migration-workflow)
+- [Push vs Generate](#push-vs-generate)
+- [Migration Patterns](#migration-patterns)
+- [Custom Migrations](#custom-migrations)
+- [Migration Table](#migration-table)
+- [Rollback Strategies](#rollback-strategies)
+- [Best Practices](#best-practices)
+- [Troubleshooting](#troubleshooting)
 
 ---
 
@@ -9,38 +23,53 @@ Comprehensive reference for managing database migrations with drizzle-kit.
 ### drizzle.config.ts
 
 ```typescript
-import { defineConfig } from "drizzle-kit";
+import { defineConfig } from 'drizzle-kit';
 
 export default defineConfig({
   // Schema location
-  schema: "./src/db/schema.ts",
+  schema: './src/db/schema.ts',
 
   // Migration output directory
-  out: "./drizzle",
+  out: './drizzle',
 
   // Database dialect
-  dialect: "postgresql",
+  dialect: 'postgresql',
 
   // Database credentials
   dbCredentials: {
     url: process.env.DATABASE_URL!,
   },
 
-  // Optional: verbose logging
-  verbose: true,
+  // Optional: must match the casing passed to drizzle() at runtime
+  casing: 'snake_case',
 
-  // Optional: strict mode
+  // Optional: verbose logging; strict prompts before risky push statements
+  verbose: true,
   strict: true,
+
+  // Optional: where the migrations journal table lives
+  // (defaults: table "__drizzle_migrations" in schema "drizzle")
+  migrations: {
+    table: '__drizzle_migrations',
+    schema: 'drizzle',
+  },
 });
 ```
+
+Note: drizzle-kit@1.0 (beta/RC) removes the `--strict` flag/`strict` behavior
+because `push` always prompts for confirmation on data-loss statements
+(`--force` to skip).
 
 ### Multiple Schema Files
 
 ```typescript
 export default defineConfig({
-  schema: "./src/db/schema/*.ts", // Glob pattern
+  schema: './src/db/schema/*.ts',  // Glob pattern
   // or
-  schema: ["./src/db/schema/users.ts", "./src/db/schema/posts.ts"],
+  schema: [
+    './src/db/schema/users.ts',
+    './src/db/schema/posts.ts',
+  ],
   // ...
 });
 ```
@@ -48,16 +77,18 @@ export default defineConfig({
 ### Environment-Specific Config
 
 ```typescript
-import { defineConfig } from "drizzle-kit";
+import { defineConfig } from 'drizzle-kit';
 
-const isProd = process.env.NODE_ENV === "production";
+const isProd = process.env.NODE_ENV === 'production';
 
 export default defineConfig({
-  schema: "./src/db/schema.ts",
-  out: "./drizzle",
-  dialect: "postgresql",
+  schema: './src/db/schema.ts',
+  out: './drizzle',
+  dialect: 'postgresql',
   dbCredentials: {
-    url: isProd ? process.env.DATABASE_URL! : process.env.DEV_DATABASE_URL!,
+    url: isProd
+      ? process.env.DATABASE_URL!
+      : process.env.DEV_DATABASE_URL!,
   },
 });
 ```
@@ -72,19 +103,25 @@ Generate SQL migrations from schema changes.
 
 ```bash
 npx drizzle-kit generate
+npx drizzle-kit generate --name=add_posts   # readable file name
+npx drizzle-kit generate --custom --name=seed-users   # empty file for hand-written SQL
 ```
 
 Output:
-
 ```
 drizzle/
   0000_initial.sql
-  0001_add_posts_table.sql
+  0001_add_posts.sql
   meta/
     0000_snapshot.json
     0001_snapshot.json
     _journal.json
 ```
+
+The `meta/` folder and `_journal.json` are generated migration state; commit them
+with the migrations. Use `generate` or `generate --custom` to register new
+migrations. Review and edit the generated SQL before applying it when needed;
+do not rewrite applied migration history or hand-invent journal/snapshot entries.
 
 ### migrate
 
@@ -103,7 +140,6 @@ npx drizzle-kit push
 ```
 
 **Use cases:**
-
 - Rapid prototyping
 - Local development
 - Schema experimentation
@@ -117,7 +153,6 @@ npx drizzle-kit pull
 ```
 
 **Use cases:**
-
 - Adopting Drizzle on existing project
 - Syncing schema from production
 - Reverse engineering
@@ -164,17 +199,17 @@ npx drizzle-kit migrate
 
 ```typescript
 // src/db/migrate.ts
-import { drizzle } from "drizzle-orm/postgres-js";
-import { migrate } from "drizzle-orm/postgres-js/migrator";
-import postgres from "postgres";
+import { drizzle } from 'drizzle-orm/postgres-js';
+import { migrate } from 'drizzle-orm/postgres-js/migrator';
+import postgres from 'postgres';
 
 const runMigrations = async () => {
   const connection = postgres(process.env.DATABASE_URL!, { max: 1 });
   const db = drizzle(connection);
 
-  console.log("Running migrations...");
-  await migrate(db, { migrationsFolder: "./drizzle" });
-  console.log("Migrations complete!");
+  console.log('Running migrations...');
+  await migrate(db, { migrationsFolder: './drizzle' });
+  console.log('Migrations complete!');
 
   await connection.end();
 };
@@ -184,7 +219,7 @@ runMigrations().catch(console.error);
 
 ```bash
 # Run before app starts
-node -r tsx src/db/migrate.ts
+npx tsx src/db/migrate.ts
 ```
 
 #### Option 2: CI/CD Migration
@@ -201,12 +236,12 @@ node -r tsx src/db/migrate.ts
 
 ```typescript
 // src/index.ts
-import { migrate } from "drizzle-orm/postgres-js/migrator";
-import { db } from "./db";
+import { migrate } from 'drizzle-orm/postgres-js/migrator';
+import { db } from './db';
 
 async function main() {
   // Run migrations on startup
-  await migrate(db, { migrationsFolder: "./drizzle" });
+  await migrate(db, { migrationsFolder: './drizzle' });
 
   // Start application
   app.listen(3000);
@@ -217,14 +252,14 @@ async function main() {
 
 ## Push vs Generate
 
-| Aspect             | `push`          | `generate` + `migrate` |
-| ------------------ | --------------- | ---------------------- |
-| Migration files    | No              | Yes                    |
-| Version control    | No              | Yes                    |
-| Rollback support   | No              | Manual                 |
-| Team collaboration | Difficult       | Easy                   |
-| Production use     | Not recommended | Recommended            |
-| Speed              | Fast            | Slower                 |
+| Aspect | `push` | `generate` + `migrate` |
+|--------|--------|------------------------|
+| Migration files | No | Yes |
+| Version control | No | Yes |
+| Rollback support | No | Manual |
+| Team collaboration | Difficult | Easy |
+| Production use | Not recommended | Recommended |
+| Speed | Fast | Slower |
 
 ### Transitioning from Push to Migrate
 
@@ -247,21 +282,20 @@ npx drizzle-kit generate
 
 ```typescript
 // Before
-export const users = pgTable("users", {
-  id: uuid("id").primaryKey().defaultRandom(),
-  email: text("email").notNull(),
+export const users = pgTable('users', {
+  id: uuid('id').primaryKey().defaultRandom(),
+  email: text('email').notNull(),
 });
 
 // After
-export const users = pgTable("users", {
-  id: uuid("id").primaryKey().defaultRandom(),
-  email: text("email").notNull(),
-  name: text("name"), // New nullable column
+export const users = pgTable('users', {
+  id: uuid('id').primaryKey().defaultRandom(),
+  email: text('email').notNull(),
+  name: text('name'),  // New nullable column
 });
 ```
 
 Generated SQL:
-
 ```sql
 ALTER TABLE "users" ADD COLUMN "name" text;
 ```
@@ -274,36 +308,33 @@ name: text('name').notNull().default('Unknown'),
 ```
 
 Generated SQL:
-
 ```sql
 ALTER TABLE "users" ADD COLUMN "name" text NOT NULL DEFAULT 'Unknown';
 ```
 
-### Renaming a Column
+### Renaming a Column or Table
 
-**Warning:** Drizzle may generate DROP + ADD instead of RENAME.
+`drizzle-kit generate` cannot tell a rename from a drop+create, so it prompts
+interactively ("column renamed or deleted?"). Answer "renamed" to get `ALTER ...
+RENAME`; answering wrong (or blindly accepting in CI) produces DROP + ADD and
+**loses data**. Always review the generated SQL for renames:
 
 ```sql
--- Manual migration
+-- What you want to see
 ALTER TABLE "users" RENAME COLUMN "name" TO "full_name";
 ```
 
 ### Adding an Index
 
 ```typescript
-export const users = pgTable(
-  "users",
-  {
-    // ...
-  },
-  table => [
-    index("users_email_idx").on(table.email), // New index
-  ]
-);
+export const users = pgTable('users', {
+  // ...
+}, (table) => [
+  index('users_email_idx').on(table.email),  // New index
+]);
 ```
 
 Generated SQL:
-
 ```sql
 CREATE INDEX "users_email_idx" ON "users" ("email");
 ```
@@ -311,16 +342,15 @@ CREATE INDEX "users_email_idx" ON "users" ("email");
 ### Adding a Foreign Key
 
 ```typescript
-export const posts = pgTable("posts", {
-  id: uuid("id").primaryKey().defaultRandom(),
-  authorId: uuid("author_id")
+export const posts = pgTable('posts', {
+  id: uuid('id').primaryKey().defaultRandom(),
+  authorId: uuid('author_id')
     .notNull()
-    .references(() => users.id), // New FK
+    .references(() => users.id),  // New FK
 });
 ```
 
 Generated SQL:
-
 ```sql
 ALTER TABLE "posts"
 ADD CONSTRAINT "posts_author_id_users_id_fk"
@@ -330,20 +360,17 @@ FOREIGN KEY ("author_id") REFERENCES "users"("id");
 ### Creating a New Table
 
 ```typescript
-export const comments = pgTable("comments", {
-  id: uuid("id").primaryKey().defaultRandom(),
-  content: text("content").notNull(),
-  postId: uuid("post_id")
-    .notNull()
-    .references(() => posts.id),
-  createdAt: timestamp("created_at").notNull().defaultNow(),
+export const comments = pgTable('comments', {
+  id: uuid('id').primaryKey().defaultRandom(),
+  content: text('content').notNull(),
+  postId: uuid('post_id').notNull().references(() => posts.id),
+  createdAt: timestamp('created_at').notNull().defaultNow(),
 });
 ```
 
 ### Dropping a Table
 
 Remove the table definition from schema. Generated SQL:
-
 ```sql
 DROP TABLE "old_table";
 ```
@@ -354,10 +381,17 @@ DROP TABLE "old_table";
 
 ### Adding Custom SQL
 
-Create a migration file manually:
+Generate an empty, journal-registered migration file — do NOT create SQL files
+in `drizzle/` by hand (they won't be tracked in `meta/_journal.json`):
+
+```bash
+npx drizzle-kit generate --custom --name=posts-search
+```
+
+Then fill in the generated file:
 
 ```sql
--- drizzle/0005_custom_migration.sql
+-- drizzle/0005_posts-search.sql
 
 -- Add full-text search
 ALTER TABLE posts ADD COLUMN search_vector tsvector;
@@ -379,7 +413,8 @@ CREATE TRIGGER posts_search_update
 ### Data Migrations
 
 ```sql
--- drizzle/0006_migrate_data.sql
+-- Generated with: npx drizzle-kit generate --custom --name=backfill-names
+-- drizzle/0006_backfill-names.sql
 
 -- Migrate data from old structure to new
 UPDATE users SET full_name = first_name || ' ' || last_name
@@ -393,16 +428,21 @@ UPDATE posts SET word_count = array_length(string_to_array(content, ' '), 1);
 
 ## Migration Table
 
-Drizzle tracks migrations in `__drizzle_migrations` table:
+Drizzle tracks applied migrations in `__drizzle_migrations`, which lives in the
+`drizzle` schema by default (not `public`):
 
 ```sql
-SELECT * FROM __drizzle_migrations;
+SELECT * FROM drizzle.__drizzle_migrations;
 ```
 
-| id  | hash   | created_at |
-| --- | ------ | ---------- |
-| 1   | abc123 | 2024-01-15 |
-| 2   | def456 | 2024-01-20 |
+| id | hash | created_at |
+|----|------|------------|
+| 1 | abc123 | 2024-01-15 |
+| 2 | def456 | 2024-01-20 |
+
+Change the location with the `migrations: { table, schema }` config option
+(must match between drizzle-kit and any programmatic `migrate()` call via
+`migrationsTable`/`migrationsSchema`).
 
 ---
 
@@ -475,12 +515,16 @@ COMMIT;
 
 ### 5. Handle Downtime
 
-For zero-downtime deployments:
+For zero-downtime deployments, build indexes without locking writes:
 
 ```sql
--- Create index concurrently (no lock)
 CREATE INDEX CONCURRENTLY users_email_idx ON users(email);
 ```
+
+Caveat: `CREATE INDEX CONCURRENTLY` cannot run inside a transaction, and the
+Drizzle migrator applies each migration file transactionally. Run concurrent
+index builds outside the migration pipeline (ops script/psql), or accept a
+brief lock with a plain `CREATE INDEX` in the migration.
 
 ### 6. Version Control
 
@@ -506,14 +550,14 @@ CREATE INDEX CONCURRENTLY users_email_idx ON users(email);
 
 ### "Migration already applied"
 
-```bash
-# Check migration status
-SELECT * FROM __drizzle_migrations;
-
-# If needed, manually mark as applied
-INSERT INTO __drizzle_migrations (hash, created_at)
-VALUES ('migration_hash', NOW());
+```sql
+-- Check migration status (note the drizzle schema)
+SELECT * FROM drizzle.__drizzle_migrations;
 ```
+
+If SQL ran outside the migrator, inspect the actual schema and migration history
+before proposing reconciliation. Use the installed migrator's supported recovery
+procedure; do not guess hashes or edit its tracking table as a routine fix.
 
 ### "Schema out of sync"
 
@@ -540,6 +584,6 @@ Use advisory locks:
 
 ```typescript
 await db.execute(sql`SELECT pg_advisory_lock(12345)`);
-await migrate(db, { migrationsFolder: "./drizzle" });
+await migrate(db, { migrationsFolder: './drizzle' });
 await db.execute(sql`SELECT pg_advisory_unlock(12345)`);
 ```

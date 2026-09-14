@@ -1,6 +1,6 @@
 # Pedro Nauck's Skills
 
-A curated collection of **128 agent skills** for Claude Code and compatible AI coding assistants — **40 original** (⭐️), **24 hand-picked** (💎), **18 marketing & business** (📣), plus **46 community** skills. Each skill provides domain-specific knowledge, best practices, and guided workflows that enhance an agent's ability to perform specialized tasks.
+A curated collection of **139 agent skills** for Claude Code and compatible AI coding assistants — **40 original** (⭐️), **42 hand-picked** (💎), **18 marketing & business** (📣), plus **39 community** skills. Each skill provides domain-specific knowledge, best practices, and guided workflows that enhance an agent's ability to perform specialized tasks.
 
 ## Installation
 
@@ -45,9 +45,9 @@ ln -s $(pwd)/skills/mine ~/.claude/skills/mine
 Skills are organized into four top-level buckets:
 
 - `skills/mine/` — 40 original skills authored in this repository (⭐️)
-- `skills/curated/` — 24 hand-picked community skills (💎)
+- `skills/curated/` — 42 hand-picked skills, including locally authored skills (💎)
 - `skills/marketing/` — 18 marketing, business, and writing skills (📣)
-- `skills/community/` — 46 broader community skills
+- `skills/community/` — 39 broader community skills
 
 ## Usage
 
@@ -108,15 +108,33 @@ Original skills authored in this repository.
 
 ### Curated 💎
 
-Hand-picked community skills maintained in this repository.
+Hand-picked skills maintained in this repository, including locally authored skills placed here by the owner.
 
 - **[agent-browser](./skills/curated/agent-browser)** — Automate browser interactions for testing, form filling, and data extraction
 - **[autoresearch](./skills/curated/autoresearch)** — Autonomously optimize any skill by running evals, mutating prompts, and keeping improvements
+- **[centrifugo](./skills/curated/centrifugo)** — Centrifugo real-time messaging -- WebSocket PUB/SUB, channels, JWT auth, scaling
 - **[context7](./skills/curated/context7)** — Retrieve up-to-date technical documentation, API references, and code examples for any library via Context7 CLI
 - **[documentation-writer](./skills/curated/documentation-writer)** — Diátaxis-guided technical writing across tutorials, how-to guides, reference, and explanation quadrants
 - **[effect-ts](./skills/curated/effect-ts)** — Effect-TS code including setup, data modeling, error handling, and `Context.Tag`
+- **[electron-builder](./skills/curated/electron-builder)** — Electron packaging, code signing, auto-updates, and release workflows
+- **[electron-dev](./skills/curated/electron-dev)** — Electron development with Electron Vite and Builder -- main/renderer processes, IPC
+- **[electron-release](./skills/curated/electron-release)** — Electron production builds, notarization, auto-updates, and releases
+- **[elysia](./skills/curated/elysia)** — Type-safe APIs with Elysia including routing, validation, plugins, and error handling
+- **[es-toolkit](./skills/curated/es-toolkit)** — Modern utility library as a lodash replacement -- array, object, string operations
+- **[evolution-api](./skills/curated/evolution-api)** — Evolution API for WhatsApp messaging, instance management, and chatbot orchestration
 - **[exa-web-search-free](./skills/curated/exa-web-search-free)** — Free AI-powered web, code, and company search via Exa MCP
 - **[extreme-software-optimization](./skills/curated/extreme-software-optimization)** — Profile-driven performance optimization with behavior proofs, opportunity scoring, and isomorphism guarantees
+- **[firecrawl-agent](./skills/curated/firecrawl-agent)** — Structured web extraction with the Firecrawl agent
+- **[firecrawl-crawl](./skills/curated/firecrawl-crawl)** — Crawl multiple pages from a website
+- **[firecrawl-developer-index](./skills/curated/firecrawl-developer-index)** — Search developer documentation, issues, and code references
+- **[firecrawl-download](./skills/curated/firecrawl-download)** — Download website content to local files
+- **[firecrawl-interact](./skills/curated/firecrawl-interact)** — Interact with forms, pagination, and browser pages
+- **[firecrawl-map](./skills/curated/firecrawl-map)** — Discover URLs within a website
+- **[firecrawl-monitor](./skills/curated/firecrawl-monitor)** — Monitor pages for content changes
+- **[firecrawl-parse](./skills/curated/firecrawl-parse)** — Parse local documents and files
+- **[firecrawl-research-index](./skills/curated/firecrawl-research-index)** — Search scientific papers and research literature
+- **[firecrawl-scrape](./skills/curated/firecrawl-scrape)** — Extract content from a known URL
+- **[firecrawl-search](./skills/curated/firecrawl-search)** — Search the web and gather sources
 - **[firecrawl](./skills/curated/firecrawl)** — Web scraping, search, crawling, and browser automation via the Firecrawl CLI
 - **[hono](./skills/curated/hono)** — Hono framework development with documentation search and API reference
 - **[lesson-learned](./skills/curated/lesson-learned)** — Extract software engineering lessons from git history and recent code changes
@@ -169,7 +187,6 @@ Broader community skills.
 - **[better-auth-best-practices](./skills/community/better-auth-best-practices)** — Better Auth TypeScript authentication framework integration
 - **[better-auth-organization-best-practices](./skills/community/better-auth-organization-best-practices)** — Multi-tenant organizations, RBAC, teams, members, and invitations with Better Auth's organization plugin
 - **[building-components](./skills/community/building-components)** — Accessible, composable UI components with design tokens and documentation
-- **[centrifugo](./skills/community/centrifugo)** — Centrifugo real-time messaging -- WebSocket PUB/SUB, channels, JWT auth, scaling
 - **[cloudflare](./skills/community/cloudflare)** — Cloudflare platform -- Workers, Pages, storage, AI, networking, and security
 - **[crafting-effective-readmes](./skills/community/crafting-effective-readmes)** — Templates and guidance for writing README files matched to audience and project
 - **[creating-spec](./skills/community/creating-spec)** — Comprehensive technical specs for SDK gaps, features, or system centralization
@@ -177,12 +194,6 @@ Broader community skills.
 - **[devops-engineer](./skills/community/devops-engineer)** — Dockerfiles, CI/CD pipelines, Kubernetes manifests, and Terraform/Pulumi templates
 - **[drizzle-orm](./skills/community/drizzle-orm)** — Drizzle ORM best practices -- schemas, queries, mutations, transactions, migrations
 - **[drizzle-postgres](./skills/community/drizzle-postgres)** — PostgreSQL and Drizzle ORM best practices for type-safe database apps
-- **[electron-builder](./skills/community/electron-builder)** — Electron packaging, code signing, auto-updates, and release workflows
-- **[electron-dev](./skills/community/electron-dev)** — Electron development with Electron Vite and Builder -- main/renderer processes, IPC
-- **[electron-release](./skills/community/electron-release)** — Electron production builds, notarization, auto-updates, and releases
-- **[elysia](./skills/community/elysia)** — Type-safe APIs with Elysia including routing, validation, plugins, and error handling
-- **[es-toolkit](./skills/community/es-toolkit)** — Modern utility library as a lodash replacement -- array, object, string operations
-- **[evolution-api](./skills/community/evolution-api)** — Evolution API for WhatsApp messaging, instance management, and chatbot orchestration
 - **[executing-plans](./skills/community/executing-plans)** — Execute implementation plans in batches with review checkpoints
 - **[find-rules](./skills/community/find-rules)** — Discover project rules, coding standards, and architectural guidelines
 - **[find-skills](./skills/community/find-skills)** — Discover and install agent skills from the open agent skills ecosystem
@@ -230,6 +241,23 @@ skills/<bucket>/<skill-name>/
 ```
 
 ## Contributing
+
+### Updating imported skills
+
+Third-party skills are tracked in [`upstream/sources.json`](./upstream/sources.json), including original repositories, renamed skills, and sources that are retired or still unverified. Keep their published files in `skills/` and use the maintainer command:
+
+```bash
+make check
+make update
+# Or update one skill:
+make update SKILL=context7
+```
+
+Use `make status` for the offline inventory, `make check BUCKET=curated` to select a bucket, and `make` to see all shortcuts.
+
+This runs the native `npx skills add` in isolated staging projects, preserves bucket paths and published names, and protects subsequent local edits. It uses separate catalogue locks under `upstream/`; the root development-environment lock is untouched. See [the maintenance guide](./docs/upstream-skills.md) for setup, backups, source exceptions, and adding a new tracked skill. Bare `npx skills check` is not a read-only catalogue check in the pinned CLI version.
+
+### Adding skills
 
 To add a new skill:
 

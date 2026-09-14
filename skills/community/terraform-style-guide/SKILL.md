@@ -1,6 +1,8 @@
 ---
 name: terraform-style-guide
 description: Generate Terraform HCL code following HashiCorp's official style conventions and best practices. Use when writing, reviewing, or generating Terraform configurations.
+metadata:
+  lifecycle-status: active
 ---
 
 # Terraform Style Guide
@@ -21,26 +23,26 @@ When generating Terraform code:
 
 ## File Organization
 
-| File           | Purpose                                     |
-| -------------- | ------------------------------------------- |
+| File | Purpose |
+|------|---------|
 | `terraform.tf` | Terraform and provider version requirements |
-| `providers.tf` | Provider configurations                     |
-| `main.tf`      | Primary resources and data sources          |
-| `variables.tf` | Input variable declarations (alphabetical)  |
-| `outputs.tf`   | Output value declarations (alphabetical)    |
-| `locals.tf`    | Local value declarations                    |
+| `providers.tf` | Provider configurations |
+| `main.tf` | Primary resources and data sources |
+| `variables.tf` | Input variable declarations (alphabetical) |
+| `outputs.tf` | Output value declarations (alphabetical) |
+| `locals.tf` | Local value declarations |
 
 ### Example Structure
 
 ```hcl
 # terraform.tf
 terraform {
-  required_version = ">= 1.7"
+  required_version = ">= 1.14"
 
   required_providers {
     aws = {
       source  = "hashicorp/aws"
-      version = "~> 5.0"
+      version = "~> 6.0"
     }
   }
 }
@@ -222,69 +224,29 @@ resource "aws_cloudwatch_metric_alarm" "cpu" {
 
 ## Security Best Practices
 
-When generating code, apply security hardening:
-
-- Enable encryption at rest by default
-- Configure private networking where applicable
-- Apply principle of least privilege for security groups
-- Enable logging and monitoring
-- Never hardcode credentials or secrets
-- Mark sensitive outputs with `sensitive = true`
-
-### Example: Secure S3 Bucket
-
-```hcl
-resource "aws_s3_bucket" "data" {
-  bucket = "${var.project}-${var.environment}-data"
-  tags   = local.common_tags
-}
-
-resource "aws_s3_bucket_versioning" "data" {
-  bucket = aws_s3_bucket.data.id
-
-  versioning_configuration {
-    status = "Enabled"
-  }
-}
-
-resource "aws_s3_bucket_server_side_encryption_configuration" "data" {
-  bucket = aws_s3_bucket.data.id
-
-  rule {
-    apply_server_side_encryption_by_default {
-      sse_algorithm     = "aws:kms"
-      kms_master_key_id = aws_kms_key.s3.arn
-    }
-  }
-}
-
-resource "aws_s3_bucket_public_access_block" "data" {
-  bucket = aws_s3_bucket.data.id
-
-  block_public_acls       = true
-  block_public_policy     = true
-  ignore_public_acls      = true
-  restrict_public_buckets = true
-}
-```
+Refer to SECURITY.md. It includes guidance on encrypting resources,
+preventing sensitive data in state, and secure configurations.
 
 ## Version Pinning
 
 ```hcl
 terraform {
-  required_version = ">= 1.7"
+  required_version = ">= 1.14"
 
   required_providers {
     aws = {
       source  = "hashicorp/aws"
-      version = "~> 5.0"  # Allow minor updates
+      version = "~> 6.0"
     }
   }
 }
 ```
 
-**Version constraint operators:**
+Use the latest major version of each provider and the latest minor version of
+Terraform, unless otherwise constrained by a dependency lock file or by other
+modules used by the configuration.
 
+**Version constraint operators:**
 - `= 1.0.0` - Exact version
 - `>= 1.0.0` - Greater than or equal
 - `~> 1.0` - Allow rightmost component to increment
@@ -314,14 +276,12 @@ provider "aws" {
 ## Version Control
 
 **Never commit:**
-
 - `terraform.tfstate`, `terraform.tfstate.backup`
 - `.terraform/` directory
 - `*.tfplan`
 - `.tfvars` files with sensitive data
 
 **Always commit:**
-
 - All `.tf` configuration files
 - `.terraform.lock.hcl` (dependency lock file)
 
@@ -335,7 +295,6 @@ terraform validate
 ```
 
 Additional tools:
-
 - `tflint` - Linting and best practices
 - `checkov` / `tfsec` - Security scanning
 
@@ -354,4 +313,4 @@ Additional tools:
 
 ---
 
-_Based on: [HashiCorp Terraform Style Guide](https://developer.hashicorp.com/terraform/language/style)_
+*Based on: [HashiCorp Terraform Style Guide](https://developer.hashicorp.com/terraform/language/style)*

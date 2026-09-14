@@ -42,15 +42,15 @@ use ratatui::style::Stylize;
 
 ### Color Semantic Mapping
 
-| Purpose         | Style            | Example                   |
-| --------------- | ---------------- | ------------------------- |
-| Primary action  | `.cyan()`        | Selected item, active tab |
-| Success         | `.green()`       | Completion, valid input   |
-| Error           | `.red()`         | Errors, invalid input     |
-| Warning         | `.yellow()`      | Caution (use sparingly)   |
-| Muted/secondary | `.dim()`         | Help text, metadata       |
-| Accent          | `.magenta()`     | Highlights, special items |
-| Key bindings    | `.bold().cyan()` | Keyboard shortcuts        |
+| Purpose | Style | Example |
+|---------|-------|---------|
+| Primary action | `.cyan()` | Selected item, active tab |
+| Success | `.green()` | Completion, valid input |
+| Error | `.red()` | Errors, invalid input |
+| Warning | `.yellow()` | Caution (use sparingly) |
+| Muted/secondary | `.dim()` | Help text, metadata |
+| Accent | `.magenta()` | Highlights, special items |
+| Key bindings | `.bold().cyan()` | Keyboard shortcuts |
 
 ## What to Avoid
 

@@ -1,5 +1,5 @@
 ---
-name: better-auth-organization-best-practices
+name: "better-auth-organization-best-practices"
 description: Configure multi-tenant organizations, manage members and invitations, define custom roles and permissions, set up teams, and implement RBAC using Better Auth's organization plugin. Use when users need org setup, team management, member roles, access control, or the Better Auth organization plugin.
 ---
 
@@ -7,7 +7,7 @@ description: Configure multi-tenant organizations, manage members and invitation
 
 1. Add `organization()` plugin to server config
 2. Add `organizationClient()` plugin to client config
-3. Run `npx @better-auth/cli migrate`
+3. Run `npx auth@latest migrate` (built-in adapter) or generate + push for Drizzle/Prisma
 4. Verify: check that organization, member, invitation tables exist in your database
 
 ```ts
@@ -82,6 +82,7 @@ await auth.api.createOrganization({
 ```
 
 **Note**: The `userId` parameter cannot be used alongside session headers.
+
 
 ## Active Organizations
 
@@ -240,9 +241,9 @@ import { organization } from "better-auth/plugins";
 export const auth = betterAuth({
   plugins: [
     organization({
-      teams: {
-        enabled: true,
-      },
+        teams: {
+            enabled: true
+        }
     }),
   ],
 });
@@ -267,10 +268,10 @@ Set active team with `setActiveTeam({ teamId })`.
 ```ts
 organization({
   teams: {
-    maximumTeams: 20, // Max teams per org
-    maximumMembersPerTeam: 50, // Max members per team
-    allowRemovingAllTeams: false, // Prevent removing last team
-  },
+      maximumTeams: 20, // Max teams per org
+      maximumMembersPerTeam: 50, // Max members per team
+      allowRemovingAllTeams: false, // Prevent removing last team
+  }
 });
 ```
 
@@ -285,9 +286,9 @@ import { dynamicAccessControl } from "@better-auth/organization/addons";
 export const auth = betterAuth({
   plugins: [
     organization({
-      dynamicAccessControl: {
-        enabled: true,
-      },
+        dynamicAccessControl: {
+            enabled: true
+        }
     }),
   ],
 });

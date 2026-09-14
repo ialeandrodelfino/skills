@@ -10,17 +10,17 @@ Create and manage Hetzner Cloud servers using the `hcloud` CLI.
 ## Prerequisites
 
 - `hcloud` CLI installed (via mise: `hcloud = "latest"`)
-- Authenticated: `hcloud context create <name>` with API token from https://console.hetzner.cloud
+- Authenticated: `hcloud context create <name>` with API token from <https://console.hetzner.cloud>
 
 ## Cloud Firewalls
 
-Reusable firewall profiles applied at server creation. Firewalls can be swapped on running servers — use `apply-to-resource` / `remove-from-resource`.
+Reusable firewall profiles applied at server creation. Firewalls can be swapped on running servers - use `apply-to-resource` / `remove-from-resource`.
 
-| Firewall  | Rules                                       | Use case                                                       |
-| --------- | ------------------------------------------- | -------------------------------------------------------------- |
-| `ts-ssh`  | UDP 41641 (Tailscale) + TCP 22 (SSH)        | Dev boxes — initial setup, swap to `ts-only` after `tsonlyssh` |
-| `ts-only` | UDP 41641 (Tailscale)                       | Tailscale-only access, no public ports                         |
-| `ts-web`  | UDP 41641 (Tailscale) + TCP 80,443 (HTTP/S) | Servers accepting public web traffic                           |
+| Firewall | Rules | Use case |
+|----------|-------|----------|
+| `ts-ssh` | UDP 41641 (Tailscale) + TCP 22 (SSH) | Dev boxes - initial setup, swap to `ts-only` after `tsonlyssh` |
+| `ts-only` | UDP 41641 (Tailscale) | Tailscale-only access, no public ports |
+| `ts-web` | UDP 41641 (Tailscale) + TCP 80,443 (HTTP/S) | Servers accepting public web traffic |
 
 ### Swapping firewalls on a running server
 
@@ -66,6 +66,13 @@ hcloud server create \
   --without-ipv4
 ```
 
+**IPv6-only caveat:** `hcloud server ip <name>` and `hcssh` assume IPv4 -
+`server ip` prints nothing useful and hcssh reads only the ipv4 column, so
+the managed Host entries come out empty. For a `--without-ipv4` server use
+`hcloud server ip --ipv6 <name>` (returns the /64; the host is `...::1`) and
+write the SSH Host entry by hand, or just reach it over Tailscale once
+`ts up` has run.
+
 ### With user-data (auto-run install script)
 
 ```bash
@@ -108,7 +115,7 @@ Ubuntu cloud images don't include swap by default. Add swap via cloud-init at cr
 # Create server with 16GB swap (1:1 ratio for 16GB RAM server)
 hcloud server create \
   --name dev \
-  --type cax33 \
+  --type cax31 \
   --image ubuntu-24.04 \
   --location nbg1 \
   --ssh-key connorads \
@@ -143,73 +150,16 @@ ssh connor@$(hcloud server ip dev) "sudo fallocate -l 16G /swapfile && \
 ssh connor@$(hcloud server ip dev) "free -h"
 ```
 
-### Common commands
+### Reference lookups
+
+Server types, locations, images, SSH keys, and day-to-day server ops are live queries - look them up, don't memorise:
 
 ```bash
-# List servers
-hcloud server list
-
-# Get server IP
-hcloud server ip dev
-
-# SSH to server
-ssh connor@$(hcloud server ip dev)
-
-# Delete server
-hcloud server delete dev
-
-# Power operations
-hcloud server poweroff dev
-hcloud server poweron dev
-hcloud server reboot dev
-
-# Rebuild (reinstall OS, keeps IP)
-hcloud server rebuild dev --image ubuntu-24.04
-```
-
-### Server types (commonly used)
-
-Prices in USD for EU regions (US regions ~20% higher):
-
-| Type  | Arch | vCPU | RAM  | Disk  | ~USD/mo |
-| ----- | ---- | ---- | ---- | ----- | ------- |
-| cax11 | ARM  | 2    | 4GB  | 40GB  | $4.50   |
-| cax21 | ARM  | 4    | 8GB  | 80GB  | $8      |
-| cax31 | ARM  | 8    | 16GB | 160GB | $16     |
-| cpx21 | x86  | 3    | 4GB  | 80GB  | $9      |
-| cpx31 | x86  | 4    | 8GB  | 160GB | $18     |
-
-Full list: `hcloud server-type list`
-
-### Locations
-
-| ID   | City        | Country |
-| ---- | ----------- | ------- |
-| fsn1 | Falkenstein | DE      |
-| nbg1 | Nuremberg   | DE      |
-| hel1 | Helsinki    | FI      |
-| ash  | Ashburn     | US      |
-| hil  | Hillsboro   | US      |
-| sin  | Singapore   | SG      |
-
-### SSH keys
-
-```bash
-# List keys
-hcloud ssh-key list
-
-# Add a key
-hcloud ssh-key create --name mykey --public-key-from-file ~/.ssh/id_ed25519.pub
-```
-
-### Images
-
-```bash
-# List system images
-hcloud image list --type system
-
-# ARM images
+hcloud server-type list                              # ARM cax* preferred (best value); cpx* x86 fallback
+hcloud location list                                 # nbg1 is the usual default here
 hcloud image list --type system --architecture arm
+hcloud ssh-key list
+hcloud server list|ip|delete|poweroff|poweron|reboot|rebuild   # rebuild keeps the IP
 ```
 
 ## Cloning GitHub repos (SSH agent forwarding)
@@ -258,8 +208,8 @@ hcssh --dry-run    # preview without writing
 
 This creates two Host entries per server inside a managed block (`# BEGIN/END hetzner-managed`):
 
-- `<name>` — no agent forwarding (safe for AI agents)
-- `<name>-agent` — with agent forwarding (for git push/pull to GitHub)
+- `<name>` - no agent forwarding (safe for AI agents)
+- `<name>-agent` - with agent forwarding (for git push/pull to GitHub)
 
 Run `hcssh` again after creating/deleting servers to keep SSH config in sync.
 This enables VS Code Remote-SSH to show the server in the dropdown.
@@ -272,7 +222,6 @@ Fallback: Hetzner Cloud Console VNC if locked out.
 
 ## Notes
 
-- ARM (cax\*) servers are best value for dev work
 - IPv6-only saves money but requires Tailscale/cloudflared for access from IPv4 networks
 - User-data runs as root on first boot
 - The dotfiles install.sh handles creating user `connor`, installing Nix, home-manager, and mise tools

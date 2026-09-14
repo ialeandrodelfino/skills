@@ -1,6 +1,6 @@
 ---
 name: design-spec-extraction
-description: Extract comprehensive, production-ready JSON design specifications from visual inputs using a 7-pass serial architecture with cross-validation. Use when converting screenshots, mockups, or design exports into structured design tokens, component specs, accessibility analysis, and developer handoff artifacts.
+description: Extract comprehensive JSON design specifications from visual sources including Figma exports, UI mockups, screenshots, or live website captures. Produces W3C DTCG-compliant output with component trees, suitable for code generation, design documentation, and developer handoff.
 ---
 
 # Design Specification Extraction
@@ -36,20 +36,20 @@ The extraction produces JSON following the W3C Design Tokens Community Group (DT
 Before starting extraction, create the output directory:
 
 ```bash
-mkdir -p .tmp-design-specs/{project-name}
+mkdir -p .design-specs/{project-name}
 ```
 
 ### Required File Outputs
 
 | Pass | Output File | Description |
 |------|-------------|-------------|
-| 1 | `.tmp-design-specs/{project}/pass-1-layout.json` | Layout and structure |
-| 2 | `.tmp-design-specs/{project}/pass-2-colors.json` | Color tokens |
-| 3 | `.tmp-design-specs/{project}/pass-3-typography.json` | Typography tokens |
-| 4 | `.tmp-design-specs/{project}/pass-4-components.json` | Component tree |
-| 5 | `.tmp-design-specs/{project}/pass-5-spacing.json` | Spacing and dimensions |
-| 6 | `.tmp-design-specs/{project}/pass-6-states.json` | States and accessibility |
-| 7 | `.tmp-design-specs/{project}/design-spec.json` | **Final consolidated output** |
+| 1 | `.design-specs/{project}/pass-1-layout.json` | Layout and structure |
+| 2 | `.design-specs/{project}/pass-2-colors.json` | Color tokens |
+| 3 | `.design-specs/{project}/pass-3-typography.json` | Typography tokens |
+| 4 | `.design-specs/{project}/pass-4-components.json` | Component tree |
+| 5 | `.design-specs/{project}/pass-5-spacing.json` | Spacing and dimensions |
+| 6 | `.design-specs/{project}/pass-6-states.json` | States and accessibility |
+| 7 | `.design-specs/{project}/design-spec.json` | **Final consolidated output** |
 
 ### Why File-Based?
 
@@ -106,7 +106,7 @@ You are Pass 1 of a 7-pass design specification extraction system. Your focus: L
 ## CRITICAL REQUIREMENT
 You MUST write your output to a JSON file. This is mandatory - do not just return JSON in your response.
 
-OUTPUT FILE: `.tmp-design-specs/{project}/pass-1-layout.json`
+OUTPUT FILE: `.design-specs/{project}/pass-1-layout.json`
 
 Use the Write tool to save your analysis as valid JSON to this file.
 
@@ -188,7 +188,7 @@ Return JSON:
 Use pixel values. Be precise with bounds. Note confidence level for uncertain areas.
 
 ## FINAL STEP - MANDATORY
-Use the Write tool to save this JSON to: `.tmp-design-specs/{project}/pass-1-layout.json`
+Use the Write tool to save this JSON to: `.design-specs/{project}/pass-1-layout.json`
 Do NOT proceed without writing the file. Confirm the file was written successfully.
 ```
 
@@ -206,14 +206,14 @@ You are Pass 2 of a 7-pass design specification extraction system. Your focus: C
 ## CRITICAL REQUIREMENT
 You MUST write your output to a JSON file. This is mandatory - do not just return JSON in your response.
 
-OUTPUT FILE: `.tmp-design-specs/{project}/pass-2-colors.json`
+OUTPUT FILE: `.design-specs/{project}/pass-2-colors.json`
 
-First, read the Pass 1 output: `.tmp-design-specs/{project}/pass-1-layout.json`
+First, read the Pass 1 output: `.design-specs/{project}/pass-1-layout.json`
 Then use the Write tool to save your analysis as valid JSON.
 
 ## Input
 - Screenshot: [attached image]
-- Layout data from Pass 1: Read from `.tmp-design-specs/{project}/pass-1-layout.json`
+- Layout data from Pass 1: Read from `.design-specs/{project}/pass-1-layout.json`
 
 ## Your Task
 
@@ -329,7 +329,7 @@ Return JSON:
 Use DTCG $value and $type syntax. Include $description for AI readability.
 
 ## FINAL STEP - MANDATORY
-Use the Write tool to save this JSON to: `.tmp-design-specs/{project}/pass-2-colors.json`
+Use the Write tool to save this JSON to: `.design-specs/{project}/pass-2-colors.json`
 Do NOT proceed without writing the file. Confirm the file was written successfully.
 ```
 
@@ -347,18 +347,18 @@ You are Pass 3 of a 7-pass design specification extraction system. Your focus: T
 ## CRITICAL REQUIREMENT
 You MUST write your output to a JSON file. This is mandatory - do not just return JSON in your response.
 
-OUTPUT FILE: `.tmp-design-specs/{project}/pass-3-typography.json`
+OUTPUT FILE: `.design-specs/{project}/pass-3-typography.json`
 
 First, read previous pass outputs:
-- `.tmp-design-specs/{project}/pass-1-layout.json`
-- `.tmp-design-specs/{project}/pass-2-colors.json`
+- `.design-specs/{project}/pass-1-layout.json`
+- `.design-specs/{project}/pass-2-colors.json`
 
 Then use the Write tool to save your analysis as valid JSON.
 
 ## Input
 - Screenshot: [attached image]
-- Layout data from Pass 1: Read from `.tmp-design-specs/{project}/pass-1-layout.json`
-- Color data from Pass 2: Read from `.tmp-design-specs/{project}/pass-2-colors.json`
+- Layout data from Pass 1: Read from `.design-specs/{project}/pass-1-layout.json`
+- Color data from Pass 2: Read from `.design-specs/{project}/pass-2-colors.json`
 
 ## Your Task
 
@@ -518,7 +518,7 @@ Return JSON:
 Reference tokens using {token.path} syntax per DTCG specification.
 
 ## FINAL STEP - MANDATORY
-Use the Write tool to save this JSON to: `.tmp-design-specs/{project}/pass-3-typography.json`
+Use the Write tool to save this JSON to: `.design-specs/{project}/pass-3-typography.json`
 Do NOT proceed without writing the file. Confirm the file was written successfully.
 ```
 
@@ -536,20 +536,20 @@ You are Pass 4 of a 7-pass design specification extraction system. Your focus: C
 ## CRITICAL REQUIREMENT
 You MUST write your output to a JSON file. This is mandatory - do not just return JSON in your response.
 
-OUTPUT FILE: `.tmp-design-specs/{project}/pass-4-components.json`
+OUTPUT FILE: `.design-specs/{project}/pass-4-components.json`
 
 First, read previous pass outputs:
-- `.tmp-design-specs/{project}/pass-1-layout.json`
-- `.tmp-design-specs/{project}/pass-2-colors.json`
-- `.tmp-design-specs/{project}/pass-3-typography.json`
+- `.design-specs/{project}/pass-1-layout.json`
+- `.design-specs/{project}/pass-2-colors.json`
+- `.design-specs/{project}/pass-3-typography.json`
 
 Then use the Write tool to save your analysis as valid JSON.
 
 ## Input
 - Screenshot: [attached image]
-- Layout data from Pass 1: Read from `.tmp-design-specs/{project}/pass-1-layout.json`
-- Color data from Pass 2: Read from `.tmp-design-specs/{project}/pass-2-colors.json`
-- Typography data from Pass 3: Read from `.tmp-design-specs/{project}/pass-3-typography.json`
+- Layout data from Pass 1: Read from `.design-specs/{project}/pass-1-layout.json`
+- Color data from Pass 2: Read from `.design-specs/{project}/pass-2-colors.json`
+- Typography data from Pass 3: Read from `.design-specs/{project}/pass-3-typography.json`
 
 ## Your Task
 
@@ -715,7 +715,7 @@ Return JSON:
 Be exhaustive. Every visible interactive or content element must be cataloged.
 
 ## FINAL STEP - MANDATORY
-Use the Write tool to save this JSON to: `.tmp-design-specs/{project}/pass-4-components.json`
+Use the Write tool to save this JSON to: `.design-specs/{project}/pass-4-components.json`
 Do NOT proceed without writing the file. Confirm the file was written successfully.
 ```
 
@@ -733,18 +733,18 @@ You are Pass 5 of a 7-pass design specification extraction system. Your focus: S
 ## CRITICAL REQUIREMENT
 You MUST write your output to a JSON file. This is mandatory - do not just return JSON in your response.
 
-OUTPUT FILE: `.tmp-design-specs/{project}/pass-5-spacing.json`
+OUTPUT FILE: `.design-specs/{project}/pass-5-spacing.json`
 
 First, read previous pass outputs:
-- `.tmp-design-specs/{project}/pass-1-layout.json`
-- `.tmp-design-specs/{project}/pass-4-components.json`
+- `.design-specs/{project}/pass-1-layout.json`
+- `.design-specs/{project}/pass-4-components.json`
 
 Then use the Write tool to save your analysis as valid JSON.
 
 ## Input
 - Screenshot: [attached image]
-- Layout data from Pass 1: Read from `.tmp-design-specs/{project}/pass-1-layout.json`
-- Component data from Pass 4: Read from `.tmp-design-specs/{project}/pass-4-components.json`
+- Layout data from Pass 1: Read from `.design-specs/{project}/pass-1-layout.json`
+- Component data from Pass 4: Read from `.design-specs/{project}/pass-4-components.json`
 
 ## Your Task
 
@@ -871,7 +871,7 @@ Return JSON:
 Detect patterns and express them. Use 4px or 8px base unit convention.
 
 ## FINAL STEP - MANDATORY
-Use the Write tool to save this JSON to: `.tmp-design-specs/{project}/pass-5-spacing.json`
+Use the Write tool to save this JSON to: `.design-specs/{project}/pass-5-spacing.json`
 Do NOT proceed without writing the file. Confirm the file was written successfully.
 ```
 
@@ -889,18 +889,18 @@ You are Pass 6 of a 7-pass design specification extraction system. Your focus: S
 ## CRITICAL REQUIREMENT
 You MUST write your output to a JSON file. This is mandatory - do not just return JSON in your response.
 
-OUTPUT FILE: `.tmp-design-specs/{project}/pass-6-states.json`
+OUTPUT FILE: `.design-specs/{project}/pass-6-states.json`
 
 First, read previous pass outputs:
-- `.tmp-design-specs/{project}/pass-2-colors.json`
-- `.tmp-design-specs/{project}/pass-4-components.json`
+- `.design-specs/{project}/pass-2-colors.json`
+- `.design-specs/{project}/pass-4-components.json`
 
 Then use the Write tool to save your analysis as valid JSON.
 
 ## Input
 - Screenshot: [attached image]
-- Component data from Pass 4: Read from `.tmp-design-specs/{project}/pass-4-components.json`
-- Color data from Pass 2: Read from `.tmp-design-specs/{project}/pass-2-colors.json`
+- Component data from Pass 4: Read from `.design-specs/{project}/pass-4-components.json`
+- Color data from Pass 2: Read from `.design-specs/{project}/pass-2-colors.json`
 
 ## Your Task
 
@@ -1086,7 +1086,7 @@ Return JSON:
 Infer states from visual context. When states are not visible, provide reasonable defaults.
 
 ## FINAL STEP - MANDATORY
-Use the Write tool to save this JSON to: `.tmp-design-specs/{project}/pass-6-states.json`
+Use the Write tool to save this JSON to: `.design-specs/{project}/pass-6-states.json`
 Do NOT proceed without writing the file. Confirm the file was written successfully.
 ```
 
@@ -1104,15 +1104,15 @@ You are Pass 7 (FINAL) of a 7-pass design specification extraction system. Your 
 ## CRITICAL REQUIREMENT
 You MUST write your final output to a JSON file. This is mandatory - do not just return JSON in your response.
 
-OUTPUT FILE: `.tmp-design-specs/{project}/design-spec.json`
+OUTPUT FILE: `.design-specs/{project}/design-spec.json`
 
 First, read ALL previous pass outputs:
-- `.tmp-design-specs/{project}/pass-1-layout.json`
-- `.tmp-design-specs/{project}/pass-2-colors.json`
-- `.tmp-design-specs/{project}/pass-3-typography.json`
-- `.tmp-design-specs/{project}/pass-4-components.json`
-- `.tmp-design-specs/{project}/pass-5-spacing.json`
-- `.tmp-design-specs/{project}/pass-6-states.json`
+- `.design-specs/{project}/pass-1-layout.json`
+- `.design-specs/{project}/pass-2-colors.json`
+- `.design-specs/{project}/pass-3-typography.json`
+- `.design-specs/{project}/pass-4-components.json`
+- `.design-specs/{project}/pass-5-spacing.json`
+- `.design-specs/{project}/pass-6-states.json`
 
 Then use the Write tool to save your consolidated analysis as valid JSON.
 
@@ -1242,7 +1242,7 @@ Return complete JSON matching the schema at references/design-tokens-schema.json
 The final file MUST be valid JSON. Validate all references resolve correctly.
 
 ## FINAL STEP - MANDATORY
-Use the Write tool to save this JSON to: `.tmp-design-specs/{project}/design-spec.json`
+Use the Write tool to save this JSON to: `.design-specs/{project}/design-spec.json`
 This is the FINAL deliverable. Do NOT proceed without writing the file. Confirm the file was written successfully.
 ```
 
@@ -1256,43 +1256,42 @@ Before launching any pass:
 
 1. **Create the output directory:**
 ```bash
-mkdir -p .tmp-design-specs/{project-name}
+mkdir -p .design-specs/{project-name}
 ```
 
 2. **Each pass MUST write to its designated file** - Subtask agents will use the Write tool
 3. **Verify file exists before proceeding to next pass** - Read the file to confirm
 
-### Delegating Extraction Passes
+### Using Task Subtask Agents
 
-Execute each pass as a delegated worker. **Replace `{project}` with actual project name in ALL prompts.**
+Execute each pass as a dedicated subtask agent. **Replace `{project}` with actual project name in ALL prompts.**
 
 ```javascript
-// Step 0: Create directory for intermediate files
-mkdir -p .tmp-design-specs/my-design
+// Step 0: Create directory
+mkdir -p .design-specs/my-design
 
-// Steps 1-6: Delegate each pass sequentially
-teams(action: 'delegate', tasks: [{
-  text: '[Pass 1 prompt - worker MUST write to .tmp-design-specs/my-design/pass-1-layout.json]',
-  assignee: 'design-pass-1'
-}])
-// VERIFY: Read .tmp-design-specs/my-design/pass-1-layout.json exists
+// Step 1: Pass 1 - Layout
+Task({
+  prompt: "[Pass 1 prompt - agent MUST write to .design-specs/my-design/pass-1-layout.json]",
+  model: "sonnet"
+});
+// VERIFY: Read .design-specs/my-design/pass-1-layout.json exists
 
-// Continue for Passes 2-6, verifying each file exists ...
+// Step 2: Pass 2 - Colors
+Task({
+  prompt: "[Pass 2 prompt - agent reads pass-1, MUST write to pass-2-colors.json]",
+  model: "sonnet"
+});
+// VERIFY: Read .design-specs/my-design/pass-2-colors.json exists
 
-// Step 7: Final Consolidation
-teams(action: 'delegate', tasks: [{
-  text: '[Pass 7 prompt - worker reads ALL pass files, MUST write to design-spec.json]',
-  assignee: 'design-consolidator'
-}])
-// VERIFY: Read .tmp-design-specs/my-design/design-spec.json exists
+// ... Continue for Passes 3-6, verifying each file exists ...
 
-// Step 8: Save final spec as a ticket
-todos_oneshot(
-  title: "Design spec: my-design",
-  description: "<contents of design-spec.json>",
-  tags: "design-spec",
-  type: "task"
-)
+// Step 7: Pass 7 - Final Consolidation
+Task({
+  prompt: "[Pass 7 prompt - agent reads ALL pass files, MUST write to design-spec.json]",
+  model: "opus"  // Use Opus for complex consolidation
+});
+// VERIFY: Read .design-specs/my-design/design-spec.json exists
 ```
 
 ### Verification After Each Pass
@@ -1301,7 +1300,7 @@ After each subtask completes, verify the output file was written:
 
 ```javascript
 // After Pass N completes:
-Read(".tmp-design-specs/{project}/pass-N-{type}.json")
+Read(".design-specs/{project}/pass-N-{type}.json")
 // If file doesn't exist or is invalid JSON, re-run the pass
 ```
 
@@ -1389,7 +1388,7 @@ Load these references as needed during extraction for detailed guidance on speci
 
 ## Schema Compliance
 
-Output follows W3C Design Tokens Community Group format (2025.10):
+Output follows [W3C Design Tokens Community Group format (2025.10)](https://www.designtokens.org/tr/drafts/format/):
 - All tokens use `$value`, `$type`, `$description` properties
 - Token references use `{group.token}` syntax
 - Extensions use reverse domain notation in `$extensions`

@@ -6,6 +6,26 @@ Adapted from: University of Manchester Academic Phrasebank (2023), Plain English
 
 ---
 
+## Contents
+- Previewing Content Structure
+- Introducing a New Topic
+- Referring Back
+- Moving Between Sections
+- Indicating Addition
+- Indicating Contrast
+- Indicating Similarity
+- Indicating Cause and Effect
+- Giving Examples
+- Emphasising Key Points
+- Providing Evidence (neutral attribution, expert quotes, supporting claims)
+- Summarising Sections
+- Concluding Content
+- Question-Based Transitions
+- List Introductions
+- Hedging Language
+- Best Practice Guidelines
+- Transitions to Avoid (AI Tells)
+
 ## Previewing Content Structure
 
 Use to orient readers and set expectations:
@@ -138,7 +158,6 @@ Use to connect ideas and reinforce key points:
 Use when citing sources, data, or expert opinions:
 
 ### Neutral attribution
-
 - According to [Source],...
 - [Source] reports that...
 - Research shows that...
@@ -146,14 +165,12 @@ Use when citing sources, data, or expert opinions:
 - A study by [Source] found...
 
 ### Expert quotes
-
 - As [Expert] puts it,...
 - [Expert] explains,...
 - In the words of [Expert],...
 - [Expert] notes that...
 
 ### Supporting claims
-
 - This is backed by...
 - Evidence suggests...
 - The numbers confirm...

@@ -3,7 +3,6 @@
 ## Overview
 
 `ratatui-image` provides terminal image rendering using various protocols:
-
 - **Sixel** - Wide support (xterm, foot, mlterm, etc.)
 - **Kitty** - Kitty terminal native protocol
 - **iTerm2** - iTerm2 and compatible terminals
@@ -19,11 +18,11 @@ image = "0.25"
 
 ### Feature Flags
 
-| Feature        | Description                                    |
-| -------------- | ---------------------------------------------- |
+| Feature | Description |
+|---------|-------------|
 | `chafa-static` | Statically link libchafa for portable binaries |
-| `chafa`        | Dynamic link to system libchafa                |
-| `serde`        | Serialization support                          |
+| `chafa` | Dynamic link to system libchafa |
+| `serde` | Serialization support |
 
 **Recommendation:** Use `chafa-static` for release binaries to ensure they work on any system.
 
@@ -334,15 +333,15 @@ impl Gallery {
 
 ## Terminal Compatibility
 
-| Terminal       | Protocol             | Notes                   |
-| -------------- | -------------------- | ----------------------- |
-| Kitty          | Kitty                | Native, best quality    |
-| iTerm2         | iTerm2               | Native support          |
-| WezTerm        | Kitty, Sixel, iTerm2 | Multiple protocols      |
-| foot           | Sixel                | Good quality            |
-| xterm          | Sixel                | Enable with `-ti vt340` |
-| Alacritty      | Halfblocks           | No native image support |
-| macOS Terminal | Halfblocks           | No native support       |
+| Terminal | Protocol | Notes |
+|----------|----------|-------|
+| Kitty | Kitty | Native, best quality |
+| iTerm2 | iTerm2 | Native support |
+| WezTerm | Kitty, Sixel, iTerm2 | Multiple protocols |
+| foot | Sixel | Good quality |
+| xterm | Sixel | Enable with `-ti vt340` |
+| Alacritty | Halfblocks | No native image support |
+| macOS Terminal | Halfblocks | No native support |
 
 ### Fallback Strategy
 

@@ -78,7 +78,11 @@ type StepperProps = {
   onValueChange: (value: number) => void;
 };
 
-export const Stepper = ({ value: controlledValue, defaultValue, onValueChange }: StepperProps) => {
+export const Stepper = ({
+  value: controlledValue,
+  defaultValue,
+  onValueChange,
+}: StepperProps) => {
   const [value, setValue] = useControllableState({
     prop: controlledValue, // The controlled value prop
     defaultProp: defaultValue, // Default value for uncontrolled mode

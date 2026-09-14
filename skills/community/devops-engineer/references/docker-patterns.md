@@ -51,12 +51,12 @@ CMD ["uvicorn", "main:app", "--host", "0.0.0.0", "--port", "8000"]
 ## Docker Compose (Development)
 
 ```yaml
-version: "3.8"
+version: '3.8'
 services:
   app:
     build:
       context: .
-      target: builder # Use dev stage
+      target: builder  # Use dev stage
     volumes:
       - .:/app
       - /app/node_modules
@@ -88,15 +88,15 @@ volumes:
 
 ## Security Best Practices
 
-| Practice            | Implementation                          |
-| ------------------- | --------------------------------------- |
-| Non-root user       | `USER nodejs` or `USER 1001`            |
-| Minimal base image  | Use `-alpine` or `-slim` variants       |
-| No secrets in image | Use runtime env vars or secrets         |
-| Pin versions        | `FROM node:20.10.0-alpine` not `latest` |
-| Scan images         | `docker scout`, `trivy`, `snyk`         |
-| Health checks       | `HEALTHCHECK` instruction               |
-| .dockerignore       | Exclude `node_modules`, `.git`, `.env`  |
+| Practice | Implementation |
+|----------|----------------|
+| Non-root user | `USER nodejs` or `USER 1001` |
+| Minimal base image | Use `-alpine` or `-slim` variants |
+| No secrets in image | Use runtime env vars or secrets |
+| Pin versions | `FROM node:20.10.0-alpine` not `latest` |
+| Scan images | `docker scout`, `trivy`, `snyk` |
+| Health checks | `HEALTHCHECK` instruction |
+| .dockerignore | Exclude `node_modules`, `.git`, `.env` |
 
 ## .dockerignore Template
 

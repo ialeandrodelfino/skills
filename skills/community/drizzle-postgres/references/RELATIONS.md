@@ -2,18 +2,41 @@
 
 Comprehensive reference for defining relations and using the relational queries API.
 
+## Contents
+
+- [Overview](#overview)
+- [Defining Relations](#defining-relations)
+- [One-to-Many](#one-to-many)
+- [One-to-One](#one-to-one)
+- [Many-to-Many](#many-to-many)
+- [Self-Referential](#self-referential)
+- [Relational Queries API](#relational-queries-api)
+- [Complex Examples](#complex-examples)
+- [Type Inference](#type-inference)
+- [Relations vs Joins](#relations-vs-joins)
+- [Relational Queries v2 (drizzle-orm v1.0)](#relational-queries-v2-drizzle-orm-v10)
+
 ---
 
 ## Overview
 
 Drizzle has two query APIs:
 
-| API                             | Use Case                             | N+1 Safe |
-| ------------------------------- | ------------------------------------ | -------- |
-| **SQL-like** (`db.select()...`) | Complex queries, joins, aggregations | Manual   |
-| **Relational** (`db.query...`)  | Nested data, simple CRUD             | Yes      |
+| API | Use Case | N+1 Safe |
+|-----|----------|----------|
+| **SQL-like** (`db.select()...`) | Complex queries, joins, aggregations | Manual |
+| **Relational** (`db.query...`) | Nested data, simple CRUD | Yes |
 
-Relations are **application-level** (not database constraints). They enable the relational queries API.
+Relations are **application-level** (not database constraints). They enable the
+relational queries API. Define the FK (`.references()` in the table) when database
+referential integrity is required and the relation when using relational queries;
+one does not imply the other.
+
+**Version note:** everything up to the final section uses the **stable 0.x**
+`relations()` API (npm `latest`). drizzle-orm v1.0 (beta/RC — and the syntax shown
+on orm.drizzle.team's main docs pages) replaces it with `defineRelations()`; see
+[Relational Queries v2](#relational-queries-v2-drizzle-orm-v10). Never mix the two
+APIs in one project.
 
 ---
 
@@ -22,8 +45,8 @@ Relations are **application-level** (not database constraints). They enable the 
 ### Imports
 
 ```typescript
-import { relations } from "drizzle-orm";
-import { pgTable, uuid, text, timestamp, integer } from "drizzle-orm/pg-core";
+import { relations } from 'drizzle-orm';
+import { pgTable, uuid, text, timestamp, primaryKey } from 'drizzle-orm/pg-core';
 ```
 
 ---
@@ -34,17 +57,15 @@ A user has many posts. A post belongs to one user.
 
 ```typescript
 // Tables
-export const users = pgTable("users", {
-  id: uuid("id").primaryKey().defaultRandom(),
-  name: text("name").notNull(),
+export const users = pgTable('users', {
+  id: uuid('id').primaryKey().defaultRandom(),
+  name: text('name').notNull(),
 });
 
-export const posts = pgTable("posts", {
-  id: uuid("id").primaryKey().defaultRandom(),
-  title: text("title").notNull(),
-  authorId: uuid("author_id")
-    .notNull()
-    .references(() => users.id),
+export const posts = pgTable('posts', {
+  id: uuid('id').primaryKey().defaultRandom(),
+  title: text('title').notNull(),
+  authorId: uuid('author_id').notNull().references(() => users.id),
 });
 
 // Relations
@@ -84,23 +105,22 @@ A user has one profile. A profile belongs to one user.
 
 ```typescript
 // Tables
-export const users = pgTable("users", {
-  id: uuid("id").primaryKey().defaultRandom(),
-  email: text("email").notNull(),
+export const users = pgTable('users', {
+  id: uuid('id').primaryKey().defaultRandom(),
+  email: text('email').notNull(),
 });
 
-export const profiles = pgTable("profiles", {
-  id: uuid("id").primaryKey().defaultRandom(),
-  userId: uuid("user_id")
-    .notNull()
-    .unique()
-    .references(() => users.id),
-  bio: text("bio"),
-  avatarUrl: text("avatar_url"),
+export const profiles = pgTable('profiles', {
+  id: uuid('id').primaryKey().defaultRandom(),
+  userId: uuid('user_id').notNull().unique().references(() => users.id),
+  bio: text('bio'),
+  avatarUrl: text('avatar_url'),
 });
 
 // Relations
 export const usersRelations = relations(users, ({ one }) => ({
+  // No config on this side: the FK lives on profiles, so Drizzle
+  // infers the join from profilesRelations below
   profile: one(profiles),
 }));
 
@@ -136,31 +156,25 @@ Users belong to many groups. Groups have many users.
 
 ```typescript
 // Tables
-export const users = pgTable("users", {
-  id: uuid("id").primaryKey().defaultRandom(),
-  name: text("name").notNull(),
+export const users = pgTable('users', {
+  id: uuid('id').primaryKey().defaultRandom(),
+  name: text('name').notNull(),
 });
 
-export const groups = pgTable("groups", {
-  id: uuid("id").primaryKey().defaultRandom(),
-  name: text("name").notNull(),
+export const groups = pgTable('groups', {
+  id: uuid('id').primaryKey().defaultRandom(),
+  name: text('name').notNull(),
 });
 
 // Junction table
-export const usersToGroups = pgTable(
-  "users_to_groups",
-  {
-    userId: uuid("user_id")
-      .notNull()
-      .references(() => users.id, { onDelete: "cascade" }),
-    groupId: uuid("group_id")
-      .notNull()
-      .references(() => groups.id, { onDelete: "cascade" }),
-    joinedAt: timestamp("joined_at").notNull().defaultNow(),
-    role: text("role").notNull().default("member"),
-  },
-  table => [primaryKey({ columns: [table.userId, table.groupId] })]
-);
+export const usersToGroups = pgTable('users_to_groups', {
+  userId: uuid('user_id').notNull().references(() => users.id, { onDelete: 'cascade' }),
+  groupId: uuid('group_id').notNull().references(() => groups.id, { onDelete: 'cascade' }),
+  joinedAt: timestamp('joined_at').notNull().defaultNow(),
+  role: text('role').notNull().default('member'),
+}, (table) => [
+  primaryKey({ columns: [table.userId, table.groupId] }),
+]);
 
 // Relations
 export const usersRelations = relations(users, ({ many }) => ({
@@ -221,22 +235,22 @@ const groupWithMembers = await db.query.groups.findFirst({
 A category can have a parent category and child categories.
 
 ```typescript
-import { AnyPgColumn } from "drizzle-orm/pg-core";
+import { AnyPgColumn } from 'drizzle-orm/pg-core';
 
-export const categories = pgTable("categories", {
-  id: uuid("id").primaryKey().defaultRandom(),
-  name: text("name").notNull(),
-  parentId: uuid("parent_id").references((): AnyPgColumn => categories.id),
+export const categories = pgTable('categories', {
+  id: uuid('id').primaryKey().defaultRandom(),
+  name: text('name').notNull(),
+  parentId: uuid('parent_id').references((): AnyPgColumn => categories.id),
 });
 
 export const categoriesRelations = relations(categories, ({ one, many }) => ({
   parent: one(categories, {
     fields: [categories.parentId],
     references: [categories.id],
-    relationName: "parent",
+    relationName: 'parent',
   }),
   children: many(categories, {
-    relationName: "parent",
+    relationName: 'parent',
   }),
 }));
 ```
@@ -259,7 +273,7 @@ const rootCategories = await db.query.categories.findMany({
   with: {
     children: {
       with: {
-        children: true, // 2 levels deep
+        children: true,  // 2 levels deep
       },
     },
   },
@@ -273,12 +287,12 @@ const rootCategories = await db.query.categories.findMany({
 ### Setup
 
 ```typescript
-import { drizzle } from "drizzle-orm/postgres-js";
-import postgres from "postgres";
-import * as schema from "./schema";
+import { drizzle } from 'drizzle-orm/postgres-js';
+import postgres from 'postgres';
+import * as schema from './schema';
 
 const client = postgres(process.env.DATABASE_URL!);
-export const db = drizzle(client, { schema }); // Pass schema!
+export const db = drizzle(client, { schema });  // Pass schema!
 ```
 
 ### findMany
@@ -289,7 +303,7 @@ const allUsers = await db.query.users.findMany();
 
 // With filter
 const activeUsers = await db.query.users.findMany({
-  where: eq(users.status, "active"),
+  where: eq(users.status, 'active'),
 });
 
 // With ordering
@@ -406,7 +420,7 @@ const usersWithPostCount = await db.query.users.findMany({
   extras: {
     postCount: sql<number>`(
       SELECT count(*) FROM posts WHERE posts.author_id = users.id
-    )`.as("post_count"),
+    )`.as('post_count'),
   },
 });
 ```
@@ -419,46 +433,34 @@ const usersWithPostCount = await db.query.users.findMany({
 
 ```typescript
 // Schema
-export const users = pgTable("users", {
-  id: uuid("id").primaryKey().defaultRandom(),
-  name: text("name").notNull(),
-  email: text("email").notNull().unique(),
+export const users = pgTable('users', {
+  id: uuid('id').primaryKey().defaultRandom(),
+  name: text('name').notNull(),
+  email: text('email').notNull().unique(),
 });
 
-export const posts = pgTable("posts", {
-  id: uuid("id").primaryKey().defaultRandom(),
-  title: text("title").notNull(),
-  content: text("content").notNull(),
-  authorId: uuid("author_id")
-    .notNull()
-    .references(() => users.id),
-  createdAt: timestamp("created_at").notNull().defaultNow(),
+export const posts = pgTable('posts', {
+  id: uuid('id').primaryKey().defaultRandom(),
+  title: text('title').notNull(),
+  content: text('content').notNull(),
+  authorId: uuid('author_id').notNull().references(() => users.id),
+  createdAt: timestamp('created_at').notNull().defaultNow(),
 });
 
-export const comments = pgTable("comments", {
-  id: uuid("id").primaryKey().defaultRandom(),
-  content: text("content").notNull(),
-  postId: uuid("post_id")
-    .notNull()
-    .references(() => posts.id),
-  authorId: uuid("author_id")
-    .notNull()
-    .references(() => users.id),
-  createdAt: timestamp("created_at").notNull().defaultNow(),
+export const comments = pgTable('comments', {
+  id: uuid('id').primaryKey().defaultRandom(),
+  content: text('content').notNull(),
+  postId: uuid('post_id').notNull().references(() => posts.id),
+  authorId: uuid('author_id').notNull().references(() => users.id),
+  createdAt: timestamp('created_at').notNull().defaultNow(),
 });
 
-export const likes = pgTable(
-  "likes",
-  {
-    userId: uuid("user_id")
-      .notNull()
-      .references(() => users.id),
-    postId: uuid("post_id")
-      .notNull()
-      .references(() => posts.id),
-  },
-  table => [primaryKey({ columns: [table.userId, table.postId] })]
-);
+export const likes = pgTable('likes', {
+  userId: uuid('user_id').notNull().references(() => users.id),
+  postId: uuid('post_id').notNull().references(() => posts.id),
+}, (table) => [
+  primaryKey({ columns: [table.userId, table.postId] }),
+]);
 
 // Relations
 export const usersRelations = relations(users, ({ many }) => ({
@@ -555,10 +557,10 @@ const feed = await db.query.posts.findMany({
   extras: {
     commentCount: sql<number>`(
       SELECT count(*) FROM comments WHERE comments.post_id = posts.id
-    )`.as("comment_count"),
+    )`.as('comment_count'),
     likeCount: sql<number>`(
       SELECT count(*) FROM likes WHERE likes.post_id = posts.id
-    )`.as("like_count"),
+    )`.as('like_count'),
   },
 });
 ```
@@ -570,7 +572,7 @@ const feed = await db.query.posts.findMany({
 ### Basic Types
 
 ```typescript
-import type { InferSelectModel, InferInsertModel } from "drizzle-orm";
+import type { InferSelectModel, InferInsertModel } from 'drizzle-orm';
 
 type User = InferSelectModel<typeof users>;
 type NewUser = InferInsertModel<typeof users>;
@@ -580,13 +582,9 @@ type NewUser = InferInsertModel<typeof users>;
 
 ```typescript
 // Type from a specific query result
-type UserWithPosts = Awaited<
-  ReturnType<
-    typeof db.query.users.findFirst<{
-      with: { posts: true };
-    }>
-  >
->;
+type UserWithPosts = Awaited<ReturnType<typeof db.query.users.findFirst<{
+  with: { posts: true };
+}>>>;
 
 // Or infer from actual query
 const getUser = async (id: string) => {
@@ -609,7 +607,7 @@ const result = await db
   })
   .from(users);
 
-type UserBasic = (typeof result)[number];
+type UserBasic = typeof result[number];
 // { id: string; email: string }
 ```
 
@@ -649,3 +647,96 @@ const userWithPosts = await db
   .where(eq(users.id, userId));
 // [{ users: { id, name }, posts: { id, title } | null }, ...]
 ```
+
+---
+
+## Relational Queries v2 (drizzle-orm v1.0)
+
+drizzle-orm v1.0 (in beta/RC as of mid-2026; check `package.json`) removes the
+`relations()` API above and replaces it with **RQB v2**. If the project depends on
+`drizzle-orm@1.0.0-beta.*` / `1.0.0-rc.*` / `1.x`, use this section instead.
+
+Summary of what changed:
+
+| v1 (stable 0.x) | v2 (drizzle-orm 1.0) |
+|-----------------|----------------------|
+| `relations(table, ...)` per table | One `defineRelations(schema, (r) => ...)` for the whole schema |
+| `drizzle(client, { schema })` | `drizzle(client, { relations })` |
+| `fields` / `references` | `from` / `to` (single column or array) |
+| `relationName: 'x'` for disambiguation | `alias: 'x'` |
+| Many-to-many via explicit junction nesting | `.through()` — junction handled automatically |
+| `where: eq(users.id, 1)` or callback | Object filters: `where: { id: 1 }` |
+| `orderBy: [desc(users.createdAt)]` or callback | `orderBy: { createdAt: 'desc' }` |
+| Cannot filter parents by related rows | Can: `where: { posts: { title: { like: 'M%' } } }` |
+
+### Defining Relations (v2)
+
+```typescript
+// relations.ts
+import { defineRelations } from 'drizzle-orm';
+import * as schema from './schema';
+
+export const relations = defineRelations(schema, (r) => ({
+  users: {
+    posts: r.many.posts(),                    // inferred from posts.author
+    // Many-to-many through a junction table:
+    groups: r.many.groups({
+      from: r.users.id.through(r.usersToGroups.userId),
+      to: r.groups.id.through(r.usersToGroups.groupId),
+    }),
+  },
+  posts: {
+    author: r.one.users({
+      from: r.posts.authorId,
+      to: r.users.id,
+      optional: false,   // author is non-nullable in the result type
+    }),
+  },
+}));
+```
+
+### Initialization (v2)
+
+```typescript
+import { drizzle } from 'drizzle-orm/node-postgres';
+import { relations } from './relations';
+
+export const db = drizzle(process.env.DATABASE_URL!, { relations });
+```
+
+### Querying (v2)
+
+```typescript
+// Object-style filters — no eq()/and() imports needed for db.query
+const usersWithPosts = await db.query.users.findMany({
+  where: {
+    AND: [
+      { OR: [{ id: { gt: 10 } }, { name: { like: 'John%' } }] },
+      { age: 15 },
+    ],
+  },
+  orderBy: { createdAt: 'desc' },
+  with: {
+    posts: {
+      where: { published: true },
+      limit: 10,
+      offset: 5,          // offset on nested relations is new in v2
+    },
+  },
+});
+
+// Filter parents by related rows (impossible in v1)
+const authorsOfMPosts = await db.query.users.findMany({
+  where: { posts: { title: { like: 'M%' } } },
+});
+
+// Many-to-many reads through the junction transparently
+const usersWithGroups = await db.query.users.findMany({
+  with: { groups: true },   // no usersToGroups nesting needed
+});
+```
+
+The SQL-like API (`db.select()`, `db.insert()`, operators like `eq`/`and`) is
+unchanged in v1.0 — only relations and `db.query.*` filters changed. Migration
+guide: https://orm.drizzle.team/docs/relations-v1-v2 and
+https://orm.drizzle.team/docs/v0-v1-changes
