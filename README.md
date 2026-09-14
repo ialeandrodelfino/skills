@@ -1,6 +1,6 @@
 # Pedro Nauck's Skills
 
-A curated collection of **139 agent skills** for Claude Code and compatible AI coding assistants — **40 original** (⭐️), **42 hand-picked** (💎), **18 marketing & business** (📣), plus **39 community** skills. Each skill provides domain-specific knowledge, best practices, and guided workflows that enhance an agent's ability to perform specialized tasks.
+A curated collection of **87 agent skills** for Claude Code and compatible AI coding assistants — **40 original** (⭐️), **34 hand-picked** (💎), and **13 marketing & business** (📣). Each skill provides domain-specific knowledge, best practices, and guided workflows that enhance an agent's ability to perform specialized tasks.
 
 ## Installation
 
@@ -42,12 +42,11 @@ cp -r skills/mine/react ~/.claude/skills/react
 ln -s $(pwd)/skills/mine ~/.claude/skills/mine
 ```
 
-Skills are organized into four top-level buckets:
+Skills are organized into three top-level buckets:
 
 - `skills/mine/` — 40 original skills authored in this repository (⭐️)
-- `skills/curated/` — 42 hand-picked skills, including locally authored skills (💎)
-- `skills/marketing/` — 18 marketing, business, and writing skills (📣)
-- `skills/community/` — 39 broader community skills
+- `skills/curated/` — 34 hand-picked skills, including locally authored skills (💎)
+- `skills/marketing/` — 13 marketing, business, and writing skills (📣)
 
 ## Usage
 
@@ -111,6 +110,7 @@ Original skills authored in this repository.
 Hand-picked skills maintained in this repository, including locally authored skills placed here by the owner.
 
 - **[agent-browser](./skills/curated/agent-browser)** — Automate browser interactions for testing, form filling, and data extraction
+- **[ai-sdk](./skills/curated/ai-sdk)** — Vercel AI SDK for building AI-powered features
 - **[autoresearch](./skills/curated/autoresearch)** — Autonomously optimize any skill by running evals, mutating prompts, and keeping improvements
 - **[centrifugo](./skills/curated/centrifugo)** — Centrifugo real-time messaging -- WebSocket PUB/SUB, channels, JWT auth, scaling
 - **[context7](./skills/curated/context7)** — Retrieve up-to-date technical documentation, API references, and code examples for any library via Context7 CLI
@@ -119,31 +119,22 @@ Hand-picked skills maintained in this repository, including locally authored ski
 - **[electron-builder](./skills/curated/electron-builder)** — Electron packaging, code signing, auto-updates, and release workflows
 - **[electron-dev](./skills/curated/electron-dev)** — Electron development with Electron Vite and Builder -- main/renderer processes, IPC
 - **[electron-release](./skills/curated/electron-release)** — Electron production builds, notarization, auto-updates, and releases
-- **[elysia](./skills/curated/elysia)** — Type-safe APIs with Elysia including routing, validation, plugins, and error handling
 - **[es-toolkit](./skills/curated/es-toolkit)** — Modern utility library as a lodash replacement -- array, object, string operations
-- **[evolution-api](./skills/curated/evolution-api)** — Evolution API for WhatsApp messaging, instance management, and chatbot orchestration
-- **[exa-web-search-free](./skills/curated/exa-web-search-free)** — Free AI-powered web, code, and company search via Exa MCP
 - **[extreme-software-optimization](./skills/curated/extreme-software-optimization)** — Profile-driven performance optimization with behavior proofs, opportunity scoring, and isomorphism guarantees
-- **[firecrawl-agent](./skills/curated/firecrawl-agent)** — Structured web extraction with the Firecrawl agent
-- **[firecrawl-crawl](./skills/curated/firecrawl-crawl)** — Crawl multiple pages from a website
-- **[firecrawl-developer-index](./skills/curated/firecrawl-developer-index)** — Search developer documentation, issues, and code references
-- **[firecrawl-download](./skills/curated/firecrawl-download)** — Download website content to local files
-- **[firecrawl-interact](./skills/curated/firecrawl-interact)** — Interact with forms, pagination, and browser pages
-- **[firecrawl-map](./skills/curated/firecrawl-map)** — Discover URLs within a website
-- **[firecrawl-monitor](./skills/curated/firecrawl-monitor)** — Monitor pages for content changes
-- **[firecrawl-parse](./skills/curated/firecrawl-parse)** — Parse local documents and files
-- **[firecrawl-research-index](./skills/curated/firecrawl-research-index)** — Search scientific papers and research literature
-- **[firecrawl-scrape](./skills/curated/firecrawl-scrape)** — Extract content from a known URL
-- **[firecrawl-search](./skills/curated/firecrawl-search)** — Search the web and gather sources
-- **[firecrawl](./skills/curated/firecrawl)** — Web scraping, search, crawling, and browser automation via the Firecrawl CLI
 - **[hono](./skills/curated/hono)** — Hono framework development with documentation search and API reference
+- **[inngest](./skills/curated/inngest)** — Serverless background jobs, event-driven workflows, and durable execution
 - **[lesson-learned](./skills/curated/lesson-learned)** — Extract software engineering lessons from git history and recent code changes
-- **[mastra](./skills/curated/mastra)** — Mastra framework for building AI agents and workflows
+- **[mermaid-diagrams](./skills/curated/mermaid-diagrams)** — Software diagrams using Mermaid syntax -- class, sequence, flowcharts, ERD, C4
 - **[next-best-practices](./skills/curated/next-best-practices)** — Next.js best practices -- file conventions, RSC boundaries, data patterns, async APIs, metadata, error handling, and optimization
+- **[obsidian-bases](./skills/curated/obsidian-bases)** — Create and edit Obsidian Bases (`.base` files) with views, filters, formulas, and summaries
+- **[obsidian-cli](./skills/curated/obsidian-cli)** — Interact with Obsidian vaults via CLI -- read, create, search, manage notes, and develop plugins
+- **[obsidian-markdown](./skills/curated/obsidian-markdown)** — Obsidian Flavored Markdown with wikilinks, embeds, callouts, properties, and tags
 - **[qmd](./skills/curated/qmd)** — Search markdown knowledge bases, notes, and documentation using QMD
+- **[requirements-clarity](./skills/curated/requirements-clarity)** — Clarify ambiguous requirements through focused dialogue before implementation
 - **[sentry-cli](./skills/curated/sentry-cli)** — Sentry CLI for interacting with Sentry from the command line
 - **[shadcn](./skills/curated/shadcn)** — Building UI components with shadcn/ui, Radix UI primitives, and design tokens
 - **[systematic-debugging](./skills/curated/systematic-debugging)** — Root-cause investigation before proposing fixes for bugs or test failures
+- **[tauri-v2](./skills/curated/tauri-v2)** — Tauri v2 cross-platform apps with Rust backend, IPC, permissions, and builds
 - **[tui-design](./skills/curated/tui-design)** — Universal TUI design patterns -- layouts, color schemes, keyboard navigation, dashboards, and accessibility
 - **[vercel-composition-patterns](./skills/curated/vercel-composition-patterns)** — React composition patterns for refactoring boolean prop proliferation
 - **[vercel-react-best-practices](./skills/curated/vercel-react-best-practices)** — React/Next.js performance optimization from Vercel Engineering
@@ -165,60 +156,11 @@ Marketing, sales, business, and writing skills.
 - **[google-ads](./skills/marketing/google-ads)** — Query, audit, and optimize Google Ads campaigns
 - **[hormozi-ad-factory](./skills/marketing/hormozi-ad-factory)** — Generate 150-750+ ad variations using Hormozi's combinatorial Hook x Meat x CTA framework
 - **[humanizer](./skills/marketing/humanizer)** — Remove signs of AI-generated writing from text
-- **[pitch-deck](./skills/marketing/pitch-deck)** — Generate professional PowerPoint pitch decks for startups
-- **[pitch-deck-visuals](./skills/marketing/pitch-deck-visuals)** — Investor pitch deck visuals with slide-by-slide framework and design rules
-- **[pitch-gen](./skills/marketing/pitch-gen)** — Generate startup pitch deck content with AI
-- **[pptx-creator](./skills/marketing/pptx-creator)** — Create professional PowerPoint presentations from outlines or data
 - **[professional-communication](./skills/marketing/professional-communication)** — Technical communication for emails, team messaging, and meeting agendas
 - **[promo-video](./skills/marketing/promo-video)** — Create promotional videos using Remotion with AI voiceover and background music
 - **[sales-methodology-implementer](./skills/marketing/sales-methodology-implementer)** — Implement proven sales methodologies (MEDDIC, BANT, Sandler, Challenger, SPIN)
 - **[startup-validator](./skills/marketing/startup-validator)** — Comprehensive startup idea validation and market analysis
-- **[viz](./skills/marketing/viz)** — Four visualization modes in one skill -- Excalidraw diagrams, Swiss Pulse PNG infographics, inline Visualizer widgets, and published HeyGenverse apps
 - **[writing-clearly-and-concisely](./skills/marketing/writing-clearly-and-concisely)** — Strunk's timeless rules for clearer, stronger, more professional prose
-
-### Community
-
-Broader community skills.
-
-- **[a11y-testing](./skills/community/a11y-testing)** — Automated accessibility testing with axe-core, Playwright, and jest-axe
-- **[adversarial-review](./skills/community/adversarial-review)** — Spawn opposing AI model reviewers to adversarially challenge work
-- **[ai-sdk](./skills/community/ai-sdk)** — Vercel AI SDK for building AI-powered features
-- **[argocd-expert](./skills/community/argocd-expert)** — ArgoCD GitOps deployment, sync strategies, and production operations
-- **[better-auth-best-practices](./skills/community/better-auth-best-practices)** — Better Auth TypeScript authentication framework integration
-- **[better-auth-organization-best-practices](./skills/community/better-auth-organization-best-practices)** — Multi-tenant organizations, RBAC, teams, members, and invitations with Better Auth's organization plugin
-- **[building-components](./skills/community/building-components)** — Accessible, composable UI components with design tokens and documentation
-- **[cloudflare](./skills/community/cloudflare)** — Cloudflare platform -- Workers, Pages, storage, AI, networking, and security
-- **[crafting-effective-readmes](./skills/community/crafting-effective-readmes)** — Templates and guidance for writing README files matched to audience and project
-- **[creating-spec](./skills/community/creating-spec)** — Comprehensive technical specs for SDK gaps, features, or system centralization
-- **[design-spec-extraction](./skills/community/design-spec-extraction)** — Extract production-ready JSON design specs from visual inputs using a 7-pass architecture
-- **[devops-engineer](./skills/community/devops-engineer)** — Dockerfiles, CI/CD pipelines, Kubernetes manifests, and Terraform/Pulumi templates
-- **[drizzle-orm](./skills/community/drizzle-orm)** — Drizzle ORM best practices -- schemas, queries, mutations, transactions, migrations
-- **[drizzle-postgres](./skills/community/drizzle-postgres)** — PostgreSQL and Drizzle ORM best practices for type-safe database apps
-- **[executing-plans](./skills/community/executing-plans)** — Execute implementation plans in batches with review checkpoints
-- **[find-rules](./skills/community/find-rules)** — Discover project rules, coding standards, and architectural guidelines
-- **[find-skills](./skills/community/find-skills)** — Discover and install agent skills from the open agent skills ecosystem
-- **[fixing-motion-performance](./skills/community/fixing-motion-performance)** — Diagnose and fix animation performance issues in UI code
-- **[helm-chart-scaffolding](./skills/community/helm-chart-scaffolding)** — Design, organize, and manage Helm charts for Kubernetes applications
-- **[hetzner-server](./skills/community/hetzner-server)** — Create and manage Hetzner Cloud servers via the `hcloud` CLI
-- **[inngest](./skills/community/inngest)** — Serverless background jobs, event-driven workflows, and durable execution
-- **[k8s-security-policies](./skills/community/k8s-security-policies)** — Kubernetes security policies -- NetworkPolicy, PodSecurityPolicy, and RBAC
-- **[kubernetes-specialist](./skills/community/kubernetes-specialist)** — Deploy and manage Kubernetes workloads -- manifests, Helm, RBAC, networking, GitOps
-- **[mermaid-diagrams](./skills/community/mermaid-diagrams)** — Software diagrams using Mermaid syntax -- class, sequence, flowcharts, ERD, C4
-- **[motion](./skills/community/motion)** — React animations with Motion (formerly Framer Motion) -- gestures, scroll effects, spring physics
-- **[motion-react](./skills/community/motion-react)** — Full Motion for React guide including SVG, exit animations, and layout transitions
-- **[obsidian-bases](./skills/community/obsidian-bases)** — Create and edit Obsidian Bases (`.base` files) with views, filters, formulas, and summaries
-- **[obsidian-cli](./skills/community/obsidian-cli)** — Interact with Obsidian vaults via CLI -- read, create, search, manage notes, and develop plugins
-- **[obsidian-markdown](./skills/community/obsidian-markdown)** — Obsidian Flavored Markdown with wikilinks, embeds, callouts, properties, and tags
-- **[pal](./skills/community/pal)** — Pal MCP toolkit for code analysis, debugging, planning, refactoring, and tracing
-- **[perplexity](./skills/community/perplexity)** — Web search and research using Perplexity AI
-- **[remotion-best-practices](./skills/community/remotion-best-practices)** — Best practices for Remotion video creation in React
-- **[requirements-clarity](./skills/community/requirements-clarity)** — Clarify ambiguous requirements through focused dialogue before implementation
-- **[ship-learn-next](./skills/community/ship-learn-next)** — Transform learning content into actionable implementation plans
-- **[sourcebot](./skills/community/sourcebot)** — Search external libraries and frameworks using Sourcebot MCP
-- **[tauri-v2](./skills/community/tauri-v2)** — Tauri v2 cross-platform apps with Rust backend, IPC, permissions, and builds
-- **[terraform-style-guide](./skills/community/terraform-style-guide)** — Terraform HCL following HashiCorp's official style conventions
-- **[workflow](./skills/community/workflow)** — Durable, resumable workflows using Vercel's Workflow DevKit
-- **[wrangler](./skills/community/wrangler)** — Cloudflare Workers CLI for deploying and managing Workers, KV, R2, D1, and more
 
 ## Structure
 
@@ -229,7 +171,6 @@ skills/
   mine/<skill-name>/       # Original skills authored here (⭐️)
   curated/<skill-name>/    # Hand-picked community skills (💎)
   marketing/<skill-name>/  # Marketing, business, and writing skills (📣)
-  community/<skill-name>/  # Broader community skills
 
 skills/<bucket>/<skill-name>/
   SKILL.md              # Main skill definition (required)
@@ -265,7 +206,6 @@ To add a new skill:
    - `skills/mine/` — original work authored here
    - `skills/curated/` — hand-picked, high-quality community skills you maintain
    - `skills/marketing/` — marketing, sales, business, or writing skills
-   - `skills/community/` — broader community skills
 2. Add a `SKILL.md` with proper frontmatter (`name` and `description` fields)
 3. Include reference material, examples, and templates as needed
 4. Follow the conventions documented in `skills/mine/writing-skills/SKILL.md`
